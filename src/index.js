@@ -37,6 +37,22 @@ export { EmptyState } from './empty-state.jsx';
 export { FilterDivider, FilterPill, FilterPillGroup } from './filter-pill.jsx';
 export { Checkbox, Input, Select, Textarea, Toggle } from './form-controls.jsx';
 export { HealthRing } from './health-ring.jsx';
+// Image viewer and comparison modes
+export {
+  BaseComparisonMode,
+  ComparisonContainer,
+  ImageRenderer,
+  ImageWithErrorBoundary,
+  OnionSkinMode,
+  OverlayMode,
+  SideBySideView,
+  ThumbnailStrip,
+  ToggleMode,
+  ToggleView,
+  useZoom,
+  ZoomableImage,
+  ZoomControls
+} from './image-viewer/index.js';
 // Review workflow components
 export {
   InspectorAction,
@@ -111,19 +127,3 @@ export {
 } from './variant-strip.jsx';
 // View mode controls
 export { ViewModeSelect, ViewModeToggle } from './view-mode-toggle.jsx';
-// Image viewer and comparison modes
-export {
-  ThumbnailStrip,
-  useZoom,
-  ZoomControls,
-  SideBySideView,
-  ZoomableImage,
-  OverlayMode,
-  ToggleMode,
-  ToggleView,
-  OnionSkinMode,
-  BaseComparisonMode,
-  ComparisonContainer,
-  ImageRenderer,
-  ImageWithErrorBoundary
-} from './image-viewer/index.js';

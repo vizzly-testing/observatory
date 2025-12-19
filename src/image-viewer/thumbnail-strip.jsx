@@ -101,7 +101,8 @@ export function ThumbnailStrip({
   // Find active index
   const activeIndex = items.findIndex((item) => item.id === activeId);
 
-  // Scroll active thumbnail into view
+  // Scroll active thumbnail into view when activeId changes
+  // biome-ignore lint/correctness/useExhaustiveDependencies: intentionally trigger on activeId change
   useEffect(() => {
     if (activeRef.current && stripRef.current) {
       const container = stripRef.current;

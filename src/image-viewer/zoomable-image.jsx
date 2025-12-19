@@ -132,6 +132,7 @@ export function ZoomableImage({
   );
 
   // Reset pan when zoom changes
+  // biome-ignore lint/correctness/useExhaustiveDependencies: intentionally trigger on zoom change
   useEffect(() => {
     setPan({ x: 0, y: 0 });
   }, [zoom]);

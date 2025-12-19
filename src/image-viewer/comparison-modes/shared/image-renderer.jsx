@@ -45,8 +45,7 @@ export function ImageRenderer({
   }
 
   // Filter out non-HTML props that shouldn't go to img element
-  // biome-ignore lint/correctness/noUnusedVariables: destructure to exclude non-HTML props
-  let { screenshot, zoom, ...htmlProps } = props;
+  let { screenshot: _screenshot, zoom: _zoom, ...htmlProps } = props;
 
   return (
     <img

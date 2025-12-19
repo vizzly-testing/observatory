@@ -12,12 +12,12 @@ export function ToggleView({
   screenshot,
   onImageError,
   onImageLoad,
-  imageErrors = new Set(),
+  imageErrors = new Set()
 }) {
   let [showBaseline, setShowBaseline] = useState(true);
 
   let handleImageClick = () => {
-    setShowBaseline(prev => !prev);
+    setShowBaseline((prev) => !prev);
   };
 
   return (
