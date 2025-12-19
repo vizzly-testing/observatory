@@ -92,6 +92,8 @@ jobs:
           draft: false
           prerelease: ${{ steps.version.outputs.is_prerelease }}
 
+      # Uses OIDC trusted publishing - no NPM_TOKEN needed
+      # Configure at: https://www.npmjs.com/package/@vizzly-testing/observatory/access
       - name: Publish to NPM
         run: |
           if [ "${{ steps.version.outputs.is_prerelease }}" = "true" ]; then
@@ -99,5 +101,3 @@ jobs:
           else
             npm publish --access public
           fi
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
