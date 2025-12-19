@@ -25,7 +25,8 @@ export function ApprovalButton({
   loading = false,
   compact = false,
   showLabel = true,
-  className = ''
+  className = '',
+  testId
 }) {
   const config = {
     approve: {
@@ -46,6 +47,8 @@ export function ApprovalButton({
 
   const Icon = config.icon;
 
+  let buttonTestId = testId || `btn-${variant}`;
+
   // Compact mode for mobile - icon only or smaller
   if (compact) {
     return (
@@ -64,6 +67,8 @@ export function ApprovalButton({
         title={config.label}
         aria-label={config.label}
         aria-pressed={isActive}
+        data-testid={buttonTestId}
+        data-active={isActive}
       >
         {loading ? (
           <span className="w-4 h-4 border-2 border-current border-t-transparent rounded-full animate-spin" />
@@ -92,6 +97,8 @@ export function ApprovalButton({
         ${className}
       `}
       aria-pressed={isActive}
+      data-testid={buttonTestId}
+      data-active={isActive}
     >
       {loading ? (
         <span className="w-4 h-4 border-2 border-current border-t-transparent rounded-full animate-spin" />
@@ -154,7 +161,8 @@ export function MobileApprovalBar({
   onReject,
   disabled = false,
   loading = false,
-  className = ''
+  className = '',
+  testIdPrefix = 'mobile'
 }) {
   const isApproved = status === 'approved' || status === 'auto_approved';
   const isRejected = status === 'rejected';
@@ -171,6 +179,8 @@ export function MobileApprovalBar({
         <button
           onClick={onReject}
           disabled={disabled || loading}
+          data-testid={`${testIdPrefix}-btn-reject`}
+          data-active={isRejected}
           className={`
             flex-1
             flex items-center justify-center gap-2
@@ -194,6 +204,8 @@ export function MobileApprovalBar({
         <button
           onClick={onApprove}
           disabled={disabled || loading}
+          data-testid={`${testIdPrefix}-btn-approve`}
+          data-active={isApproved}
           className={`
             flex-1
             flex items-center justify-center gap-2

@@ -1,6 +1,6 @@
 {
   "name": "@vizzly-testing/observatory",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "Observatory Design System - React component library for Vizzly applications",
   "type": "module",
   "main": "./src/index.js",

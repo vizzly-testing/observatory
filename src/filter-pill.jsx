@@ -53,7 +53,8 @@ export function FilterPill({
   disabled = false,
   onClick,
   icon: Icon,
-  className = ''
+  className = '',
+  testId
 }) {
   const colors = colorClasses[color] || colorClasses.gray;
   const stateClass = active ? colors.active : colors.inactive;
@@ -62,6 +63,7 @@ export function FilterPill({
     <button
       onClick={onClick}
       disabled={disabled || count === 0}
+      data-testid={testId}
       className={`
         inline-flex items-center gap-1.5 px-2.5 py-1.5 rounded-md text-xs font-medium
         border transition-all duration-150
