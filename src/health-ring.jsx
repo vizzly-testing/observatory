@@ -16,7 +16,7 @@ export function HealthRing({
   showValue = true,
   className = ''
 }) {
-  let [displayValue, setDisplayValue] = useState(animated ? 0 : value);
+  const [displayValue, setDisplayValue] = useState(animated ? 0 : value);
 
   useEffect(() => {
     if (!animated) {
@@ -24,15 +24,15 @@ export function HealthRing({
       return;
     }
 
-    let start = 0;
-    let end = value;
-    let duration = 1000;
+    const start = 0;
+    const end = value;
+    const duration = 1000;
     let startTime = null;
 
-    let animate = (timestamp) => {
+    const animate = (timestamp) => {
       if (!startTime) startTime = timestamp;
-      let progress = Math.min((timestamp - startTime) / duration, 1);
-      let eased = 1 - Math.pow(1 - progress, 3);
+      const progress = Math.min((timestamp - startTime) / duration, 1);
+      const eased = 1 - (1 - progress) ** 3;
       setDisplayValue(Math.round(start + (end - start) * eased));
 
       if (progress < 1) {
@@ -43,17 +43,17 @@ export function HealthRing({
     requestAnimationFrame(animate);
   }, [value, animated]);
 
-  let radius = (size - strokeWidth) / 2;
-  let circumference = radius * 2 * Math.PI;
-  let offset = circumference - (displayValue / 100) * circumference;
+  const radius = (size - strokeWidth) / 2;
+  const circumference = radius * 2 * Math.PI;
+  const offset = circumference - (displayValue / 100) * circumference;
 
-  let getColor = () => {
+  const getColor = () => {
     if (value >= 80) return '#10b981';
     if (value >= 50) return '#f59e0b';
     return '#ef4444';
   };
 
-  let stroke = getColor();
+  const stroke = getColor();
 
   return (
     <div className={`relative ${className}`} style={{ width: size, height: size }}>

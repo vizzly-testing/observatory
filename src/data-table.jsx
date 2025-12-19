@@ -21,8 +21,8 @@ import { EmptyState } from './empty-state.jsx';
  * Allows users to show/hide table columns
  */
 export function ColumnSettings({ columnVisibility, onColumnVisibilityChange, columnGroups = {} }) {
-  let [open, setOpen] = useState(false);
-  let ref = useRef(null);
+  const [open, setOpen] = useState(false);
+  const ref = useRef(null);
 
   // Close on outside click
   useEffect(() => {
@@ -36,22 +36,22 @@ export function ColumnSettings({ columnVisibility, onColumnVisibilityChange, col
     return () => document.removeEventListener('mousedown', onClickOutside);
   }, [open]);
 
-  let toggleColumn = (key) => {
+  const toggleColumn = (key) => {
     onColumnVisibilityChange({
       ...columnVisibility,
       [key]: !columnVisibility[key]
     });
   };
 
-  let toggleAll = (groupKey, show) => {
-    let cols = columnGroups[groupKey];
-    let next = { ...columnVisibility };
+  const toggleAll = (groupKey, show) => {
+    const cols = columnGroups[groupKey];
+    const next = { ...columnVisibility };
     cols.forEach((c) => (next[c.key] = show));
     onColumnVisibilityChange(next);
   };
 
-  let visible = Object.values(columnVisibility).filter(Boolean).length;
-  let total = Object.keys(columnVisibility).length;
+  const visible = Object.values(columnVisibility).filter(Boolean).length;
+  const total = Object.keys(columnVisibility).length;
 
   if (Object.keys(columnGroups).length === 0) return null;
 
@@ -78,8 +78,8 @@ export function ColumnSettings({ columnVisibility, onColumnVisibilityChange, col
           </div>
 
           {Object.entries(columnGroups).map(([groupKey, cols]) => {
-            let onCount = cols.filter((c) => columnVisibility[c.key]).length;
-            let groupTotal = cols.length;
+            const onCount = cols.filter((c) => columnVisibility[c.key]).length;
+            const groupTotal = cols.length;
 
             return (
               <div key={groupKey} className="border-b border-slate-700/50 last:border-b-0">
@@ -111,7 +111,7 @@ export function ColumnSettings({ columnVisibility, onColumnVisibilityChange, col
 
                 <div className="p-2 space-y-1">
                   {cols.map((col) => {
-                    let isOn = columnVisibility[col.key] || false;
+                    const isOn = columnVisibility[col.key] || false;
                     return (
                       <label
                         key={col.key}
@@ -152,8 +152,8 @@ export function ColumnSettings({ columnVisibility, onColumnVisibilityChange, col
  * Default mobile card renderer
  */
 function DefaultMobileCard({ row, columns, onRowClick, index }) {
-  let cardColumns = columns.filter((col) => col.key !== 'actions');
-  let actionsColumn = columns.find((col) => col.key === 'actions');
+  const cardColumns = columns.filter((col) => col.key !== 'actions');
+  const actionsColumn = columns.find((col) => col.key === 'actions');
 
   return (
     <div
@@ -163,7 +163,7 @@ function DefaultMobileCard({ row, columns, onRowClick, index }) {
       onClick={onRowClick ? () => onRowClick(row, index) : undefined}
     >
       {cardColumns.map((column, colIndex) => {
-        let value = column.mobileRender
+        const value = column.mobileRender
           ? column.mobileRender(row, index)
           : column.render
             ? column.render(row, index)
@@ -239,30 +239,30 @@ export function DataTable({
   onUrlChange,
   className = ''
 }) {
-  let [isMobile, setIsMobile] = useState(false);
-  let [sortConfig, setSortConfig] = useState({
+  const [isMobile, setIsMobile] = useState(false);
+  const [sortConfig, setSortConfig] = useState({
     key: sortBy,
     direction: sortOrder
   });
 
   // Track screen size
   useEffect(() => {
-    let checkScreenSize = () => setIsMobile(window.innerWidth < 768);
+    const checkScreenSize = () => setIsMobile(window.innerWidth < 768);
     checkScreenSize();
     window.addEventListener('resize', checkScreenSize);
     return () => window.removeEventListener('resize', checkScreenSize);
   }, []);
 
   // Update URL when sort changes (if enabled)
-  let updateUrl = useCallback(
+  const updateUrl = useCallback(
     (newSortConfig, newVisibility) => {
       if (!persistToUrl || !onUrlChange) return;
 
-      let params = {};
+      const params = {};
       if (newSortConfig?.key) params.sortBy = newSortConfig.key;
       if (newSortConfig?.direction) params.sortOrder = newSortConfig.direction;
       if (newVisibility) {
-        let visibleCols = Object.entries(newVisibility)
+        const visibleCols = Object.entries(newVisibility)
           .filter(([, v]) => v)
           .map(([k]) => k);
         if (visibleCols.length > 0) params.cols = visibleCols.join(',');
@@ -273,7 +273,7 @@ export function DataTable({
   );
 
   // Sorting logic
-  let sortedData = useMemo(() => {
+  const sortedData = useMemo(() => {
     if (!sortConfig.key || !data.length) return data;
 
     return [...data].sort((a, b) => {
@@ -302,9 +302,9 @@ export function DataTable({
   }, [data, sortConfig]);
 
   // Filter visible columns
-  let visibleColumns = useMemo(() => {
+  const visibleColumns = useMemo(() => {
     if (isMobile) {
-      let mobileKeys =
+      const mobileKeys =
         mobileColumns.length > 0
           ? mobileColumns
           : columns
@@ -317,9 +317,9 @@ export function DataTable({
   }, [columns, columnVisibility, isMobile, mobileColumns]);
 
   // Handle sort
-  let handleSort = useCallback(
+  const handleSort = useCallback(
     (columnKey) => {
-      let newConfig = {
+      const newConfig = {
         key: columnKey,
         direction: sortConfig.key === columnKey && sortConfig.direction === 'asc' ? 'desc' : 'asc'
       };
@@ -331,7 +331,7 @@ export function DataTable({
   );
 
   // Handle column visibility
-  let handleColumnVisibilityChange = useCallback(
+  const handleColumnVisibilityChange = useCallback(
     (newVisibility) => {
       onColumnVisibilityChange?.(newVisibility);
       updateUrl(null, newVisibility);

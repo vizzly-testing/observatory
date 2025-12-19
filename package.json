@@ -1,6 +1,6 @@
 {
   "name": "@vizzly-testing/observatory",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "description": "Observatory Design System - React component library for Vizzly applications",
   "type": "module",
   "main": "./src/index.js",
@@ -23,22 +23,25 @@
       "import": "./src/styles.css"
     }
   },
-  "files": ["src"],
-  "keywords": ["design-system", "react", "components", "tailwindcss", "ui"],
+  "files": [
+    "src"
+  ],
+  "keywords": [
+    "design-system",
+    "react",
+    "components",
+    "tailwindcss",
+    "ui"
+  ],
   "author": "Vizzly",
   "license": "MIT",
   "peerDependencies": {
     "react": "^18.0.0 || ^19.0.0",
     "react-dom": "^18.0.0 || ^19.0.0",
-    "tailwindcss": "^4.0.0",
-    "downshift": "^9.0.0"
-  },
-  "peerDependenciesMeta": {
-    "downshift": {
-      "optional": true
-    }
+    "tailwindcss": "^4.0.0"
   },
   "dependencies": {
-    "@heroicons/react": "^2.2.0"
+    "@heroicons/react": "^2.2.0",
+    "downshift": "^9.0.0"
   }
 }

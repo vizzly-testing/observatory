@@ -6,7 +6,7 @@
  */
 
 export function StatusDot({ status = 'default', pulse = false, size = 'md', className = '' }) {
-  let statusColors = {
+  const statusColors = {
     default: 'bg-slate-500',
     success: 'bg-emerald-500',
     warning: 'bg-amber-500',
@@ -15,13 +15,13 @@ export function StatusDot({ status = 'default', pulse = false, size = 'md', clas
     processing: 'bg-blue-500'
   };
 
-  let sizeClasses = {
+  const sizeClasses = {
     sm: 'w-1.5 h-1.5',
     md: 'w-2 h-2',
     lg: 'w-3 h-3'
   };
 
-  let shouldPulse = pulse || status === 'processing';
+  const shouldPulse = pulse || status === 'processing';
 
   return (
     <span className={`relative inline-flex ${className}`}>

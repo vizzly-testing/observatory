@@ -5,7 +5,7 @@ import { XMarkIcon } from '@heroicons/react/24/outline';
  * Used to display currently applied filters that can be removed
  */
 
-let colorClasses = {
+const colorClasses = {
   amber: 'bg-amber-500/10 text-amber-300 border-amber-500/20',
   cyan: 'bg-cyan-500/10 text-cyan-300 border-cyan-500/20',
   blue: 'bg-blue-500/10 text-blue-300 border-blue-500/20',
@@ -48,7 +48,7 @@ export function ActiveFilterBar({
   onClearAll,
   className = ''
 }) {
-  let hasFilters = children && (Array.isArray(children) ? children.length > 0 : true);
+  const hasFilters = children && (Array.isArray(children) ? children.length > 0 : true);
 
   if (!hasFilters) return null;
 

@@ -39,28 +39,34 @@ export function ZoomableImage({
   checkerboardColor = '#1a1a1a',
   className = ''
 }) {
-  let containerRef = useRef(null);
-  let imageRef = useRef(null);
-  let [imageDimensions, setImageDimensions] = useState({ width: 0, height: 0 });
-  let [containerDimensions, setContainerDimensions] = useState({ width: 0, height: 0 });
-  let [pan, setPan] = useState({ x: 0, y: 0 });
-  let [isDragging, setIsDragging] = useState(false);
-  let [dragStart, setDragStart] = useState({ x: 0, y: 0 });
-  let [imageLoaded, setImageLoaded] = useState(false);
+  const containerRef = useRef(null);
+  const imageRef = useRef(null);
+  const [imageDimensions, setImageDimensions] = useState({
+    width: 0,
+    height: 0
+  });
+  const [containerDimensions, setContainerDimensions] = useState({
+    width: 0,
+    height: 0
+  });
+  const [pan, setPan] = useState({ x: 0, y: 0 });
+  const [isDragging, setIsDragging] = useState(false);
+  const [dragStart, setDragStart] = useState({ x: 0, y: 0 });
+  const [imageLoaded, setImageLoaded] = useState(false);
 
   // Detect device type from metadata
-  let deviceInfo = useMemo(() => {
+  const deviceInfo = useMemo(() => {
     if (!metadata) return null;
 
-    let platform = metadata.platform?.toLowerCase() || '';
-    let device = metadata.device?.toLowerCase() || '';
-    let width = metadata.width || metadata.viewport_width || 0;
-    let height = metadata.height || metadata.viewport_height || 0;
+    const platform = metadata.platform?.toLowerCase() || '';
+    const device = metadata.device?.toLowerCase() || '';
+    const width = metadata.width || metadata.viewport_width || 0;
+    const height = metadata.height || metadata.viewport_height || 0;
 
-    let isIOS = platform === 'ios' || device.includes('iphone') || device.includes('ipad');
-    let isAndroid = platform === 'android';
-    let isMobile = isIOS || isAndroid || width < 768;
-    let isPortrait = height > width;
+    const isIOS = platform === 'ios' || device.includes('iphone') || device.includes('ipad');
+    const isAndroid = platform === 'android';
+    const isMobile = isIOS || isAndroid || width < 768;
+    const isPortrait = height > width;
 
     return {
       platform: isIOS ? 'ios' : isAndroid ? 'android' : 'desktop',
@@ -70,10 +76,13 @@ export function ZoomableImage({
   }, [metadata]);
 
   // Handle image load
-  let handleImageLoad = useCallback(
+  const handleImageLoad = useCallback(
     (e) => {
-      let img = e.target;
-      setImageDimensions({ width: img.naturalWidth, height: img.naturalHeight });
+      const img = e.target;
+      setImageDimensions({
+        width: img.naturalWidth,
+        height: img.naturalHeight
+      });
       setImageLoaded(true);
       onLoad?.();
     },
@@ -82,9 +91,9 @@ export function ZoomableImage({
 
   // Update container dimensions on resize
   useEffect(() => {
-    let updateContainerSize = () => {
+    const updateContainerSize = () => {
       if (containerRef.current) {
-        let rect = containerRef.current.getBoundingClientRect();
+        const rect = containerRef.current.getBoundingClientRect();
         setContainerDimensions({ width: rect.width, height: rect.height });
       }
     };
@@ -95,18 +104,18 @@ export function ZoomableImage({
   }, []);
 
   // Calculate actual zoom scale
-  let scale = useMemo(() => {
+  const scale = useMemo(() => {
     if (!imageDimensions.width || !containerDimensions.width) return 1;
 
-    let scaleX = containerDimensions.width / imageDimensions.width;
-    let scaleY = containerDimensions.height / imageDimensions.height;
-    let fitScale = Math.min(scaleX, scaleY, 1); // Never scale up for fit
+    const scaleX = containerDimensions.width / imageDimensions.width;
+    const scaleY = containerDimensions.height / imageDimensions.height;
+    const fitScale = Math.min(scaleX, scaleY, 1); // Never scale up for fit
 
     return zoom === 'fit' ? fitScale : zoom;
   }, [zoom, imageDimensions, containerDimensions]);
 
   // Calculate scaled dimensions
-  let scaledDimensions = useMemo(
+  const scaledDimensions = useMemo(
     () => ({
       width: imageDimensions.width * scale,
       height: imageDimensions.height * scale
@@ -115,7 +124,7 @@ export function ZoomableImage({
   );
 
   // Check if panning is needed
-  let canPan = useMemo(
+  const canPan = useMemo(
     () =>
       scaledDimensions.width > containerDimensions.width ||
       scaledDimensions.height > containerDimensions.height,
@@ -128,7 +137,7 @@ export function ZoomableImage({
   }, [zoom]);
 
   // Pan handlers
-  let handleMouseDown = useCallback(
+  const handleMouseDown = useCallback(
     (e) => {
       if (!canPan) return;
       e.preventDefault();
@@ -138,7 +147,7 @@ export function ZoomableImage({
     [canPan, pan]
   );
 
-  let handleMouseMove = useCallback(
+  const handleMouseMove = useCallback(
     (e) => {
       if (!isDragging) return;
 
@@ -146,8 +155,8 @@ export function ZoomableImage({
       let newY = e.clientY - dragStart.y;
 
       // Constrain pan to keep image visible
-      let maxPanX = Math.max(0, (scaledDimensions.width - containerDimensions.width) / 2);
-      let maxPanY = Math.max(0, (scaledDimensions.height - containerDimensions.height) / 2);
+      const maxPanX = Math.max(0, (scaledDimensions.width - containerDimensions.width) / 2);
+      const maxPanY = Math.max(0, (scaledDimensions.height - containerDimensions.height) / 2);
 
       newX = Math.max(-maxPanX, Math.min(maxPanX, newX));
       newY = Math.max(-maxPanY, Math.min(maxPanY, newY));
@@ -157,12 +166,12 @@ export function ZoomableImage({
     [isDragging, dragStart, scaledDimensions, containerDimensions]
   );
 
-  let handleMouseUp = useCallback(() => {
+  const handleMouseUp = useCallback(() => {
     setIsDragging(false);
   }, []);
 
   // Image transform style
-  let imageStyle = useMemo(
+  const imageStyle = useMemo(
     () => ({
       transform: `translate(${pan.x}px, ${pan.y}px) scale(${scale})`,
       transformOrigin: 'center center',
@@ -173,7 +182,7 @@ export function ZoomableImage({
   );
 
   // Checkerboard background style
-  let checkerboardStyle = useMemo(
+  const checkerboardStyle = useMemo(
     () => ({
       backgroundImage: `
       linear-gradient(45deg, ${checkerboardColor} 25%, transparent 25%),

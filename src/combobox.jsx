@@ -43,15 +43,15 @@ export function Combobox({
   className = ''
 }) {
   // Default filter: case-insensitive string matching
-  let defaultFilterItems = (items, inputValue) => {
+  const defaultFilterItems = (items, inputValue) => {
     if (!inputValue) return items;
-    let lower = inputValue.toLowerCase();
+    const lower = inputValue.toLowerCase();
     return items.filter((item) => itemToString(item).toLowerCase().includes(lower));
   };
 
-  let filterFn = filterItems || defaultFilterItems;
+  const filterFn = filterItems || defaultFilterItems;
 
-  let {
+  const {
     isOpen,
     getToggleButtonProps,
     getLabelProps,
@@ -73,15 +73,15 @@ export function Combobox({
     }
   });
 
-  let filteredItems = filterFn(items, inputValue);
+  const filteredItems = filterFn(items, inputValue);
 
-  let sizeClasses = {
+  const sizeClasses = {
     sm: 'py-2 pl-9 pr-16 text-sm',
     md: 'py-3 pl-10 pr-20',
     lg: 'py-4 pl-12 pr-24 text-lg'
   };
 
-  let iconSizes = {
+  const iconSizes = {
     sm: 'h-4 w-4',
     md: 'h-5 w-5',
     lg: 'h-6 w-6'
@@ -151,9 +151,9 @@ export function Combobox({
         {isOpen &&
           (filteredItems.length > 0 ? (
             filteredItems.map((item, index) => {
-              let itemDisabled = isItemDisabled(item);
-              let highlighted = highlightedIndex === index;
-              let selected = selectedItem === item;
+              const itemDisabled = isItemDisabled(item);
+              const highlighted = highlightedIndex === index;
+              const selected = selectedItem === item;
 
               return (
                 <li
@@ -170,7 +170,11 @@ export function Combobox({
                   })}
                 >
                   {renderItem
-                    ? renderItem(item, { highlighted, selected, disabled: itemDisabled })
+                    ? renderItem(item, {
+                        highlighted,
+                        selected,
+                        disabled: itemDisabled
+                      })
                     : itemToString(item)}
                 </li>
               );

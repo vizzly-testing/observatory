@@ -8,7 +8,7 @@
 import { useEffect, useState } from 'react';
 
 export function Tabs({ tabs = [], defaultTab, onChange, variant = 'default', className = '' }) {
-  let [activeTab, setActiveTab] = useState(defaultTab || tabs[0]?.id);
+  const [activeTab, setActiveTab] = useState(defaultTab || tabs[0]?.id);
 
   // Sync internal state with external defaultTab prop (controlled component pattern)
   useEffect(() => {
@@ -17,12 +17,12 @@ export function Tabs({ tabs = [], defaultTab, onChange, variant = 'default', cla
     }
   }, [defaultTab]);
 
-  let handleTabChange = (tabId) => {
+  const handleTabChange = (tabId) => {
     setActiveTab(tabId);
     onChange?.(tabId);
   };
 
-  let variantClasses = {
+  const variantClasses = {
     default: {
       container: 'border-b border-slate-700/50',
       tab: 'px-4 py-3 text-sm font-medium transition-colors relative',
@@ -47,7 +47,7 @@ export function Tabs({ tabs = [], defaultTab, onChange, variant = 'default', cla
     }
   };
 
-  let styles = variantClasses[variant];
+  const styles = variantClasses[variant];
 
   return (
     <div className={className} data-testid="tabs">

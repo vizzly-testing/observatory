@@ -13,8 +13,8 @@ import { useEffect, useRef, useState } from 'react';
  * Individual Thumbnail
  */
 function Thumbnail({ src, alt, label, isActive, onClick, badge, statusIcon, activeRef }) {
-  let [loaded, setLoaded] = useState(false);
-  let [error, setError] = useState(false);
+  const [loaded, setLoaded] = useState(false);
+  const [error, setError] = useState(false);
 
   return (
     <button
@@ -95,18 +95,18 @@ export function ThumbnailStrip({
   navigationHint = 'Use ← → to navigate',
   className = ''
 }) {
-  let stripRef = useRef(null);
-  let activeRef = useRef(null);
+  const stripRef = useRef(null);
+  const activeRef = useRef(null);
 
   // Find active index
-  let activeIndex = items.findIndex((item) => item.id === activeId);
+  const activeIndex = items.findIndex((item) => item.id === activeId);
 
   // Scroll active thumbnail into view
   useEffect(() => {
     if (activeRef.current && stripRef.current) {
-      let container = stripRef.current;
-      let thumb = activeRef.current;
-      let scrollLeft = thumb.offsetLeft - container.offsetWidth / 2 + thumb.offsetWidth / 2;
+      const container = stripRef.current;
+      const thumb = activeRef.current;
+      const scrollLeft = thumb.offsetLeft - container.offsetWidth / 2 + thumb.offsetWidth / 2;
       container.scrollTo({ left: scrollLeft, behavior: 'smooth' });
     }
   }, [activeId]);

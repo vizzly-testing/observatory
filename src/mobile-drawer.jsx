@@ -21,7 +21,7 @@ import { XMarkIcon } from '@heroicons/react/24/outline';
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 
 // Global escape key handler - single listener for all drawers
-let escapeCallbacks = new Set();
+const escapeCallbacks = new Set();
 
 function registerEscapeHandler(callback) {
   if (escapeCallbacks.size === 0) {
@@ -39,36 +39,51 @@ function registerEscapeHandler(callback) {
 function globalEscapeHandler(e) {
   if (e.key === 'Escape') {
     // Call the most recently registered callback (top-most drawer)
-    let callbacks = Array.from(escapeCallbacks);
-    let lastCallback = callbacks[callbacks.length - 1];
+    const callbacks = Array.from(escapeCallbacks);
+    const lastCallback = callbacks[callbacks.length - 1];
     lastCallback?.();
   }
 }
 
-// Map width values to responsive desktop-only widths for bottom sheets
-let desktopWidthMap = {
-  'w-64': 'sm:w-64',
-  'w-72': 'sm:w-72',
-  'w-80': 'sm:w-80',
-  'w-96': 'sm:w-96'
+/*
+ * Tailwind Safelist - these classes are used dynamically and must be scanned.
+ * DO NOT REMOVE - Tailwind's scanner reads this comment block.
+ *
+ * Display: flex hidden sm:flex sm:hidden
+ * Position: fixed relative sm:relative z-50 sm:z-auto
+ * Inset: inset-x-0 inset-y-0 bottom-0 left-0 right-0 sm:inset-auto
+ * Width: w-64 w-72 w-80 w-96 sm:w-64 sm:w-72 sm:w-80 sm:w-96 w-[85vw] max-w-xs
+ * Border: border-t border-l border-r sm:border-t-0 sm:border-b-0 sm:border-l sm:border-r
+ * Border color: border-slate-800/60 sm:border-slate-800/50
+ * Radius: rounded-t-xl sm:rounded-none
+ * Shadow: shadow-2xl shadow-black/50 sm:shadow-none
+ * Animation: animate-in fade-in slide-in-from-bottom slide-in-from-left slide-in-from-right sm:animate-none duration-150 duration-200
+ */
+
+// Width classes - complete strings for Tailwind scanning
+const widthClasses = {
+  'w-64': { mobile: 'w-64', desktop: 'sm:w-64' },
+  'w-72': { mobile: 'w-72', desktop: 'sm:w-72' },
+  'w-80': { mobile: 'w-80', desktop: 'sm:w-80' },
+  'w-96': { mobile: 'w-96', desktop: 'sm:w-96' }
 };
 
 // Position classes for mobile
-let mobilePositionClasses = {
+const mobilePositionClasses = {
   bottom: 'inset-x-0 bottom-0 rounded-t-xl',
   left: 'inset-y-0 left-0 w-[85vw] max-w-xs',
   right: 'inset-y-0 right-0 w-[85vw] max-w-xs'
 };
 
 // Border classes by position
-let borderClasses = {
+const borderClasses = {
   bottom: 'border-t',
   left: 'border-r',
   right: 'border-l'
 };
 
 // Animation classes by position
-let animationClasses = {
+const animationClasses = {
   bottom: 'animate-in slide-in-from-bottom duration-200',
   left: 'animate-in slide-in-from-left duration-200',
   right: 'animate-in slide-in-from-right duration-200'
@@ -103,21 +118,21 @@ export function MobileDrawer({
   className = '',
   testId
 }) {
-  let drawerRef = useRef(null);
-  let desktopWidth = desktopWidthMap[width] || 'sm:w-72';
-  let [isExpanded, setIsExpanded] = useState(false);
+  const drawerRef = useRef(null);
+  const widthConfig = widthClasses[width] || widthClasses['w-72'];
+  const [isExpanded, setIsExpanded] = useState(false);
 
   // Reset expanded state when drawer closes
   useEffect(() => {
     if (!isOpen) setIsExpanded(false);
   }, [isOpen]);
 
-  let handleToggleExpand = useCallback(() => {
+  const handleToggleExpand = useCallback(() => {
     setIsExpanded((prev) => !prev);
   }, []);
 
   // Current height based on expand state (as raw value for inline style)
-  let currentHeight = isExpanded ? expandedHeight : mobileHeight;
+  const currentHeight = isExpanded ? expandedHeight : mobileHeight;
 
   // Close on escape - uses global handler to avoid multiple listeners
   useEffect(() => {
@@ -126,7 +141,7 @@ export function MobileDrawer({
   }, [isOpen, onClose]);
 
   // Handle click outside on mobile
-  let handleBackdropClick = useCallback(
+  const handleBackdropClick = useCallback(
     (e) => {
       if (e.target === e.currentTarget) {
         onClose?.();
@@ -136,7 +151,7 @@ export function MobileDrawer({
   );
 
   // Desktop border direction
-  let desktopBorderClass = desktopPosition === 'left' ? 'sm:border-r' : 'sm:border-l';
+  const desktopBorderClass = desktopPosition === 'left' ? 'sm:border-r' : 'sm:border-l';
 
   // If desktopPosition is 'none', only render on mobile when open
   if (desktopPosition === 'none') {
@@ -172,7 +187,10 @@ export function MobileDrawer({
         >
           {React.Children.map(children, (child) =>
             React.isValidElement(child)
-              ? React.cloneElement(child, { isExpanded, onToggleExpand: handleToggleExpand })
+              ? React.cloneElement(child, {
+                  isExpanded,
+                  onToggleExpand: handleToggleExpand
+                })
               : child
           )}
         </aside>
@@ -204,7 +222,7 @@ export function MobileDrawer({
           fixed z-50 sm:relative sm:z-auto
           ${mobilePositionClasses[position]} sm:inset-auto
           ${position === 'bottom' ? 'mobile-drawer-height' : 'h-full'}
-          ${position === 'bottom' ? desktopWidth : width}
+          ${position === 'bottom' ? widthConfig.desktop : width}
 
           bg-slate-900
           ${borderClasses[position]} sm:border-t-0 sm:border-b-0 ${desktopBorderClass}
@@ -224,7 +242,10 @@ export function MobileDrawer({
       >
         {React.Children.map(children, (child) =>
           React.isValidElement(child)
-            ? React.cloneElement(child, { isExpanded, onToggleExpand: handleToggleExpand })
+            ? React.cloneElement(child, {
+                isExpanded,
+                onToggleExpand: handleToggleExpand
+              })
             : child
         )}
       </aside>

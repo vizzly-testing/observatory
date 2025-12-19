@@ -15,13 +15,13 @@ export function Input({
   value,
   ...props
 }) {
-  let sizeClasses = {
+  const sizeClasses = {
     sm: 'h-8 text-sm px-3',
     md: 'h-10 text-sm px-4',
     lg: 'h-12 text-base px-4'
   };
 
-  let inputClasses = [
+  const inputClasses = [
     'w-full bg-white/[0.03] border rounded-lg text-white placeholder-slate-500 transition-all duration-150',
     'focus:outline-none focus:border-amber-500/50 focus:ring-2 focus:ring-amber-500/20',
     'hover:border-slate-600',
@@ -57,7 +57,7 @@ export function Input({
 }
 
 export function Textarea({ label, hint, error, className = '', rows = 4, value, ...props }) {
-  let textareaClasses = [
+  const textareaClasses = [
     'w-full bg-white/[0.03] border rounded-lg text-white placeholder-slate-500 transition-all duration-150 p-4 text-sm',
     'focus:outline-none focus:border-amber-500/50 focus:ring-2 focus:ring-amber-500/20',
     'hover:border-slate-600 resize-y min-h-[100px]',
@@ -93,13 +93,13 @@ export function Select({
   className = '',
   ...props
 }) {
-  let sizeClasses = {
+  const sizeClasses = {
     sm: 'h-8 text-sm px-3',
     md: 'h-10 text-sm px-4',
     lg: 'h-12 text-base px-4'
   };
 
-  let selectClasses = [
+  const selectClasses = [
     'w-full bg-white/[0.03] border rounded-lg text-white transition-all duration-150 appearance-none cursor-pointer',
     'focus:outline-none focus:border-amber-500/50 focus:ring-2 focus:ring-amber-500/20',
     'hover:border-slate-600',
@@ -210,13 +210,17 @@ export function Toggle({
   className = '',
   ...props
 }) {
-  let sizes = {
-    sm: { track: 'w-8 h-5', thumb: 'w-3.5 h-3.5', translate: 'translate-x-3.5' },
+  const sizes = {
+    sm: {
+      track: 'w-8 h-5',
+      thumb: 'w-3.5 h-3.5',
+      translate: 'translate-x-3.5'
+    },
     md: { track: 'w-11 h-6', thumb: 'w-4 h-4', translate: 'translate-x-5' },
     lg: { track: 'w-14 h-7', thumb: 'w-5 h-5', translate: 'translate-x-7' }
   };
 
-  let { track, thumb, translate } = sizes[size];
+  const { track, thumb, translate } = sizes[size];
 
   return (
     <label

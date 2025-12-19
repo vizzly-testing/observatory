@@ -18,7 +18,7 @@ import {
 } from '@heroicons/react/24/outline';
 import { createPortal } from 'react-dom';
 
-let variantConfig = {
+const variantConfig = {
   success: {
     icon: CheckCircleIcon,
     classes: 'bg-emerald-900/90 border-emerald-500/30 text-emerald-100',
@@ -52,10 +52,10 @@ export function Toast({
 }) {
   if (!isVisible || !message) return null;
 
-  let config = variantConfig[variant] || variantConfig.info;
-  let Icon = config.icon;
+  const config = variantConfig[variant] || variantConfig.info;
+  const Icon = config.icon;
 
-  let positionClasses = {
+  const positionClasses = {
     top: 'top-4 left-1/2 -translate-x-1/2',
     'top-right': 'top-4 right-4',
     'top-left': 'top-4 left-4',
@@ -64,7 +64,7 @@ export function Toast({
     'bottom-left': 'bottom-4 left-4'
   };
 
-  let toast = (
+  const toast = (
     <div
       className={`fixed z-50 ${positionClasses[position]} animate-in fade-in slide-in-from-top-2 duration-200`}
       role="alert"
@@ -101,7 +101,7 @@ export function Toast({
 export function ToastContainer({ toasts = [], onDismiss, position = 'top-right' }) {
   if (toasts.length === 0) return null;
 
-  let positionClasses = {
+  const positionClasses = {
     top: 'top-4 left-1/2 -translate-x-1/2 items-center',
     'top-right': 'top-4 right-4 items-end',
     'top-left': 'top-4 left-4 items-start',
@@ -113,8 +113,8 @@ export function ToastContainer({ toasts = [], onDismiss, position = 'top-right' 
   return createPortal(
     <div className={`fixed z-50 flex flex-col gap-2 ${positionClasses[position]}`}>
       {toasts.map((toast) => {
-        let config = variantConfig[toast.variant] || variantConfig.info;
-        let Icon = config.icon;
+        const config = variantConfig[toast.variant] || variantConfig.info;
+        const Icon = config.icon;
 
         return (
           <div

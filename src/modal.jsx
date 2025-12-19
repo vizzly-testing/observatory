@@ -31,7 +31,7 @@ export function Modal({
   }, [isOpen]);
 
   useEffect(() => {
-    let handleEscape = (e) => {
+    const handleEscape = (e) => {
       if (e.key === 'Escape' && isOpen) {
         onClose();
       }
@@ -42,7 +42,7 @@ export function Modal({
 
   if (!isOpen) return null;
 
-  let sizeClasses = {
+  const sizeClasses = {
     sm: 'max-w-sm',
     md: 'max-w-lg',
     lg: 'max-w-2xl',

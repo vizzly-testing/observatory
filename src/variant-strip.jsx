@@ -29,28 +29,28 @@ import { getScreenshotMetadata } from './screenshot-metadata.js';
 /**
  * Default dimensions that are always considered
  */
-let DEFAULT_DIMENSIONS = ['viewport', 'browser'];
+const DEFAULT_DIMENSIONS = ['viewport', 'browser'];
 
 /**
  * Dimension configuration with icons and formatting
  */
-let dimensionConfig = {
+const dimensionConfig = {
   viewport: {
     label: 'Size',
     icon: ComputerDesktopIcon,
     getValue: (comparison) => {
-      let w = comparison.viewport_width || comparison.width;
-      let h = comparison.viewport_height || comparison.height;
+      const w = comparison.viewport_width || comparison.width;
+      const h = comparison.viewport_height || comparison.height;
       return w && h ? `${w}x${h}` : null;
     },
     formatValue: (value) => value?.replace('x', '×'),
     sortValues: (a, b) => {
-      let [aW, aH] = (a || '0x0').split('x').map(Number);
-      let [bW, bH] = (b || '0x0').split('x').map(Number);
+      const [aW, aH] = (a || '0x0').split('x').map(Number);
+      const [bW, bH] = (b || '0x0').split('x').map(Number);
       return bW * bH - aW * aH; // Largest first
     },
     renderIcon: (value) => {
-      let width = parseInt(value?.split('x')[0], 10) || 0;
+      const width = parseInt(value?.split('x')[0], 10) || 0;
       if (width <= 480) {
         return <DevicePhoneMobileIcon className="w-3.5 h-3.5" />;
       } else if (width <= 1024) {
@@ -64,7 +64,7 @@ let dimensionConfig = {
     label: 'Browser',
     icon: GlobeAltIcon,
     getValue: (comparison) => {
-      let metadata = getScreenshotMetadata(comparison);
+      const metadata = getScreenshotMetadata(comparison);
       return metadata.browser || comparison.browser || null;
     },
     formatValue: (value) => value?.charAt(0).toUpperCase() + value?.slice(1),
@@ -75,7 +75,7 @@ let dimensionConfig = {
     label: 'Theme',
     icon: MoonIcon,
     getValue: (comparison) => {
-      let metadata = getScreenshotMetadata(comparison);
+      const metadata = getScreenshotMetadata(comparison);
       return metadata.theme || null;
     },
     formatValue: (value) => value?.charAt(0).toUpperCase() + value?.slice(1),
@@ -95,7 +95,7 @@ let dimensionConfig = {
     label: 'Device',
     icon: DevicePhoneMobileIcon,
     getValue: (comparison) => {
-      let metadata = getScreenshotMetadata(comparison);
+      const metadata = getScreenshotMetadata(comparison);
       return metadata.device || null;
     },
     formatValue: (value) => value,
@@ -105,7 +105,7 @@ let dimensionConfig = {
     label: 'Locale',
     icon: LanguageIcon,
     getValue: (comparison) => {
-      let metadata = getScreenshotMetadata(comparison);
+      const metadata = getScreenshotMetadata(comparison);
       return metadata.locale || null;
     },
     formatValue: (value) => value?.toUpperCase(),
@@ -115,7 +115,7 @@ let dimensionConfig = {
     label: 'Orientation',
     icon: DevicePhoneMobileIcon,
     getValue: (comparison) => {
-      let metadata = getScreenshotMetadata(comparison);
+      const metadata = getScreenshotMetadata(comparison);
       return metadata.orientation || null;
     },
     formatValue: (value) => value?.charAt(0).toUpperCase() + value?.slice(1),
@@ -127,12 +127,12 @@ let dimensionConfig = {
  * Get dimension value using config
  */
 function getDimensionValue(comparison, dimension) {
-  let config = dimensionConfig[dimension];
+  const config = dimensionConfig[dimension];
   if (config) {
     return config.getValue(comparison);
   }
   // Fallback for custom dimensions
-  let metadata = getScreenshotMetadata(comparison);
+  const metadata = getScreenshotMetadata(comparison);
   return metadata[dimension] || comparison[dimension] || null;
 }
 
@@ -149,7 +149,7 @@ function getDimensionLabel(dimension) {
  * Format dimension value for display
  */
 function formatDimensionValue(dimension, value) {
-  let config = dimensionConfig[dimension];
+  const config = dimensionConfig[dimension];
   if (config?.formatValue) {
     return config.formatValue(value);
   }
@@ -160,7 +160,7 @@ function formatDimensionValue(dimension, value) {
  * Sort dimension values
  */
 function sortDimensionValues(dimension, values) {
-  let config = dimensionConfig[dimension];
+  const config = dimensionConfig[dimension];
   if (config?.sortValues) {
     return [...values].sort(config.sortValues);
   }
@@ -172,10 +172,10 @@ function sortDimensionValues(dimension, values) {
  */
 function VariantButton({ value, displayValue, dimension, isSelected, onClick, compact = false }) {
   // Get dimension-specific icon renderer
-  let dimConfig = dimensionConfig[dimension];
+  const dimConfig = dimensionConfig[dimension];
 
   // Size classes based on compact mode
-  let sizeClasses = compact ? 'px-2.5 py-1 text-xs gap-1.5' : 'px-3 py-1.5 text-sm gap-2';
+  const sizeClasses = compact ? 'px-2.5 py-1 text-xs gap-1.5' : 'px-3 py-1.5 text-sm gap-2';
 
   return (
     <button
@@ -244,8 +244,8 @@ function findBestMatch(variants, changeDim, newValue, currentVariant, allDimensi
     let score = 0;
     allDimensions.forEach((dim) => {
       if (dim === changeDim) return;
-      let currentVal = currentVariant ? getDimensionValue(currentVariant, dim) : null;
-      let variantVal = getDimensionValue(variant, dim);
+      const currentVal = currentVariant ? getDimensionValue(currentVariant, dim) : null;
+      const variantVal = getDimensionValue(variant, dim);
       if (currentVal === variantVal) {
         score++;
       }
@@ -292,9 +292,9 @@ export function VariantStrip({
   showLabels = true
 }) {
   // Build effective dimensions list
-  let effectiveDimensions = useMemo(() => {
+  const effectiveDimensions = useMemo(() => {
     // Start with explicit dimensions or defaults
-    let dims = dimensions || [...DEFAULT_DIMENSIONS];
+    const dims = dimensions || [...DEFAULT_DIMENSIONS];
 
     // Add any baseline signature properties that aren't already included
     baselineSignatureProperties.forEach((prop) => {
@@ -307,16 +307,16 @@ export function VariantStrip({
   }, [dimensions, baselineSignatureProperties]);
 
   // Analyze variants and group by dimension
-  let dimensionAnalysis = useMemo(() => {
+  const dimensionAnalysis = useMemo(() => {
     if (!variants || variants.length <= 1) return {};
 
-    let analysis = {};
+    const analysis = {};
 
     effectiveDimensions.forEach((dim) => {
-      let valueSet = new Set();
+      const valueSet = new Set();
 
       variants.forEach((variant) => {
-        let value = getDimensionValue(variant, dim);
+        const value = getDimensionValue(variant, dim);
         if (value != null) {
           valueSet.add(value);
         }
@@ -324,7 +324,7 @@ export function VariantStrip({
 
       // Only include dimensions with 2+ unique values
       if (valueSet.size > 1) {
-        let sortedValues = sortDimensionValues(dim, Array.from(valueSet));
+        const sortedValues = sortDimensionValues(dim, Array.from(valueSet));
         analysis[dim] = {
           label: getDimensionLabel(dim),
           values: sortedValues
@@ -335,7 +335,7 @@ export function VariantStrip({
     return analysis;
   }, [variants, effectiveDimensions]);
 
-  let activeDimensions = Object.keys(dimensionAnalysis);
+  const activeDimensions = Object.keys(dimensionAnalysis);
 
   // If no variants or only one dimension value across all, don't render
   if (variants.length <= 1 || activeDimensions.length === 0) {
@@ -343,13 +343,13 @@ export function VariantStrip({
   }
 
   // Find current variant
-  let currentVariant = variants.find((v) => v.id === currentVariantId);
+  const currentVariant = variants.find((v) => v.id === currentVariantId);
 
   return (
     <div className={`flex items-center ${compact ? 'gap-4' : 'gap-5'} flex-wrap ${className}`}>
       {activeDimensions.map((dim) => {
-        let { label, values } = dimensionAnalysis[dim];
-        let currentDimValue = currentVariant ? getDimensionValue(currentVariant, dim) : null;
+        const { label, values } = dimensionAnalysis[dim];
+        const currentDimValue = currentVariant ? getDimensionValue(currentVariant, dim) : null;
 
         return (
           <DimensionGroup key={dim} label={showLabels ? label : ''} compact={compact}>
@@ -362,7 +362,7 @@ export function VariantStrip({
                 isSelected={value === currentDimValue}
                 compact={compact}
                 onClick={() => {
-                  let target = findBestMatch(
+                  const target = findBestMatch(
                     variants,
                     dim,
                     value,

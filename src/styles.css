@@ -12,75 +12,160 @@
  */
 
 :root {
-  /* Core palette - Dark theme */
-  --vz-bg: #0f172a;
-  --vz-surface: #1a2332;
-  --vz-elevated: #1e293b;
-  --vz-border: #374151;
-  --vz-border-subtle: #2d3748;
+	/* Core palette - Dark theme */
+	--vz-bg: #0f172a;
+	--vz-surface: #1a2332;
+	--vz-elevated: #1e293b;
+	--vz-border: #374151;
+	--vz-border-subtle: #2d3748;
 
-  /* Accent colors */
-  --accent-success: #10b981;
-  --accent-success-muted: #132a23;
-  --accent-warning: #f59e0b;
-  --accent-warning-muted: #2a2317;
-  --accent-danger: #ef4444;
-  --accent-danger-muted: #2a1717;
-  --accent-info: #3b82f6;
-  --accent-info-muted: #172033;
+	/* Accent colors */
+	--accent-success: #10b981;
+	--accent-success-muted: #132a23;
+	--accent-warning: #f59e0b;
+	--accent-warning-muted: #2a2317;
+	--accent-danger: #ef4444;
+	--accent-danger-muted: #2a1717;
+	--accent-info: #3b82f6;
+	--accent-info-muted: #172033;
 
-  /* Text hierarchy */
-  --text-primary: #ffffff;
-  --text-secondary: #9ca3af;
-  --text-tertiary: #6b7280;
-  --text-muted: #4b5563;
+	/* Text hierarchy */
+	--text-primary: #ffffff;
+	--text-secondary: #9ca3af;
+	--text-tertiary: #6b7280;
+	--text-muted: #4b5563;
 
-  /* Component-specific tokens */
-  --ring-size: 120px;
-  --ring-stroke: 8px;
+	/* Component-specific tokens */
+	--ring-size: 120px;
+	--ring-stroke: 8px;
 }
 
 /* Skeleton loading shimmer animation */
 @keyframes shimmer {
-  0% {
-    background-position: -200% 0;
-  }
-  100% {
-    background-position: 200% 0;
-  }
+	0% {
+		background-position: -200% 0;
+	}
+	100% {
+		background-position: 200% 0;
+	}
 }
 
 /* Pulse animation for status indicators */
 @keyframes pulse {
-  0%,
-  100% {
-    opacity: 1;
-  }
-  50% {
-    opacity: 0.5;
-  }
+	0%,
+	100% {
+		opacity: 1;
+	}
+	50% {
+		opacity: 0.5;
+	}
 }
 
 /* Custom scrollbar styles */
 .scrollbar-thin {
-  scrollbar-width: thin;
-  scrollbar-color: rgba(75, 85, 99, 0.5) transparent;
+	scrollbar-width: thin;
+	scrollbar-color: rgba(75, 85, 99, 0.5) transparent;
 }
 
 .scrollbar-thin::-webkit-scrollbar {
-  width: 6px;
-  height: 6px;
+	width: 6px;
+	height: 6px;
 }
 
 .scrollbar-thin::-webkit-scrollbar-track {
-  background: transparent;
+	background: transparent;
 }
 
 .scrollbar-thin::-webkit-scrollbar-thumb {
-  background: rgba(75, 85, 99, 0.5);
-  border-radius: 3px;
+	background: rgba(75, 85, 99, 0.5);
+	border-radius: 3px;
 }
 
 .scrollbar-thin::-webkit-scrollbar-thumb:hover {
-  background: rgba(107, 114, 128, 0.7);
+	background: rgba(107, 114, 128, 0.7);
+}
+
+/* Mobile drawer height utility - overrides inline height on desktop */
+.mobile-drawer-height {
+	height: var(--mobile-height);
+}
+
+@media (min-width: 640px) {
+	.mobile-drawer-height {
+		height: 100% !important;
+	}
+}
+
+/* Animation utilities */
+@keyframes fade-in {
+	from {
+		opacity: 0;
+	}
+	to {
+		opacity: 1;
+	}
+}
+
+@keyframes slide-in-from-bottom {
+	from {
+		transform: translateY(100%);
+	}
+	to {
+		transform: translateY(0);
+	}
+}
+
+@keyframes slide-in-from-left {
+	from {
+		transform: translateX(-100%);
+	}
+	to {
+		transform: translateX(0);
+	}
+}
+
+@keyframes slide-in-from-right {
+	from {
+		transform: translateX(100%);
+	}
+	to {
+		transform: translateX(0);
+	}
+}
+
+.animate-in {
+	animation-duration: 200ms;
+	animation-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+	animation-fill-mode: both;
+}
+
+.fade-in {
+	animation-name: fade-in;
+}
+
+.slide-in-from-bottom {
+	animation-name: slide-in-from-bottom;
+}
+
+.slide-in-from-left {
+	animation-name: slide-in-from-left;
+}
+
+.slide-in-from-right {
+	animation-name: slide-in-from-right;
+}
+
+.duration-150 {
+	animation-duration: 150ms;
+}
+
+.duration-200 {
+	animation-duration: 200ms;
+}
+
+/* Disable animations on desktop for drawer components */
+@media (min-width: 640px) {
+	.sm\:animate-none {
+		animation: none !important;
+	}
 }

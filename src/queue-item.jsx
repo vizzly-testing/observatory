@@ -15,41 +15,53 @@ import { useState } from 'react';
  */
 function getChangeDescription(item) {
   // Cloud format: analysis_metadata with cluster_analysis and hot_spot_coverage
-  let analysisMetadata = item.analysis_metadata || {};
-  let clusterAnalysis = analysisMetadata.cluster_analysis || {};
+  const analysisMetadata = item.analysis_metadata || {};
+  const clusterAnalysis = analysisMetadata.cluster_analysis || {};
 
   // CLI format: diffClusters array directly on item
-  let diffClusters = item.diffClusters || [];
+  const diffClusters = item.diffClusters || [];
 
   // Get diff percentage for detail (supports both formats)
-  let diffPct = item.diff_percentage ?? item.diffPercentage;
-  let pctDetail = diffPct != null ? `${Number(diffPct).toFixed(1)}%` : null;
+  const diffPct = item.diff_percentage ?? item.diffPercentage;
+  const pctDetail = diffPct != null ? `${Number(diffPct).toFixed(1)}%` : null;
 
   // Get cluster count (supports both formats)
-  let clusterCount = clusterAnalysis.clusterCount ?? (diffClusters.length || null);
+  const clusterCount = clusterAnalysis.clusterCount ?? (diffClusters.length || null);
 
   // Check for auto-approved dynamic content (only if actually auto-approved)
   // The auto_approval_reason indicates WHY it was auto-approved
-  let isAutoApproved = item.approval_status === 'auto_approved';
-  let autoApprovalReason = analysisMetadata.auto_approval_reason;
+  const isAutoApproved = item.approval_status === 'auto_approved';
+  const autoApprovalReason = analysisMetadata.auto_approval_reason;
 
   if (isAutoApproved && autoApprovalReason) {
-    return { label: 'Auto-approved', detail: pctDetail, color: 'text-purple-400/80' };
+    return {
+      label: 'Auto-approved',
+      detail: pctDetail,
+      color: 'text-purple-400/80'
+    };
   }
 
   // Use cluster classification if available (cloud format)
-  let classification = clusterAnalysis.classification;
+  const classification = clusterAnalysis.classification;
   if (classification) {
-    let detail = clusterCount ? `${clusterCount} regions` : pctDetail;
+    const detail = clusterCount ? `${clusterCount} regions` : pctDetail;
     switch (classification) {
       case 'dynamic_content':
-        return { label: 'Dynamic content', detail, color: 'text-purple-400/80' };
+        return {
+          label: 'Dynamic content',
+          detail,
+          color: 'text-purple-400/80'
+        };
       case 'major_structural':
         return { label: 'Major structural', detail, color: 'text-red-400/80' };
       case 'major':
         return { label: 'Major changes', detail, color: 'text-orange-400/80' };
       case 'moderate':
-        return { label: 'Moderate changes', detail, color: 'text-amber-400/80' };
+        return {
+          label: 'Moderate changes',
+          detail,
+          color: 'text-amber-400/80'
+        };
       case 'minor':
         return { label: 'Minor changes', detail, color: 'text-amber-400/80' };
     }
@@ -57,14 +69,14 @@ function getChangeDescription(item) {
 
   // Use cluster count for description
   if (clusterCount > 0) {
-    let label = clusterCount === 1 ? '1 region' : `${clusterCount} regions`;
+    const label = clusterCount === 1 ? '1 region' : `${clusterCount} regions`;
     return { label, detail: pctDetail, color: 'text-amber-400/80' };
   }
 
   // Fallback to diff percentage with better formatting
   // Thresholds: <1% tiny, <5% small, <15% moderate, <30% significant, ≥30% large
   if (diffPct != null) {
-    let pct = Number(diffPct);
+    const pct = Number(diffPct);
     let label;
     let color;
     if (pct < 1) {
@@ -103,20 +115,22 @@ function getChangeDescription(item) {
  * @param {function} onClick - Click handler
  */
 export function QueueItem({ item, isActive, thumbnailUrl, onClick }) {
-  let [imageLoaded, setImageLoaded] = useState(false);
+  const [imageLoaded, setImageLoaded] = useState(false);
 
   // Support both cloud format (result) and CLI format (status)
-  let hasChanges = item.result === 'changed' || item.status === 'failed';
-  let isNew = item.result === 'new' || item.status === 'new' || item.status === 'baseline-created';
-  let isApproved = item.approval_status === 'approved' || item.approval_status === 'auto_approved';
-  let isRejected = item.approval_status === 'rejected';
-  let isFlaky = item.is_flaky;
-  let needsReview = (hasChanges || isNew) && !isApproved && !isRejected;
+  const hasChanges = item.result === 'changed' || item.status === 'failed';
+  const isNew =
+    item.result === 'new' || item.status === 'new' || item.status === 'baseline-created';
+  const isApproved =
+    item.approval_status === 'approved' || item.approval_status === 'auto_approved';
+  const isRejected = item.approval_status === 'rejected';
+  const isFlaky = item.is_flaky;
+  const needsReview = (hasChanges || isNew) && !isApproved && !isRejected;
 
-  let changeDescription = hasChanges ? getChangeDescription(item) : null;
+  const changeDescription = hasChanges ? getChangeDescription(item) : null;
 
   // Determine highlight color based on status
-  let getHighlightClasses = () => {
+  const getHighlightClasses = () => {
     if (!isActive) return 'hover:bg-slate-800/60 active:bg-slate-800/80';
     if (isRejected) return 'bg-red-500/15 ring-1 ring-red-500/40';
     if (isApproved) return 'bg-emerald-500/15 ring-1 ring-emerald-500/40';
@@ -125,7 +139,7 @@ export function QueueItem({ item, isActive, thumbnailUrl, onClick }) {
   };
 
   // Determine active indicator color
-  let getIndicatorColor = () => {
+  const getIndicatorColor = () => {
     if (isRejected) return 'bg-red-500';
     if (isApproved) return 'bg-emerald-500';
     if (isFlaky) return 'bg-purple-500';
@@ -133,7 +147,7 @@ export function QueueItem({ item, isActive, thumbnailUrl, onClick }) {
   };
 
   // Determine title text color when active
-  let getTitleColor = () => {
+  const getTitleColor = () => {
     if (!isActive) return 'text-slate-300';
     if (isRejected) return 'text-red-300 font-medium';
     if (isApproved) return 'text-emerald-300 font-medium';

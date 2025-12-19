@@ -37,7 +37,7 @@ export function getScreenshotMetadata(screenshot) {
     return {};
   }
 
-  let metadata = {
+  const metadata = {
     // Core browser/device info
     browser: null,
     device: null,
@@ -67,9 +67,9 @@ export function getScreenshotMetadata(screenshot) {
     metadata.viewport = `${screenshot.width}x${screenshot.height}`;
   } else if (screenshot.metadata?.viewport) {
     metadata.viewport = screenshot.metadata.viewport;
-    let parts = screenshot.metadata.viewport.split('x');
+    const parts = screenshot.metadata.viewport.split('x');
     if (parts.length === 2) {
-      let [width, height] = parts.map(Number);
+      const [width, height] = parts.map(Number);
       if (!isNaN(width) && !isNaN(height)) {
         metadata.viewportWidth = width;
         metadata.viewportHeight = height;
@@ -123,7 +123,7 @@ export function getScreenshotMetadata(screenshot) {
  * @returns {string|null} Formatted viewport string like "1280×720"
  */
 export function getViewportDisplay(screenshot) {
-  let metadata = getScreenshotMetadata(screenshot);
+  const metadata = getScreenshotMetadata(screenshot);
 
   if (metadata.viewport) {
     return metadata.viewport.replace('x', '×');
@@ -144,11 +144,11 @@ export function getViewportDisplay(screenshot) {
  * @returns {Array} Sorted array of unique values
  */
 export function getUniquePropertyValues(screenshots, propertyKey) {
-  let values = new Set();
+  const values = new Set();
 
   screenshots.forEach((screenshot) => {
-    let metadata = getScreenshotMetadata(screenshot);
-    let value = metadata[propertyKey];
+    const metadata = getScreenshotMetadata(screenshot);
+    const value = metadata[propertyKey];
     if (value != null && value !== '') {
       values.add(String(value));
     }

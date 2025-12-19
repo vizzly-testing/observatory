@@ -35,8 +35,8 @@ export function TableToolbar({
 
   children
 }) {
-  let [openDropdown, setOpenDropdown] = useState(null);
-  let dropdownRef = useRef(null);
+  const [openDropdown, setOpenDropdown] = useState(null);
+  const dropdownRef = useRef(null);
 
   // Close dropdown when clicking outside
   useEffect(() => {
@@ -49,17 +49,17 @@ export function TableToolbar({
     return () => document.removeEventListener('mousedown', handleClickOutside);
   }, []);
 
-  let activeFilterCount =
+  const activeFilterCount =
     (searchTerm ? 1 : 0) + activeFilters.size + dropdownFilters.filter((d) => d.value).length;
 
-  let hasActiveFilters = activeFilterCount > 0;
+  const hasActiveFilters = activeFilterCount > 0;
 
-  let handleClearAll = useCallback(() => {
+  const handleClearAll = useCallback(() => {
     onClearAll?.();
   }, [onClearAll]);
 
   // Render filter pills for a group
-  let renderFilterPills = (filters) =>
+  const renderFilterPills = (filters) =>
     filters.map((filter) => (
       <FilterPill
         key={filter.key}
@@ -73,9 +73,9 @@ export function TableToolbar({
     ));
 
   // Render dropdown filter
-  let renderDropdownFilter = (dropdown) => {
-    let isOpen = openDropdown === dropdown.key;
-    let hasValue = !!dropdown.value;
+  const renderDropdownFilter = (dropdown) => {
+    const isOpen = openDropdown === dropdown.key;
+    const hasValue = !!dropdown.value;
 
     return (
       <div key={dropdown.key} className="relative" ref={isOpen ? dropdownRef : null}>

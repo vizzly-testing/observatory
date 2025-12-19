@@ -3,7 +3,7 @@
  * Used in table toolbars for status filtering
  */
 
-let colorClasses = {
+const colorClasses = {
   amber: {
     active: 'bg-amber-500/20 text-amber-300 border-amber-500/40',
     inactive: 'text-amber-400/70 border-transparent hover:border-amber-500/30 hover:bg-amber-500/10'
@@ -55,8 +55,8 @@ export function FilterPill({
   icon: Icon,
   className = ''
 }) {
-  let colors = colorClasses[color] || colorClasses.gray;
-  let stateClass = active ? colors.active : colors.inactive;
+  const colors = colorClasses[color] || colorClasses.gray;
+  const stateClass = active ? colors.active : colors.inactive;
 
   return (
     <button

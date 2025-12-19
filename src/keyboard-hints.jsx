@@ -18,7 +18,7 @@ import { useEffect, useState } from 'react';
  * Individual keyboard shortcut hint
  */
 export function KeyboardHint({ keyLabel, action, variant = 'default', className = '' }) {
-  let variants = {
+  const variants = {
     default: {
       key: 'bg-slate-700/80 border-slate-600/50 text-slate-300',
       action: 'text-slate-500'
@@ -37,7 +37,7 @@ export function KeyboardHint({ keyLabel, action, variant = 'default', className 
     }
   };
 
-  let config = variants[variant] || variants.default;
+  const config = variants[variant] || variants.default;
 
   return (
     <span className={`inline-flex items-center gap-1 ${className}`}>
@@ -144,11 +144,11 @@ export function KeyboardBar({ shortcuts = [], visible = true, className = '' }) 
  * Shows hints when user starts using keyboard, hides after mouse use
  */
 export function useKeyboardHintsVisibility(defaultVisible = true) {
-  let [visible, setVisible] = useState(defaultVisible);
-  let [lastInputType, setLastInputType] = useState('mouse');
+  const [visible, setVisible] = useState(defaultVisible);
+  const [lastInputType, setLastInputType] = useState('mouse');
 
   useEffect(() => {
-    let handleKeyDown = (e) => {
+    const handleKeyDown = (e) => {
       // Show hints when user uses keyboard shortcuts
       if (
         e.key === 'ArrowUp' ||
@@ -161,7 +161,7 @@ export function useKeyboardHintsVisibility(defaultVisible = true) {
       }
     };
 
-    let handleMouseMove = () => {
+    const handleMouseMove = () => {
       if (lastInputType === 'keyboard') {
         setLastInputType('mouse');
         // Don't auto-hide, let user control visibility

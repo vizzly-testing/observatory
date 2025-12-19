@@ -33,7 +33,7 @@ import { DrawerContent, DrawerHeader, MobileDrawer } from './mobile-drawer.jsx';
  * @param {string} badge - Optional badge text shown in header
  */
 function InspectorSection({ title, icon: Icon, children, defaultExpanded = true, badge }) {
-  let [isExpanded, setIsExpanded] = useState(defaultExpanded);
+  const [isExpanded, setIsExpanded] = useState(defaultExpanded);
 
   return (
     <div className="border-b border-slate-800/50 last:border-b-0">
@@ -81,9 +81,9 @@ function InspectorSection({ title, icon: Icon, children, defaultExpanded = true,
  * @param {Component} icon - Optional icon component
  */
 function InspectorRow({ label, value, mono = false, copyable = false, href, badge, icon: Icon }) {
-  let [copied, setCopied] = useState(false);
+  const [copied, setCopied] = useState(false);
 
-  let handleCopy = useCallback(
+  const handleCopy = useCallback(
     async (e) => {
       e.preventDefault();
       e.stopPropagation();
@@ -94,7 +94,7 @@ function InspectorRow({ label, value, mono = false, copyable = false, href, badg
   );
 
   // Reset copied state on mouse leave
-  let handleMouseLeave = useCallback(() => {
+  const handleMouseLeave = useCallback(() => {
     if (copied) setCopied(false);
   }, [copied]);
 
@@ -193,14 +193,14 @@ function InspectorRow({ label, value, mono = false, copyable = false, href, badg
  * @param {string} variant - 'default' | 'primary' | 'danger'
  */
 function InspectorAction({ label, icon: Icon, onClick, href, variant = 'default' }) {
-  let variantClasses = {
+  const variantClasses = {
     default: 'text-slate-400 hover:text-white hover:bg-slate-800/50',
     primary: 'text-blue-400 hover:text-blue-300 hover:bg-blue-500/10',
     danger: 'text-red-400 hover:text-red-300 hover:bg-red-500/10'
   };
 
-  let Component = href ? 'a' : 'button';
-  let props = href ? { href, target: '_blank', rel: 'noopener noreferrer' } : { onClick };
+  const Component = href ? 'a' : 'button';
+  const props = href ? { href, target: '_blank', rel: 'noopener noreferrer' } : { onClick };
 
   return (
     <Component

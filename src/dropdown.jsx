@@ -16,19 +16,19 @@ export function Dropdown({
   menuClassName = '',
   disabled = false
 }) {
-  let [isOpen, setIsOpen] = useState(false);
-  let containerRef = useRef(null);
+  const [isOpen, setIsOpen] = useState(false);
+  const containerRef = useRef(null);
 
   useEffect(() => {
     if (!isOpen) return;
 
-    let handleClickOutside = (event) => {
+    const handleClickOutside = (event) => {
       if (containerRef.current && !containerRef.current.contains(event.target)) {
         setIsOpen(false);
       }
     };
 
-    let handleEscape = (event) => {
+    const handleEscape = (event) => {
       if (event.key === 'Escape') setIsOpen(false);
     };
 
@@ -40,7 +40,7 @@ export function Dropdown({
     };
   }, [isOpen]);
 
-  let alignmentClasses = {
+  const alignmentClasses = {
     left: 'left-0',
     right: 'right-0',
     center: 'left-1/2 -translate-x-1/2'
@@ -79,7 +79,7 @@ export function DropdownItem({
   icon: Icon,
   className = ''
 }) {
-  let variantClasses = {
+  const variantClasses = {
     default: 'text-slate-300 hover:bg-slate-700 hover:text-white',
     primary: 'text-blue-400 hover:bg-blue-900/30',
     danger: 'text-red-400 hover:bg-red-900/30',

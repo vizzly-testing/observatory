@@ -6,9 +6,9 @@
  */
 
 export function Timeline({ items = [], onItemClick, maxItems = 20, className = '' }) {
-  let displayItems = items.slice(0, maxItems);
+  const displayItems = items.slice(0, maxItems);
 
-  let getStatusClass = (item) => {
+  const getStatusClass = (item) => {
     if (item.status === 'processing' || item.status === 'pending') {
       return 'bg-blue-500 animate-pulse';
     }

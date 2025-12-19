@@ -16,7 +16,7 @@
 import { CheckIcon, ExclamationTriangleIcon, XMarkIcon } from '@heroicons/react/24/solid';
 import { useEffect, useState } from 'react';
 
-let variantConfig = {
+const variantConfig = {
   approved: {
     icon: CheckIcon,
     bg: 'bg-emerald-500/90',
@@ -55,8 +55,8 @@ export function ActionToast({
   duration = 1500,
   className = ''
 }) {
-  let [isShowing, setIsShowing] = useState(false);
-  let [isExiting, setIsExiting] = useState(false);
+  const [isShowing, setIsShowing] = useState(false);
+  const [isExiting, setIsExiting] = useState(false);
 
   useEffect(() => {
     if (isVisible) {
@@ -64,12 +64,12 @@ export function ActionToast({
       setIsExiting(false);
 
       // Schedule exit animation
-      let exitTimer = window.setTimeout(() => {
+      const exitTimer = window.setTimeout(() => {
         setIsExiting(true);
       }, duration - 200);
 
       // Schedule actual hide
-      let hideTimer = window.setTimeout(() => {
+      const hideTimer = window.setTimeout(() => {
         setIsShowing(false);
         setIsExiting(false);
         onHide?.();
@@ -84,8 +84,8 @@ export function ActionToast({
 
   if (!isShowing) return null;
 
-  let config = variantConfig[variant] || variantConfig.approved;
-  let Icon = config.icon;
+  const config = variantConfig[variant] || variantConfig.approved;
+  const Icon = config.icon;
 
   return (
     <div
@@ -117,13 +117,17 @@ export function ActionToast({
  * useActionToast - Hook for managing action toast state
  */
 export function useActionToast() {
-  let [toast, setToast] = useState({ isVisible: false, message: '', variant: 'approved' });
+  const [toast, setToast] = useState({
+    isVisible: false,
+    message: '',
+    variant: 'approved'
+  });
 
-  let show = (message, variant = 'approved') => {
+  const show = (message, variant = 'approved') => {
     setToast({ isVisible: true, message, variant });
   };
 
-  let hide = () => {
+  const hide = () => {
     setToast((prev) => ({ ...prev, isVisible: false }));
   };
 

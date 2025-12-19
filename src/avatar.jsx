@@ -6,7 +6,7 @@
  */
 
 export function Avatar({ src, alt = '', name = '', size = 'md', status, className = '' }) {
-  let sizeClasses = {
+  const sizeClasses = {
     xs: 'w-6 h-6 text-[10px]',
     sm: 'w-8 h-8 text-xs',
     md: 'w-10 h-10 text-sm',
@@ -14,7 +14,7 @@ export function Avatar({ src, alt = '', name = '', size = 'md', status, classNam
     xl: 'w-16 h-16 text-lg'
   };
 
-  let statusSizes = {
+  const statusSizes = {
     xs: 'w-1.5 h-1.5 border',
     sm: 'w-2 h-2 border',
     md: 'w-2.5 h-2.5 border-2',
@@ -22,24 +22,24 @@ export function Avatar({ src, alt = '', name = '', size = 'md', status, classNam
     xl: 'w-4 h-4 border-2'
   };
 
-  let statusColors = {
+  const statusColors = {
     online: 'bg-emerald-500',
     offline: 'bg-slate-500',
     busy: 'bg-red-500',
     away: 'bg-amber-500'
   };
 
-  let getInitials = (name) => {
+  const getInitials = (name) => {
     if (!name) return '?';
-    let parts = name.split(' ').filter(Boolean);
+    const parts = name.split(' ').filter(Boolean);
     if (parts.length >= 2) {
       return `${parts[0][0]}${parts[1][0]}`.toUpperCase();
     }
     return name.slice(0, 2).toUpperCase();
   };
 
-  let getColorFromName = (name) => {
-    let colors = [
+  const getColorFromName = (name) => {
+    const colors = [
       'bg-amber-600',
       'bg-emerald-600',
       'bg-blue-600',
@@ -49,7 +49,7 @@ export function Avatar({ src, alt = '', name = '', size = 'md', status, classNam
       'bg-orange-600',
       'bg-teal-600'
     ];
-    let hash = name.split('').reduce((acc, char) => acc + char.charCodeAt(0), 0);
+    const hash = name.split('').reduce((acc, char) => acc + char.charCodeAt(0), 0);
     return colors[hash % colors.length];
   };
 
@@ -78,10 +78,10 @@ export function Avatar({ src, alt = '', name = '', size = 'md', status, classNam
 }
 
 export function AvatarGroup({ avatars = [], max = 4, size = 'md', className = '' }) {
-  let displayAvatars = avatars.slice(0, max);
-  let remainingCount = avatars.length - max;
+  const displayAvatars = avatars.slice(0, max);
+  const remainingCount = avatars.length - max;
 
-  let overlapClasses = {
+  const overlapClasses = {
     xs: '-ml-1.5',
     sm: '-ml-2',
     md: '-ml-2.5',
@@ -89,7 +89,7 @@ export function AvatarGroup({ avatars = [], max = 4, size = 'md', className = ''
     xl: '-ml-4'
   };
 
-  let countSizeClasses = {
+  const countSizeClasses = {
     xs: 'w-6 h-6 text-[10px]',
     sm: 'w-8 h-8 text-xs',
     md: 'w-10 h-10 text-sm',

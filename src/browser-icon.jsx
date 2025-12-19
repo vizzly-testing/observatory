@@ -8,7 +8,7 @@
 
 import { GlobeAltIcon } from '@heroicons/react/24/outline';
 
-let BROWSER_LOGOS_CDN = 'https://cdnjs.cloudflare.com/ajax/libs/browser-logos/75.0.1';
+const BROWSER_LOGOS_CDN = 'https://cdnjs.cloudflare.com/ajax/libs/browser-logos/75.0.1';
 
 /**
  * Map browser names to their CDN logo paths
@@ -126,8 +126,8 @@ export function BrowserIcon({ browser, className = 'w-4 h-4', fallbackClassName 
     return null;
   }
 
-  let browserLower = browser.toLowerCase();
-  let logoUrl = getBrowserLogoUrl(browserLower);
+  const browserLower = browser.toLowerCase();
+  const logoUrl = getBrowserLogoUrl(browserLower);
 
   if (logoUrl) {
     return (

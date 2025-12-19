@@ -6,10 +6,10 @@
  */
 
 export function Skeleton({ variant = 'text', width, height, className = '', count = 1 }) {
-  let baseClasses =
+  const baseClasses =
     'animate-pulse bg-gradient-to-r from-slate-800 via-slate-700 to-slate-800 bg-[length:200%_100%] rounded';
 
-  let variantClasses = {
+  const variantClasses = {
     text: 'h-4 rounded',
     heading: 'h-8 rounded',
     avatar: 'rounded-full',
@@ -18,7 +18,7 @@ export function Skeleton({ variant = 'text', width, height, className = '', coun
     badge: 'h-6 w-16 rounded-full'
   };
 
-  let defaultSizes = {
+  const defaultSizes = {
     text: { width: '100%', height: '16px' },
     heading: { width: '60%', height: '32px' },
     avatar: { width: '40px', height: '40px' },
@@ -27,9 +27,9 @@ export function Skeleton({ variant = 'text', width, height, className = '', coun
     badge: { width: '64px', height: '24px' }
   };
 
-  let defaultSize = defaultSizes[variant];
+  const defaultSize = defaultSizes[variant];
 
-  let skeletons = Array.from({ length: count }, (_, i) => (
+  const skeletons = Array.from({ length: count }, (_, i) => (
     <div
       key={i}
       className={`${baseClasses} ${variantClasses[variant]} ${className}`}

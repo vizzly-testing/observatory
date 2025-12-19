@@ -27,7 +27,7 @@ import { BrowserIcon } from './browser-icon.jsx';
  * Dimension styling configuration
  * Each dimension has a unique visual identity
  */
-let dimensionStyles = {
+const dimensionStyles = {
   variants: {
     bg: 'bg-slate-700/60',
     text: 'text-slate-300',
@@ -47,16 +47,16 @@ let dimensionStyles = {
     border: 'border-slate-600/20',
     renderIcon: (values) => {
       // Show appropriate device icon based on viewport sizes
-      let hasDesktop = values.some((v) => {
-        let w = parseInt(v.split('x')[0], 10);
+      const hasDesktop = values.some((v) => {
+        const w = parseInt(v.split('x')[0], 10);
         return w > 1024;
       });
-      let hasTablet = values.some((v) => {
-        let w = parseInt(v.split('x')[0], 10);
+      const hasTablet = values.some((v) => {
+        const w = parseInt(v.split('x')[0], 10);
         return w > 480 && w <= 1024;
       });
-      let hasMobile = values.some((v) => {
-        let w = parseInt(v.split('x')[0], 10);
+      const hasMobile = values.some((v) => {
+        const w = parseInt(v.split('x')[0], 10);
         return w <= 480;
       });
 
@@ -84,8 +84,8 @@ let dimensionStyles = {
     text: 'text-indigo-400',
     border: 'border-indigo-500/20',
     renderIcon: (values) => {
-      let hasDark = values.some((v) => v?.toLowerCase() === 'dark');
-      let hasLight = values.some((v) => v?.toLowerCase() === 'light');
+      const hasDark = values.some((v) => v?.toLowerCase() === 'dark');
+      const hasLight = values.some((v) => v?.toLowerCase() === 'light');
       if (hasDark && hasLight) {
         return (
           <span className="flex items-center -space-x-1">
@@ -119,8 +119,8 @@ let dimensionStyles = {
  * Individual pill component
  */
 function Pill({ dimension, values, count, label, compact = false, className = '' }) {
-  let style = dimensionStyles[dimension] || dimensionStyles.os;
-  let Icon = style.icon;
+  const style = dimensionStyles[dimension] || dimensionStyles.os;
+  const Icon = style.icon;
 
   // Determine what to display
   let displayContent = label;
@@ -135,7 +135,9 @@ function Pill({ dimension, values, count, label, compact = false, className = ''
   }
 
   // Size classes
-  let sizeClasses = compact ? 'px-1.5 py-0.5 text-[10px] gap-1' : 'px-2 py-0.5 text-[11px] gap-1.5';
+  const sizeClasses = compact
+    ? 'px-1.5 py-0.5 text-[10px] gap-1'
+    : 'px-2 py-0.5 text-[11px] gap-1.5';
 
   return (
     <span
@@ -169,8 +171,8 @@ function Pill({ dimension, values, count, label, compact = false, className = ''
 function BrowserPill({ browsers = [], compact = false }) {
   if (!browsers || browsers.length === 0) return null;
 
-  let style = dimensionStyles.browser;
-  let sizeClasses = compact ? 'px-1.5 py-0.5 gap-0.5' : 'px-2 py-1 gap-1';
+  const style = dimensionStyles.browser;
+  const sizeClasses = compact ? 'px-1.5 py-0.5 gap-0.5' : 'px-2 py-1 gap-1';
 
   return (
     <span
@@ -217,7 +219,7 @@ export function VariantPills({
   showVariantCount = true,
   className = ''
 }) {
-  let { theme = [], locale = [], os = [], orientation = [] } = customProperties;
+  const { theme = [], locale = [], os = [], orientation = [] } = customProperties;
 
   return (
     <div className={`flex items-center gap-1.5 flex-wrap ${className}`}>
@@ -297,7 +299,7 @@ export function VariantIdentifier({
   compact = false,
   className = ''
 }) {
-  let sizeClasses = compact ? 'px-2 py-1 gap-1.5' : 'px-2.5 py-1.5 gap-2';
+  const sizeClasses = compact ? 'px-2 py-1 gap-1.5' : 'px-2.5 py-1.5 gap-2';
 
   return (
     <div className={`flex items-center gap-1.5 ${className}`}>

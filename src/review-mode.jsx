@@ -15,21 +15,21 @@
 
 import { createContext, useCallback, useContext, useEffect, useState } from 'react';
 
-let ReviewModeContext = createContext(null);
+const ReviewModeContext = createContext(null);
 
 /**
  * ReviewModeProvider - Wrap your review UI with this to enable review mode
  */
 export function ReviewModeProvider({ children, defaultActive = false }) {
-  let [isActive, setIsActive] = useState(defaultActive);
+  const [isActive, setIsActive] = useState(defaultActive);
 
-  let enter = useCallback(() => setIsActive(true), []);
-  let exit = useCallback(() => setIsActive(false), []);
-  let toggle = useCallback(() => setIsActive((prev) => !prev), []);
+  const enter = useCallback(() => setIsActive(true), []);
+  const exit = useCallback(() => setIsActive(false), []);
+  const toggle = useCallback(() => setIsActive((prev) => !prev), []);
 
   // Handle Space to toggle review mode
   useEffect(() => {
-    let handleKeyDown = (e) => {
+    const handleKeyDown = (e) => {
       // Don't trigger in inputs
       if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
 
@@ -43,7 +43,7 @@ export function ReviewModeProvider({ children, defaultActive = false }) {
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, [toggle]);
 
-  let value = {
+  const value = {
     isActive,
     enter,
     exit,
@@ -57,7 +57,7 @@ export function ReviewModeProvider({ children, defaultActive = false }) {
  * useReviewMode - Access review mode state and actions
  */
 export function useReviewMode() {
-  let context = useContext(ReviewModeContext);
+  const context = useContext(ReviewModeContext);
   if (!context) {
     throw new Error('useReviewMode must be used within a ReviewModeProvider');
   }
@@ -79,20 +79,20 @@ export function useReviewMode() {
  * });
  */
 export function useReviewModeShortcuts(shortcuts, options = {}) {
-  let { isActive } = useReviewMode();
-  let { enabled = true } = options;
+  const { isActive } = useReviewMode();
+  const { enabled = true } = options;
 
   useEffect(() => {
     if (!isActive || !enabled) return;
 
-    let handleKeyDown = (e) => {
+    const handleKeyDown = (e) => {
       // Don't trigger in inputs
       if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
       // Don't trigger with modifiers (except shift for uppercase)
       if (e.metaKey || e.ctrlKey || e.altKey) return;
 
-      let key = e.key.toLowerCase();
-      let handler = shortcuts[key];
+      const key = e.key.toLowerCase();
+      const handler = shortcuts[key];
 
       if (handler) {
         e.preventDefault();
@@ -109,7 +109,7 @@ export function useReviewModeShortcuts(shortcuts, options = {}) {
  * ReviewModeHint - Shows how to enter/exit review mode
  */
 export function ReviewModeHint({ className = '' }) {
-  let { isActive } = useReviewMode();
+  const { isActive } = useReviewMode();
 
   return (
     <span className={`text-xs text-slate-500 ${className}`}>
@@ -128,7 +128,7 @@ export function ReviewModeShortcutsHint({
   showViewMode = true,
   className = ''
 }) {
-  let { isActive } = useReviewMode();
+  const { isActive } = useReviewMode();
 
   if (!isActive) {
     return (

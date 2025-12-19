@@ -36,7 +36,7 @@ export function ConfirmationDialog({
   }, [isOpen]);
 
   useEffect(() => {
-    let handleEscape = (e) => {
+    const handleEscape = (e) => {
       if (e.key === 'Escape' && isOpen && !loading) {
         onCancel();
       }
@@ -47,7 +47,7 @@ export function ConfirmationDialog({
 
   if (!isOpen) return null;
 
-  let variantStyles = {
+  const variantStyles = {
     danger: {
       header: 'bg-red-900/20 border-red-500/30',
       iconBg: 'bg-red-500',
@@ -71,8 +71,8 @@ export function ConfirmationDialog({
     }
   };
 
-  let styles = variantStyles[variant] || variantStyles.danger;
-  let Icon = CustomIcon || ExclamationTriangleIcon;
+  const styles = variantStyles[variant] || variantStyles.danger;
+  const Icon = CustomIcon || ExclamationTriangleIcon;
 
   return createPortal(
     <div className="fixed inset-0 z-50 overflow-y-auto">

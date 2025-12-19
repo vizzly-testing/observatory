@@ -21,10 +21,10 @@ export function Button({
   as: Component = 'button',
   ...props
 }) {
-  let baseClasses =
+  const baseClasses =
     'vz-btn inline-flex items-center justify-center gap-2 font-medium rounded-lg transition-all duration-150 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-900';
 
-  let variantClasses = {
+  const variantClasses = {
     primary:
       'vz-btn--primary bg-amber-500 hover:bg-amber-400 text-slate-900 focus-visible:ring-amber-500',
     secondary:
@@ -39,13 +39,13 @@ export function Button({
       'vz-btn--success bg-emerald-500/10 hover:bg-emerald-500/20 text-emerald-400 hover:text-emerald-300 focus-visible:ring-emerald-500'
   };
 
-  let sizeClasses = {
+  const sizeClasses = {
     sm: 'text-xs px-3 py-1.5 h-7',
     md: 'text-sm px-4 py-2 h-9',
     lg: 'text-base px-6 py-3 h-11'
   };
 
-  let classes = [
+  const classes = [
     baseClasses,
     variantClasses[variant],
     sizeClasses[size],
@@ -57,7 +57,7 @@ export function Button({
     .join(' ');
 
   // Only pass disabled prop to button elements
-  let elementProps = Component === 'button' ? { disabled: disabled || loading, ...props } : props;
+  const elementProps = Component === 'button' ? { disabled: disabled || loading, ...props } : props;
 
   return (
     <Component className={classes} {...elementProps}>

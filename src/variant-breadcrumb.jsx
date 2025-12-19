@@ -33,27 +33,27 @@ import { getScreenshotMetadata } from './screenshot-metadata.js';
 /**
  * Default dimensions to always consider
  */
-let DEFAULT_DIMENSIONS = ['viewport', 'browser'];
+const DEFAULT_DIMENSIONS = ['viewport', 'browser'];
 
 /**
  * Dimension configuration
  */
-let dimensionConfig = {
+const dimensionConfig = {
   viewport: {
     label: 'Size',
     getValue: (comparison) => {
-      let w = comparison.viewport_width || comparison.width;
-      let h = comparison.viewport_height || comparison.height;
+      const w = comparison.viewport_width || comparison.width;
+      const h = comparison.viewport_height || comparison.height;
       return w && h ? `${w}x${h}` : null;
     },
     formatValue: (value) => value?.replace('x', '×'),
     sortValues: (a, b) => {
-      let [aW] = (a || '0x0').split('x').map(Number);
-      let [bW] = (b || '0x0').split('x').map(Number);
+      const [aW] = (a || '0x0').split('x').map(Number);
+      const [bW] = (b || '0x0').split('x').map(Number);
       return bW - aW;
     },
     renderIcon: (value, className = 'w-3.5 h-3.5') => {
-      let width = parseInt(value?.split('x')[0], 10) || 0;
+      const width = parseInt(value?.split('x')[0], 10) || 0;
       if (width <= 480) return <DevicePhoneMobileIcon className={className} />;
       if (width <= 1024) return <DeviceTabletIcon className={className} />;
       return <ComputerDesktopIcon className={className} />;
@@ -63,7 +63,7 @@ let dimensionConfig = {
   browser: {
     label: 'Browser',
     getValue: (comparison) => {
-      let metadata = getScreenshotMetadata(comparison);
+      const metadata = getScreenshotMetadata(comparison);
       return metadata.browser || comparison.browser || null;
     },
     formatValue: (value) => value?.charAt(0).toUpperCase() + value?.slice(1),
@@ -75,7 +75,7 @@ let dimensionConfig = {
   theme: {
     label: 'Theme',
     getValue: (comparison) => {
-      let metadata = getScreenshotMetadata(comparison);
+      const metadata = getScreenshotMetadata(comparison);
       return metadata.theme || null;
     },
     formatValue: (value) => value?.charAt(0).toUpperCase() + value?.slice(1),
@@ -94,7 +94,7 @@ let dimensionConfig = {
   locale: {
     label: 'Locale',
     getValue: (comparison) => {
-      let metadata = getScreenshotMetadata(comparison);
+      const metadata = getScreenshotMetadata(comparison);
       return metadata.locale || null;
     },
     formatValue: (value) => value?.toUpperCase(),
@@ -104,7 +104,7 @@ let dimensionConfig = {
   device: {
     label: 'Device',
     getValue: (comparison) => {
-      let metadata = getScreenshotMetadata(comparison);
+      const metadata = getScreenshotMetadata(comparison);
       return metadata.device || null;
     },
     formatValue: (value) => value,
@@ -119,9 +119,9 @@ let dimensionConfig = {
  * Get dimension value from comparison
  */
 function getDimensionValue(comparison, dimension) {
-  let config = dimensionConfig[dimension];
+  const config = dimensionConfig[dimension];
   if (config) return config.getValue(comparison);
-  let metadata = getScreenshotMetadata(comparison);
+  const metadata = getScreenshotMetadata(comparison);
   return metadata[dimension] || comparison[dimension] || null;
 }
 
@@ -129,7 +129,7 @@ function getDimensionValue(comparison, dimension) {
  * Format dimension value for display
  */
 function formatDimensionValue(dimension, value, includeKey = false, maxLength = 14) {
-  let config = dimensionConfig[dimension];
+  const config = dimensionConfig[dimension];
 
   // Format the value itself
   let formattedValue;
@@ -154,7 +154,7 @@ function formatDimensionValue(dimension, value, includeKey = false, maxLength = 
 
   // For custom properties (not in config), show key: value
   if (includeKey && !config) {
-    let label = getDimensionLabel(dimension).toLowerCase();
+    const label = getDimensionLabel(dimension).toLowerCase();
     return `${label}: ${formattedValue}`;
   }
 
@@ -165,7 +165,7 @@ function formatDimensionValue(dimension, value, includeKey = false, maxLength = 
  * Sort dimension values
  */
 function sortDimensionValues(dimension, values) {
-  let config = dimensionConfig[dimension];
+  const config = dimensionConfig[dimension];
   return config?.sortValues ? [...values].sort(config.sortValues) : values;
 }
 
@@ -182,7 +182,7 @@ function getDimensionLabel(dimension) {
  * Render icon for a dimension - uses config or falls back to TagIcon
  */
 function renderDimensionIcon(dimension, value, className = 'w-4 h-4') {
-  let config = dimensionConfig[dimension];
+  const config = dimensionConfig[dimension];
   if (config?.renderIcon) {
     return config.renderIcon(value, className);
   }
@@ -195,21 +195,21 @@ function renderDimensionIcon(dimension, value, className = 'w-4 h-4') {
  */
 export function useVariantDimensions(variants, baselineSignatureProperties = []) {
   // Auto-discover dimensions from variant data
-  let effectiveDimensions = useMemo(() => {
-    let dims = [...DEFAULT_DIMENSIONS];
+  const effectiveDimensions = useMemo(() => {
+    const dims = [...DEFAULT_DIMENSIONS];
 
     baselineSignatureProperties.forEach((prop) => {
       if (!dims.includes(prop)) dims.push(prop);
     });
 
-    let knownDimensions = Object.keys(dimensionConfig);
+    const knownDimensions = Object.keys(dimensionConfig);
     knownDimensions.forEach((dim) => {
       if (dims.includes(dim)) return;
-      let hasValue = variants.some((variant) => getDimensionValue(variant, dim) != null);
+      const hasValue = variants.some((variant) => getDimensionValue(variant, dim) != null);
       if (hasValue) dims.push(dim);
     });
 
-    let skipKeys = [
+    const skipKeys = [
       'browser',
       'viewport',
       'viewportWidth',
@@ -221,7 +221,7 @@ export function useVariantDimensions(variants, baselineSignatureProperties = [])
       'height'
     ];
     variants.forEach((variant) => {
-      let metadata = getScreenshotMetadata(variant);
+      const metadata = getScreenshotMetadata(variant);
       Object.keys(metadata).forEach((key) => {
         if (
           !dims.includes(key) &&
@@ -238,14 +238,14 @@ export function useVariantDimensions(variants, baselineSignatureProperties = [])
   }, [baselineSignatureProperties, variants]);
 
   // Analyze variants by dimension
-  let dimensionAnalysis = useMemo(() => {
+  const dimensionAnalysis = useMemo(() => {
     if (!variants || variants.length === 0) return {};
 
-    let analysis = {};
+    const analysis = {};
     effectiveDimensions.forEach((dim) => {
-      let valueSet = new Set();
+      const valueSet = new Set();
       variants.forEach((variant) => {
-        let value = getDimensionValue(variant, dim);
+        const value = getDimensionValue(variant, dim);
         if (value != null) valueSet.add(value);
       });
 
@@ -276,8 +276,8 @@ function findBestMatch(variants, changeDim, newValue, currentVariant, allDimensi
     let score = 0;
     allDimensions.forEach((dim) => {
       if (dim === changeDim) return;
-      let currentVal = currentVariant ? getDimensionValue(currentVariant, dim) : null;
-      let variantVal = getDimensionValue(variant, dim);
+      const currentVal = currentVariant ? getDimensionValue(currentVariant, dim) : null;
+      const variantVal = getDimensionValue(variant, dim);
       if (currentVal === variantVal) score++;
     });
 
@@ -298,13 +298,13 @@ function findBestMatch(variants, changeDim, newValue, currentVariant, allDimensi
  * Individual breadcrumb segment with dropdown (desktop only)
  */
 function BreadcrumbSegment({ dimension, currentValue, allValues, onSelect, isLast }) {
-  let [isOpen, setIsOpen] = useState(false);
-  let segmentRef = useRef(null);
-  let dropdownRef = useRef(null);
+  const [isOpen, setIsOpen] = useState(false);
+  const segmentRef = useRef(null);
+  const dropdownRef = useRef(null);
 
-  let config = dimensionConfig[dimension];
-  let hasMultiple = allValues.length > 1;
-  let displayValue = formatDimensionValue(dimension, currentValue, true);
+  const config = dimensionConfig[dimension];
+  const hasMultiple = allValues.length > 1;
+  const displayValue = formatDimensionValue(dimension, currentValue, true);
 
   useEffect(() => {
     if (!isOpen) return;
@@ -331,7 +331,7 @@ function BreadcrumbSegment({ dimension, currentValue, allValues, onSelect, isLas
     return () => document.removeEventListener('keydown', handleEscape);
   }, [isOpen]);
 
-  let handleSelect = useCallback(
+  const handleSelect = useCallback(
     (value) => {
       onSelect(dimension, value);
       setIsOpen(false);
@@ -385,8 +385,8 @@ function BreadcrumbSegment({ dimension, currentValue, allValues, onSelect, isLas
             </span>
           </div>
           {sortDimensionValues(dimension, allValues).map((value) => {
-            let isSelected = value === currentValue;
-            let optionDisplay = formatDimensionValue(dimension, value);
+            const isSelected = value === currentValue;
+            const optionDisplay = formatDimensionValue(dimension, value);
 
             return (
               <button
@@ -426,9 +426,9 @@ function MobileVariantSheet({
   effectiveDimensions,
   onVariantSelect
 }) {
-  let handleDimensionChange = useCallback(
+  const handleDimensionChange = useCallback(
     (dimension, newValue) => {
-      let target = findBestMatch(
+      const target = findBestMatch(
         variants,
         dimension,
         newValue,
@@ -443,10 +443,12 @@ function MobileVariantSheet({
     [variants, currentVariant, effectiveDimensions, onVariantSelect, onClose]
   );
 
-  let activeDimensions = Object.keys(dimensionAnalysis);
-  let multiValueDimensions = activeDimensions.filter((dim) => dimensionAnalysis[dim].hasMultiple);
-  let singleValueDimensions = activeDimensions.filter((dim) => !dimensionAnalysis[dim].hasMultiple);
-  let sortedDimensions = [...multiValueDimensions, ...singleValueDimensions];
+  const activeDimensions = Object.keys(dimensionAnalysis);
+  const multiValueDimensions = activeDimensions.filter((dim) => dimensionAnalysis[dim].hasMultiple);
+  const singleValueDimensions = activeDimensions.filter(
+    (dim) => !dimensionAnalysis[dim].hasMultiple
+  );
+  const sortedDimensions = [...multiValueDimensions, ...singleValueDimensions];
 
   return (
     <MobileDrawer
@@ -461,9 +463,11 @@ function MobileVariantSheet({
       <DrawerContent className="px-3 py-3">
         <div className="space-y-5">
           {sortedDimensions.map((dim) => {
-            let { values, hasMultiple } = dimensionAnalysis[dim];
-            let currentValue = currentVariant ? getDimensionValue(currentVariant, dim) : values[0];
-            let label = getDimensionLabel(dim);
+            const { values, hasMultiple } = dimensionAnalysis[dim];
+            const currentValue = currentVariant
+              ? getDimensionValue(currentVariant, dim)
+              : values[0];
+            const label = getDimensionLabel(dim);
 
             return (
               <div key={dim}>
@@ -476,7 +480,7 @@ function MobileVariantSheet({
 
                 <div className="flex flex-wrap gap-2">
                   {sortDimensionValues(dim, values).map((value) => {
-                    let isActive = currentValue === value;
+                    const isActive = currentValue === value;
 
                     return (
                       <button
@@ -526,21 +530,21 @@ export function VariantBreadcrumb({
   baselineSignatureProperties = [],
   className = ''
 }) {
-  let [showMobileSheet, setShowMobileSheet] = useState(false);
+  const [showMobileSheet, setShowMobileSheet] = useState(false);
 
-  let { effectiveDimensions, dimensionAnalysis } = useVariantDimensions(
+  const { effectiveDimensions, dimensionAnalysis } = useVariantDimensions(
     variants,
     baselineSignatureProperties
   );
 
-  let currentVariant = useMemo(
+  const currentVariant = useMemo(
     () => variants.find((v) => v.id === currentVariantId),
     [variants, currentVariantId]
   );
 
-  let handleDimensionChange = useCallback(
+  const handleDimensionChange = useCallback(
     (dimension, newValue) => {
-      let target = findBestMatch(
+      const target = findBestMatch(
         variants,
         dimension,
         newValue,
@@ -554,19 +558,21 @@ export function VariantBreadcrumb({
     [variants, currentVariant, effectiveDimensions, onVariantSelect]
   );
 
-  let activeDimensions = Object.keys(dimensionAnalysis);
+  const activeDimensions = Object.keys(dimensionAnalysis);
 
   if (variants.length === 0 || activeDimensions.length === 0) {
     return null;
   }
 
-  let multiValueDimensions = activeDimensions.filter((dim) => dimensionAnalysis[dim].hasMultiple);
-  let singleValueDimensions = activeDimensions.filter((dim) => !dimensionAnalysis[dim].hasMultiple);
-  let sortedDimensions = [...multiValueDimensions, ...singleValueDimensions];
+  const multiValueDimensions = activeDimensions.filter((dim) => dimensionAnalysis[dim].hasMultiple);
+  const singleValueDimensions = activeDimensions.filter(
+    (dim) => !dimensionAnalysis[dim].hasMultiple
+  );
+  const sortedDimensions = [...multiValueDimensions, ...singleValueDimensions];
 
   // Get summary for mobile button
-  let viewportValue = currentVariant ? getDimensionValue(currentVariant, 'viewport') : null;
-  let browserValue = currentVariant ? getDimensionValue(currentVariant, 'browser') : null;
+  const viewportValue = currentVariant ? getDimensionValue(currentVariant, 'viewport') : null;
+  const browserValue = currentVariant ? getDimensionValue(currentVariant, 'browser') : null;
 
   return (
     <>
@@ -604,8 +610,8 @@ export function VariantBreadcrumb({
         `}
       >
         {sortedDimensions.map((dim, index) => {
-          let { values } = dimensionAnalysis[dim];
-          let currentValue = currentVariant ? getDimensionValue(currentVariant, dim) : values[0];
+          const { values } = dimensionAnalysis[dim];
+          const currentValue = currentVariant ? getDimensionValue(currentVariant, dim) : values[0];
 
           return (
             <BreadcrumbSegment

@@ -27,7 +27,12 @@ export { Combobox } from './combobox.jsx';
 export { ConfirmationDialog } from './confirmation-dialog.jsx';
 // Data table (advanced)
 export { ColumnSettings, DataTable } from './data-table.jsx';
-export { Dropdown, DropdownDivider, DropdownHeader, DropdownItem } from './dropdown.jsx';
+export {
+  Dropdown,
+  DropdownDivider,
+  DropdownHeader,
+  DropdownItem
+} from './dropdown.jsx';
 export { EmptyState } from './empty-state.jsx';
 export { FilterDivider, FilterPill, FilterPillGroup } from './filter-pill.jsx';
 export { Checkbox, Input, Select, Textarea, Toggle } from './form-controls.jsx';
@@ -85,7 +90,10 @@ export { Timeline } from './timeline.jsx';
 export { Toast, ToastContainer } from './toast.jsx';
 export { Tooltip } from './tooltip.jsx';
 // Variant selection components
-export { useVariantDimensions, VariantBreadcrumb } from './variant-breadcrumb.jsx';
+export {
+  useVariantDimensions,
+  VariantBreadcrumb
+} from './variant-breadcrumb.jsx';
 export {
   BrowserPill,
   Pill as VariantPill,

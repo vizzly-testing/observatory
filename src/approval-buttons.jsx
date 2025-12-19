@@ -27,7 +27,7 @@ export function ApprovalButton({
   showLabel = true,
   className = ''
 }) {
-  let config = {
+  const config = {
     approve: {
       label: 'Approve',
       icon: CheckIcon,
@@ -44,7 +44,7 @@ export function ApprovalButton({
     }
   }[variant];
 
-  let Icon = config.icon;
+  const Icon = config.icon;
 
   // Compact mode for mobile - icon only or smaller
   if (compact) {
@@ -115,8 +115,8 @@ export function ApprovalButtonGroup({
   compact = false,
   className = ''
 }) {
-  let isApproved = status === 'approved' || status === 'auto_approved';
-  let isRejected = status === 'rejected';
+  const isApproved = status === 'approved' || status === 'auto_approved';
+  const isRejected = status === 'rejected';
 
   return (
     <div className={`flex items-center gap-1 ${className}`}>
@@ -156,8 +156,8 @@ export function MobileApprovalBar({
   loading = false,
   className = ''
 }) {
-  let isApproved = status === 'approved' || status === 'auto_approved';
-  let isRejected = status === 'rejected';
+  const isApproved = status === 'approved' || status === 'auto_approved';
+  const isRejected = status === 'rejected';
 
   return (
     <div

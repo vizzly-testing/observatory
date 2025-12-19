@@ -13,7 +13,7 @@ import {
 } from '@heroicons/react/24/outline';
 import { useCallback, useEffect, useState } from 'react';
 
-let ZOOM_PRESETS = [
+const ZOOM_PRESETS = [
   { value: 'fit', label: 'Fit', icon: ArrowsPointingInIcon },
   { value: 0.25, label: '25%' },
   { value: 0.5, label: '50%' },
@@ -27,9 +27,9 @@ let ZOOM_PRESETS = [
  * Hook for managing zoom state
  */
 export function useZoom(defaultZoom = 'fit') {
-  let [zoom, setZoom] = useState(defaultZoom);
+  const [zoom, setZoom] = useState(defaultZoom);
 
-  let handleZoomChange = useCallback((newZoom) => {
+  const handleZoomChange = useCallback((newZoom) => {
     setZoom(newZoom);
   }, []);
 
@@ -61,32 +61,32 @@ export function ZoomControls({
   enableKeyboardShortcuts = true,
   className = ''
 }) {
-  let [isOpen, setIsOpen] = useState(false);
+  const [isOpen, setIsOpen] = useState(false);
 
-  let zoomIn = useCallback(() => {
+  const zoomIn = useCallback(() => {
     if (zoom === 'fit') {
       onZoomChange(0.75);
     } else {
-      let newZoom = Math.min(maxZoom, zoom + 0.25);
+      const newZoom = Math.min(maxZoom, zoom + 0.25);
       onZoomChange(newZoom);
     }
   }, [zoom, maxZoom, onZoomChange]);
 
-  let zoomOut = useCallback(() => {
+  const zoomOut = useCallback(() => {
     if (zoom === 'fit') {
       onZoomChange(0.5);
     } else {
-      let newZoom = Math.max(minZoom, zoom - 0.25);
+      const newZoom = Math.max(minZoom, zoom - 0.25);
       onZoomChange(newZoom);
     }
   }, [zoom, minZoom, onZoomChange]);
 
-  let fitToScreen = useCallback(() => {
+  const fitToScreen = useCallback(() => {
     onZoomChange('fit');
     setIsOpen(false);
   }, [onZoomChange]);
 
-  let actualSize = useCallback(() => {
+  const actualSize = useCallback(() => {
     onZoomChange(1);
     setIsOpen(false);
   }, [onZoomChange]);
@@ -95,7 +95,7 @@ export function ZoomControls({
   useEffect(() => {
     if (!enableKeyboardShortcuts) return;
 
-    let handleKeyDown = (e) => {
+    const handleKeyDown = (e) => {
       // Ignore if typing in input
       if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
 
@@ -118,7 +118,7 @@ export function ZoomControls({
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, [enableKeyboardShortcuts, zoomIn, zoomOut, actualSize, fitToScreen]);
 
-  let displayValue = zoom === 'fit' ? 'Fit' : `${Math.round(zoom * 100)}%`;
+  const displayValue = zoom === 'fit' ? 'Fit' : `${Math.round(zoom * 100)}%`;
 
   // Mobile variant - full-width touch-friendly layout
   if (variant === 'mobile') {

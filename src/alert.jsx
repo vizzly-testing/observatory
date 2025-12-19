@@ -24,7 +24,7 @@ export function Alert({
   className = '',
   ...props
 }) {
-  let variants = {
+  const variants = {
     success: {
       container: 'bg-emerald-500/10 border-emerald-500/20',
       icon: 'text-emerald-400',
@@ -55,8 +55,8 @@ export function Alert({
     }
   };
 
-  let { container, icon, title: titleColor, text, DefaultIcon } = variants[variant];
-  let Icon = CustomIcon || DefaultIcon;
+  const { container, icon, title: titleColor, text, DefaultIcon } = variants[variant];
+  const Icon = CustomIcon || DefaultIcon;
 
   return (
     <div className={`flex gap-3 p-4 rounded-lg border ${container} ${className}`} {...props}>

@@ -7,7 +7,7 @@
  */
 
 export function Card({ children, variant, hover = false, className = '', ...props }) {
-  let variantClasses = {
+  const variantClasses = {
     default: '',
     success: 'border-l-2 border-l-emerald-500',
     warning: 'border-l-2 border-l-amber-500',
@@ -16,7 +16,7 @@ export function Card({ children, variant, hover = false, className = '', ...prop
     purple: 'border-l-2 border-l-purple-500'
   };
 
-  let classes = [
+  const classes = [
     'bg-white/[0.03] backdrop-blur-sm border border-slate-700/50 rounded-xl overflow-hidden',
     variant ? variantClasses[variant] : '',
     hover ? 'transition-all duration-200 hover:border-slate-600 hover:bg-white/[0.05]' : '',

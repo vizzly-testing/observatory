@@ -21,7 +21,7 @@ import {
 /**
  * View mode configuration
  */
-let viewModes = [
+const viewModes = [
   {
     value: 'overlay',
     label: 'Overlay',
@@ -67,8 +67,8 @@ export function ViewModeToggle({
       aria-label="View mode"
     >
       {viewModes.map((mode) => {
-        let isActive = value === mode.value;
-        let Icon = mode.icon;
+        const isActive = value === mode.value;
+        const Icon = mode.icon;
 
         return (
           <button
@@ -112,8 +112,8 @@ export function ViewModeToggle({
  * ViewModeSelect - Dropdown version for very compact spaces
  */
 export function ViewModeSelect({ value = 'overlay', onChange, disabled = false, className = '' }) {
-  let currentMode = viewModes.find((m) => m.value === value) || viewModes[0];
-  let Icon = currentMode.icon;
+  const currentMode = viewModes.find((m) => m.value === value) || viewModes[0];
+  const Icon = currentMode.icon;
 
   return (
     <div className={`relative ${className}`}>
