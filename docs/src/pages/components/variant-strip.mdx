@@ -1,0 +1,207 @@
+---
+layout: ../../layouts/DocsLayout.astro
+title: VariantStrip
+description: Dimension-grouped variant selector for screenshot comparisons
+---
+
+import { ComponentPreview } from '../../components/ComponentPreview.jsx';
+import {
+  BasicVariantStripDemo,
+  MultiDimensionDemo,
+  CompactVariantStripDemo,
+  NoLabelsDemo,
+  VariantButtonDemo,
+  DimensionGroupDemo,
+  CustomPropertiesDemo
+} from '../../components/demos/VariantStripDemos.jsx';
+
+# VariantStrip
+
+A visual variant selector that groups screenshot comparisons by dimension (viewport size, browser, theme, locale, etc.). Essential for visual review workflows where screenshots have multiple variants.
+
+## Features
+
+- **Dimension Grouping**: Automatically groups variants by viewport, browser, theme, and custom properties
+- **Smart Navigation**: When switching one dimension, preserves other dimension values
+- **Status Aggregation**: Shows worst status across all comparisons for a dimension value
+- **Custom Properties Support**: Works with user-defined `baselineSignatureProperties`
+- **Compact Mode**: Reduced padding for tight UI spaces
+
+## Basic Usage
+
+Shows viewport and browser dimensions by default:
+
+<ComponentPreview client:load>
+  <BasicVariantStripDemo client:load />
+</ComponentPreview>
+
+```jsx
+import { VariantStrip } from '@vizzly-testing/observatory';
+
+<VariantStrip
+  variants={comparisons}
+  currentVariantId={selectedId}
+  onVariantSelect={(variant) => setSelectedId(variant.id)}
+/>
+```
+
+## Multi-Dimension Grouping
+
+Add custom dimensions using `baselineSignatureProperties`:
+
+<ComponentPreview client:load>
+  <MultiDimensionDemo client:load />
+</ComponentPreview>
+
+```jsx
+<VariantStrip
+  variants={comparisons}
+  currentVariantId={selectedId}
+  onVariantSelect={handleSelect}
+  baselineSignatureProperties={['theme']}
+/>
+```
+
+## Compact Mode
+
+Use `compact` for header bars or tight spaces:
+
+<ComponentPreview client:load>
+  <CompactVariantStripDemo client:load />
+</ComponentPreview>
+
+```jsx
+<VariantStrip
+  variants={comparisons}
+  currentVariantId={selectedId}
+  onVariantSelect={handleSelect}
+  compact
+/>
+```
+
+## Without Labels
+
+Hide dimension labels with `showLabels={false}`:
+
+<ComponentPreview client:load>
+  <NoLabelsDemo client:load />
+</ComponentPreview>
+
+## Custom Properties (Locale, Device, etc.)
+
+The component extracts properties from `comparison.metadata` or `comparison.metadata.properties`. Any string property can be used as a dimension:
+
+<ComponentPreview client:load>
+  <CustomPropertiesDemo client:load />
+</ComponentPreview>
+
+```jsx
+// Screenshots captured with properties
+await vizzlyScreenshot({
+  name: 'dashboard',
+  properties: {
+    locale: 'ja-JP',
+    theme: 'dark',
+    userRole: 'admin'
+  }
+});
+
+// Then in the variant selector
+<VariantStrip
+  variants={comparisons}
+  currentVariantId={selectedId}
+  onVariantSelect={handleSelect}
+  baselineSignatureProperties={['locale', 'theme', 'userRole']}
+/>
+```
+
+## Sub-Components
+
+### VariantButton
+
+Individual variant button with status indicator:
+
+<ComponentPreview client:load>
+  <VariantButtonDemo client:load />
+</ComponentPreview>
+
+### DimensionGroup
+
+Container for grouping buttons by dimension:
+
+<ComponentPreview client:load>
+  <DimensionGroupDemo client:load />
+</ComponentPreview>
+
+## Props
+
+### VariantStrip
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| `variants` | `Array` | `[]` | Array of comparison objects |
+| `currentVariantId` | `string` | - | ID of the currently selected variant |
+| `onVariantSelect` | `function` | - | Callback when a variant is selected |
+| `dimensions` | `Array` | `['viewport', 'browser']` | Explicit dimensions to show |
+| `baselineSignatureProperties` | `Array` | `[]` | Additional dimensions from project config |
+| `compact` | `boolean` | `false` | Use compact styling |
+| `showLabels` | `boolean` | `true` | Show dimension labels |
+| `className` | `string` | `''` | Additional CSS classes |
+
+### VariantButton
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| `value` | `string` | - | Raw dimension value |
+| `displayValue` | `string` | - | Formatted display value |
+| `dimension` | `string` | - | Dimension name (viewport, browser, etc.) |
+| `isSelected` | `boolean` | - | Whether this button is selected |
+| `comparisons` | `Array\|Object` | - | Comparison(s) for status aggregation |
+| `onClick` | `function` | - | Click handler |
+| `showStatus` | `boolean` | `true` | Show status indicator dot |
+| `compact` | `boolean` | `false` | Use compact styling |
+
+## Status Colors
+
+| Status | Color | Indicator |
+|--------|-------|-----------|
+| `changed` | Amber | Warning icon, pulsing dot |
+| `new` | Blue | Pulsing dot |
+| `rejected` | Red | X icon |
+| `approved` | Emerald | Check icon |
+| `auto_approved` | Purple | Sparkles icon |
+| `unchanged` | Slate | No icon |
+
+## Dimension Configuration
+
+Built-in dimensions with custom rendering:
+
+| Dimension | Label | Icon | Sorting |
+|-----------|-------|------|---------|
+| `viewport` | Size | Monitor | Largest first |
+| `browser` | Browser | Browser logo | Alphabetical |
+| `theme` | Theme | Sun/Moon | Light first |
+| `device` | Device | Phone | Alphabetical |
+| `locale` | Locale | Language | Alphabetical |
+| `orientation` | Orientation | Phone | Alphabetical |
+
+Custom dimensions (from `baselineSignatureProperties`) use a generic icon and alphabetical sorting.
+
+## Helper Functions
+
+```jsx
+import {
+  getDimensionValue,
+  getDimensionLabel,
+  formatDimensionValue
+} from '@vizzly-testing/observatory';
+
+// Extract dimension value from comparison
+let viewport = getDimensionValue(comparison, 'viewport'); // '1920x1080'
+
+// Get human-readable label
+let label = getDimensionLabel('viewport'); // 'Size'
+
+// Format for display
+let display = formatDimensionValue('viewport', '1920x1080'); // '1920×1080'
+```

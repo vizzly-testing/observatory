@@ -1,0 +1,97 @@
+---
+layout: ../../layouts/DocsLayout.astro
+title: DataTable
+description: Advanced tables with sorting, filtering, and column management
+---
+
+import { ComponentPreview } from '../../components/ComponentPreview.jsx';
+import { DosAndDonts, Do, Dont } from '../../components/DosAndDonts.jsx';
+import { PropsTable } from '../../components/PropsTable.jsx';
+import { DataTableBasicDemo } from '../../components/demos/DataDisplayDemos.jsx';
+
+# DataTable
+
+DataTable provides advanced table features like sorting, column visibility, search, and mobile-responsive card layouts.
+
+## When to use
+
+- **Large datasets** — Many rows that need filtering/sorting
+- **User customization** — Column visibility preferences
+- **Complex data** — Multiple interactive features needed
+- **Responsive needs** — Mobile card layout support
+
+## Basic Usage
+
+<ComponentPreview client:load>
+  <DataTableBasicDemo />
+</ComponentPreview>
+
+```jsx
+let [sort, setSort] = useState({ key: 'name', order: 'asc' });
+let [columnVisibility, setColumnVisibility] = useState({
+  name: true, status: true, platform: true
+});
+
+<DataTable
+  data={data}
+  columns={[
+    { key: 'name', label: 'Name', sortable: true, priority: 'high' },
+    { key: 'status', label: 'Status', sortable: true },
+    { key: 'platform', label: 'Platform' },
+  ]}
+  sortBy={sort.key}
+  sortOrder={sort.order}
+  onSortChange={(key, order) => setSort({ key, order })}
+  columnVisibility={columnVisibility}
+  onColumnVisibilityChange={setColumnVisibility}
+  toolbar={<SearchInput ... />}
+  footer={<span>{data.length} items</span>}
+/>
+```
+
+## Features
+
+### Sorting
+
+Click column headers to sort. Sortable columns show sort indicators.
+
+### Column Visibility
+
+Users can toggle columns on/off. Set `priority: 'high'` for columns that should always be visible on mobile.
+
+### Mobile Card Layout
+
+On small screens, DataTable automatically switches to a card layout. High-priority columns remain visible.
+
+### Toolbar & Footer
+
+Use the `toolbar` slot for search and filters. The `footer` slot is great for counts and pagination.
+
+## Best Practices
+
+<DosAndDonts client:load>
+  <Do>Mark the most important column as high priority for mobile</Do>
+  <Dont>Mark all columns as high priority — defeats the purpose</Dont>
+</DosAndDonts>
+
+<DosAndDonts client:load>
+  <Do>Provide an empty state when no data matches filters</Do>
+  <Dont>Show a blank table with no explanation</Dont>
+</DosAndDonts>
+
+## Props
+
+<PropsTable client:load props={[
+  { name: 'data', type: 'Array<object>', default: '[]', description: 'Row data' },
+  { name: 'columns', type: 'Array<ColumnDef>', default: '[]', description: 'Column definitions with sortable, priority, render' },
+  { name: 'sortBy', type: 'string', default: '', description: 'Current sort column key' },
+  { name: 'sortOrder', type: "'asc' | 'desc'", default: "'asc'", description: 'Sort direction' },
+  { name: 'onSortChange', type: '(key, order) => void', default: '', description: 'Sort change handler' },
+  { name: 'columnVisibility', type: 'Record<string, boolean>', default: '', description: 'Column visibility state' },
+  { name: 'onColumnVisibilityChange', type: '(state) => void', default: '', description: 'Visibility change handler' },
+  { name: 'toolbar', type: 'ReactNode', default: '', description: 'Content above the table' },
+  { name: 'footer', type: 'ReactNode', default: '', description: 'Content below the table' },
+  { name: 'onRowClick', type: '(row) => void', default: '', description: 'Row click handler' },
+  { name: 'emptyStateTitle', type: 'string', default: '', description: 'Empty state heading' },
+  { name: 'emptyStateMessage', type: 'string', default: '', description: 'Empty state description' },
+]} />

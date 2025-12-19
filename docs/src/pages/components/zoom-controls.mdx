@@ -1,0 +1,83 @@
+---
+layout: ../../layouts/DocsLayout.astro
+title: ZoomControls
+description: Image zoom controls for the viewer
+---
+
+import { ComponentPreview } from '../../components/ComponentPreview.jsx';
+import { DosAndDonts, Do, Dont } from '../../components/DosAndDonts.jsx';
+import { PropsTable } from '../../components/PropsTable.jsx';
+import { ZoomControlsBasicDemo, ZoomControlsMobileDemo } from '../../components/demos/ImageViewerDemos.jsx';
+
+# ZoomControls
+
+ZoomControls provide buttons and presets for controlling image zoom level in the screenshot viewer.
+
+## When to use
+
+- **Image viewer** — Control zoom in screenshot comparison
+- **Detail inspection** — Zoom into specific areas
+- **Fit-to-screen** — Reset to optimal viewing size
+
+## Desktop Variant
+
+<ComponentPreview client:load>
+  <ZoomControlsBasicDemo />
+</ComponentPreview>
+
+```jsx
+let [zoom, setZoom] = useState('fit');
+
+<ZoomControls zoom={zoom} onZoomChange={setZoom} />
+```
+
+## Mobile Variant
+
+<ComponentPreview client:load>
+  <ZoomControlsMobileDemo />
+</ComponentPreview>
+
+```jsx
+<ZoomControls zoom={zoom} onZoomChange={setZoom} variant="mobile" />
+```
+
+## Zoom Levels
+
+| Value | Description |
+|-------|-------------|
+| `'fit'` | Fit image to container |
+| `'100'` | 100% actual size |
+| `'50'` | 50% zoom |
+| `'200'` | 200% zoom |
+| Number | Custom percentage |
+
+## Keyboard Shortcuts
+
+Desktop variant supports keyboard shortcuts:
+
+| Key | Action |
+|-----|--------|
+| `+` / `=` | Zoom in |
+| `-` | Zoom out |
+| `0` | Reset to 100% |
+| `9` | Fit to screen |
+
+## Best Practices
+
+<DosAndDonts client:load>
+  <Do>Show the current zoom level so users know where they are</Do>
+  <Dont>Let users zoom so far they lose context</Dont>
+</DosAndDonts>
+
+<DosAndDonts client:load>
+  <Do>Provide quick access to common zoom levels (fit, 100%)</Do>
+  <Dont>Require many clicks to reach common zoom levels</Dont>
+</DosAndDonts>
+
+## Props
+
+<PropsTable client:load props={[
+  { name: 'zoom', type: "string | number", default: "'fit'", description: 'Current zoom level' },
+  { name: 'onZoomChange', type: '(zoom: string | number) => void', default: '', description: 'Zoom change handler' },
+  { name: 'variant', type: "'desktop' | 'mobile'", default: "'desktop'", description: 'Layout variant' },
+]} />

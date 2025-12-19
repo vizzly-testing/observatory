@@ -1,0 +1,83 @@
+---
+layout: ../../layouts/DocsLayout.astro
+title: StatusDot
+description: Minimal status indicators for inline use
+---
+
+import { ComponentPreview } from '../../components/ComponentPreview.jsx';
+import { DosAndDonts, Do, Dont } from '../../components/DosAndDonts.jsx';
+import { PropsTable } from '../../components/PropsTable.jsx';
+import { StatusDotBasicDemo, StatusDotSizesDemo, StatusDotAnimatedDemo } from '../../components/demos/StatusDotDemos.jsx';
+
+# StatusDot
+
+A minimal circular indicator that shows status at a glance. Use when you need a compact visual cue without text.
+
+## When to use
+
+- **Inline status** — Next to names, labels, or in tight spaces
+- **Table cells** — When Badge would be too prominent
+- **Lists** — Quick visual scanning of item states
+- **Connection status** — Online/offline indicators
+
+## Basic Usage
+
+<ComponentPreview client:load>
+  <StatusDotBasicDemo />
+</ComponentPreview>
+
+```jsx
+<StatusDot status="success" />
+<StatusDot status="warning" />
+<StatusDot status="danger" />
+<StatusDot status="processing" />
+```
+
+## Sizes
+
+<ComponentPreview client:load>
+  <StatusDotSizesDemo />
+</ComponentPreview>
+
+```jsx
+<StatusDot status="success" size="sm" />
+<StatusDot status="success" size="md" />
+<StatusDot status="success" size="lg" />
+```
+
+## Animated State
+
+The `processing` status includes a pulse animation to indicate ongoing activity.
+
+<ComponentPreview client:load>
+  <StatusDotAnimatedDemo />
+</ComponentPreview>
+
+## Status Reference
+
+| Status | Color | Usage |
+|--------|-------|-------|
+| `success` | Green | Approved, passing, online |
+| `warning` | Amber | Pending, review needed |
+| `danger` | Red | Failed, rejected, error |
+| `processing` | Blue (animated) | In progress, loading |
+
+## Best Practices
+
+<DosAndDonts client:load>
+  <Do>Use StatusDot for quick visual scanning in dense interfaces</Do>
+  <Dont>Use StatusDot alone for critical status — add text for accessibility</Dont>
+</DosAndDonts>
+
+<DosAndDonts client:load>
+  <Do>Pair with nearby text that explains the status</Do>
+  <Dont>Use more than one StatusDot per item — it creates confusion</Dont>
+</DosAndDonts>
+
+## Props
+
+<PropsTable client:load props={[
+  { name: 'status', type: "'success' | 'warning' | 'danger' | 'processing'", default: "'success'", description: 'Visual status indicator' },
+  { name: 'size', type: "'sm' | 'md' | 'lg'", default: "'md'", description: 'Size of the dot' },
+  { name: 'className', type: 'string', default: '', description: 'Additional CSS classes' },
+]} />

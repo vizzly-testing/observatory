@@ -1,0 +1,92 @@
+---
+layout: ../../layouts/DocsLayout.astro
+title: Table
+description: Simple data tables for structured content
+---
+
+import { ComponentPreview } from '../../components/ComponentPreview.jsx';
+import { DosAndDonts, Do, Dont } from '../../components/DosAndDonts.jsx';
+import { PropsTable } from '../../components/PropsTable.jsx';
+import { TableBasicDemo } from '../../components/demos/DataDisplayDemos.jsx';
+
+# Table
+
+Tables display structured data in rows and columns. Use for content that benefits from direct comparison.
+
+## When to use
+
+- **Structured data** — Lists with multiple attributes per item
+- **Comparison** — When users need to compare values across rows
+- **Scannable content** — Data that users scan rather than read
+- **Simple lists** — When DataTable features aren't needed
+
+## Basic Usage
+
+<ComponentPreview client:load>
+  <TableBasicDemo />
+</ComponentPreview>
+
+```jsx
+let columns = [
+  { key: 'name', header: 'Screenshot' },
+  {
+    key: 'status',
+    header: 'Status',
+    render: (value) => <Badge variant={...}>{value}</Badge>,
+  },
+  { key: 'changes', header: 'Changes' },
+  { key: 'updated', header: 'Updated' },
+];
+
+<Table
+  columns={columns}
+  data={data}
+  onRowClick={(row) => navigate(`/screenshot/${row.id}`)}
+/>
+```
+
+## Table vs DataTable
+
+| Use Table when... | Use DataTable when... |
+|-------------------|----------------------|
+| Simple display | Sorting needed |
+| No user configuration | Column visibility toggle |
+| Few rows | Many rows with filtering |
+| Read-only | Interactive features |
+
+## Custom Rendering
+
+Use the `render` function in column definitions to customize how cells display:
+
+```jsx
+{
+  key: 'status',
+  header: 'Status',
+  render: (value, row) => (
+    <Badge variant={value === 'approved' ? 'success' : 'warning'}>
+      {value}
+    </Badge>
+  ),
+}
+```
+
+## Best Practices
+
+<DosAndDonts client:load>
+  <Do>Align numbers and dates to the right for easier scanning</Do>
+  <Dont>Mix alignment inconsistently within a column</Dont>
+</DosAndDonts>
+
+<DosAndDonts client:load>
+  <Do>Keep column headers short and clear</Do>
+  <Dont>Wrap column headers across multiple lines</Dont>
+</DosAndDonts>
+
+## Props
+
+<PropsTable client:load props={[
+  { name: 'columns', type: 'Array<{ key, header, render? }>', default: '[]', description: 'Column definitions' },
+  { name: 'data', type: 'Array<object>', default: '[]', description: 'Row data' },
+  { name: 'onRowClick', type: '(row) => void', default: '', description: 'Row click handler' },
+  { name: 'emptyMessage', type: 'string', default: "'No data'", description: 'Message when empty' },
+]} />

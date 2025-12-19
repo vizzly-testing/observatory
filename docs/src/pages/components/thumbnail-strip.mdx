@@ -1,0 +1,101 @@
+---
+layout: ../../layouts/DocsLayout.astro
+title: ThumbnailStrip
+description: Navigable strip of image thumbnails
+---
+
+import { ComponentPreview } from '../../components/ComponentPreview.jsx';
+import { DosAndDonts, Do, Dont } from '../../components/DosAndDonts.jsx';
+import { PropsTable } from '../../components/PropsTable.jsx';
+import { ThumbnailStripDemo } from '../../components/demos/ImageViewerDemos.jsx';
+
+# ThumbnailStrip
+
+ThumbnailStrip displays a horizontal row of thumbnail images for navigating between screenshots in the viewer.
+
+## When to use
+
+- **Image gallery** — Navigate between multiple images
+- **Screenshot viewer** — Switch between screenshots in a build
+- **Comparison views** — Jump between different screenshots
+
+## Basic Usage
+
+<ComponentPreview client:load>
+  <ThumbnailStripDemo />
+</ComponentPreview>
+
+```jsx
+let [activeId, setActiveId] = useState(1);
+let [expanded, setExpanded] = useState(true);
+
+<ThumbnailStrip
+  items={[
+    { id: 1, label: 'Homepage', badge: 'NEW' },
+    { id: 2, label: 'Login Page' },
+    { id: 3, label: 'Dashboard', badge: 'DIFF' },
+  ]}
+  activeId={activeId}
+  onSelect={setActiveId}
+  collapsible
+  isExpanded={expanded}
+  onToggle={() => setExpanded(!expanded)}
+/>
+```
+
+## Features
+
+### Badges
+
+Items can have badges to indicate status:
+
+- `NEW` — Newly added screenshot
+- `DIFF` — Has visual differences
+- Custom text for other states
+
+### Collapsible
+
+When `collapsible` is true, the strip can be expanded/collapsed to save space.
+
+### Auto-scroll
+
+The strip automatically scrolls to keep the active item visible.
+
+## Best Practices
+
+<DosAndDonts client:load>
+  <Do>Show the screenshot name in the thumbnail for identification</Do>
+  <Dont>Rely only on thumbnail images that may be too small to distinguish</Dont>
+</DosAndDonts>
+
+<DosAndDonts client:load>
+  <Do>Use badges to highlight items that need attention</Do>
+  <Dont>Badge every item — it loses meaning</Dont>
+</DosAndDonts>
+
+<DosAndDonts client:load>
+  <Do>Make the collapsible state persist across sessions</Do>
+  <Dont>Reset user preferences on every page load</Dont>
+</DosAndDonts>
+
+## Props
+
+<PropsTable client:load props={[
+  { name: 'items', type: 'Array<ThumbnailItem>', default: '[]', description: 'Thumbnail items' },
+  { name: 'activeId', type: 'string | number', default: '', description: 'Currently active item ID' },
+  { name: 'onSelect', type: '(id) => void', default: '', description: 'Selection handler' },
+  { name: 'collapsible', type: 'boolean', default: 'false', description: 'Enable collapse/expand' },
+  { name: 'isExpanded', type: 'boolean', default: 'true', description: 'Controlled expanded state' },
+  { name: 'onToggle', type: '() => void', default: '', description: 'Toggle handler' },
+]} />
+
+### ThumbnailItem
+
+```ts
+interface ThumbnailItem {
+  id: string | number;
+  label: string;
+  src?: string;
+  badge?: string;
+}
+```

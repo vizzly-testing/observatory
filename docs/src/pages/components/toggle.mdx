@@ -1,0 +1,64 @@
+---
+layout: ../../layouts/DocsLayout.astro
+title: Toggle
+description: Switch for immediate on/off control
+---
+
+import { ComponentPreview } from '../../components/ComponentPreview.jsx';
+import { DosAndDonts, Do, Dont } from '../../components/DosAndDonts.jsx';
+import { PropsTable } from '../../components/PropsTable.jsx';
+import { ToggleBasicDemo } from '../../components/demos/FormDemos.jsx';
+
+# Toggle
+
+Toggles provide an immediate on/off switch. Unlike checkboxes, toggles apply changes immediately without needing to submit a form.
+
+## When to use
+
+- **Immediate effect** — Changes that apply instantly
+- **Feature toggles** — Enable/disable functionality
+- **Settings** — Dark mode, notifications, auto-save
+- **Visibility** — Show/hide elements
+
+## Basic Usage
+
+<ComponentPreview client:load>
+  <ToggleBasicDemo />
+</ComponentPreview>
+
+```jsx
+<Toggle
+  label="Dynamic content detection"
+  description="Auto-detect and ignore dynamic regions"
+  checked={enabled}
+  onChange={(e) => setEnabled(e.target.checked)}
+/>
+```
+
+## Best Practices
+
+<DosAndDonts client:load>
+  <Do>Use toggles for settings that take effect immediately</Do>
+  <Dont>Use toggles in forms where changes need to be submitted</Dont>
+</DosAndDonts>
+
+<DosAndDonts client:load>
+  <Do>Place the toggle on the right side of its label</Do>
+  <Dont>Place toggles in unpredictable positions</Dont>
+</DosAndDonts>
+
+<DosAndDonts client:load>
+  <Do>Show visual feedback when the toggle state changes</Do>
+  <Dont>Leave users unsure if their action was registered</Dont>
+</DosAndDonts>
+
+## Props
+
+<PropsTable client:load props={[
+  { name: 'label', type: 'string', default: '', description: 'Toggle label' },
+  { name: 'description', type: 'string', default: '', description: 'Additional helper text' },
+  { name: 'checked', type: 'boolean', default: 'false', description: 'Controlled checked state' },
+  { name: 'onChange', type: '(e: ChangeEvent) => void', default: '', description: 'Change handler' },
+  { name: 'disabled', type: 'boolean', default: 'false', description: 'Disable the toggle' },
+  { name: 'size', type: "'sm' | 'md' | 'lg'", default: "'md'", description: 'Toggle size' },
+]} />

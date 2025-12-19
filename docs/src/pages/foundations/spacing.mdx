@@ -1,0 +1,184 @@
+---
+layout: ../../layouts/DocsLayout.astro
+title: Spacing
+description: The spacing scale and layout rhythm
+---
+
+import { ComponentPreview } from '../../components/ComponentPreview.jsx';
+import { SpacingScaleDemo, SpacingTokensDemo, PaddingExamplesDemo, ComponentSpacingDemo, GridGapsDemo } from '../../components/demos/SpacingDemos.jsx';
+
+# Spacing
+
+Consistent spacing creates rhythm and hierarchy. Observatory uses Tailwind's spacing scale with specific conventions for different contexts.
+
+## The Scale
+
+Based on a 4px base unit. Each step multiplies the base.
+
+<ComponentPreview client:load>
+  <SpacingScaleDemo />
+</ComponentPreview>
+
+## Common Tokens
+
+Quick reference for the most-used spacing values.
+
+<ComponentPreview client:load>
+  <SpacingTokensDemo />
+</ComponentPreview>
+
+## Padding Patterns
+
+Different contexts call for different padding densities.
+
+<ComponentPreview client:load>
+  <PaddingExamplesDemo />
+</ComponentPreview>
+
+### Guidelines
+
+| Context | Padding | Example |
+|---------|---------|---------|
+| Buttons, badges | `p-2` to `p-3` | `<Button className="px-4 py-2">` |
+| Cards, panels | `p-4` to `p-6` | `<Card className="p-6">` |
+| Page sections | `p-8` to `p-12` | `<section className="py-12">` |
+| Modals | `p-6` | `<Modal className="p-6">` |
+
+## Component Spacing
+
+Real-world example of spacing in a card component.
+
+<ComponentPreview client:load>
+  <ComponentSpacingDemo />
+</ComponentPreview>
+
+```jsx
+<Card className="p-6">
+  {/* Header with icon */}
+  <div className="flex items-center gap-3 pb-4 border-b mb-4">
+    <Icon />
+    <div>
+      <Title />
+      <Subtitle />
+    </div>
+  </div>
+
+  {/* Content with consistent gaps */}
+  <div className="space-y-3">
+    <Row className="gap-2" />
+    <Row className="gap-2" />
+  </div>
+</Card>
+```
+
+## Grid Gaps
+
+Use consistent gaps in grid layouts.
+
+<ComponentPreview client:load>
+  <GridGapsDemo />
+</ComponentPreview>
+
+```jsx
+{/* Compact - thumbnails, icon grids */}
+<div className="grid grid-cols-4 gap-2">
+
+{/* Standard - cards, form fields */}
+<div className="grid grid-cols-3 gap-4">
+
+{/* Spacious - dashboard cards, feature grids */}
+<div className="grid grid-cols-2 gap-6">
+```
+
+## Spacing Utilities
+
+### Margin & Padding
+
+```jsx
+{/* All sides */}
+<div className="p-4 m-4">
+
+{/* Horizontal / Vertical */}
+<div className="px-4 py-2">
+<div className="mx-auto my-8">
+
+{/* Individual sides */}
+<div className="pt-4 pb-2 pl-3 pr-6">
+<div className="mt-8 mb-4 ml-2 mr-0">
+```
+
+### Gap (Flexbox & Grid)
+
+```jsx
+{/* Uniform gap */}
+<div className="flex gap-4">
+<div className="grid gap-6">
+
+{/* Different x/y gaps */}
+<div className="grid gap-x-4 gap-y-6">
+```
+
+### Space Between (Stack)
+
+```jsx
+{/* Vertical stack with consistent spacing */}
+<div className="space-y-4">
+  <Item />
+  <Item />
+  <Item />
+</div>
+
+{/* Horizontal with spacing */}
+<div className="space-x-2 flex">
+  <Tag />
+  <Tag />
+</div>
+```
+
+## Best Practices
+
+### Do
+
+- Stick to the scale—avoid arbitrary values like `p-[13px]`
+- Use `gap` for flex/grid layouts instead of margins
+- Use `space-y-*` for vertical stacks of similar items
+- Increase spacing at larger breakpoints: `p-4 md:p-6 lg:p-8`
+
+### Don't
+
+- Don't mix spacing systems (Tailwind + custom CSS pixels)
+- Avoid margins on the last item in a list—use `gap` instead
+- Don't use large spacing in dense UI like tables or toolbars
+- Never use negative margins to "fix" layout issues
+
+## Responsive Spacing
+
+Increase breathing room on larger screens:
+
+```jsx
+{/* Card padding */}
+<Card className="p-4 md:p-6 lg:p-8">
+
+{/* Section spacing */}
+<section className="py-8 md:py-12 lg:py-16">
+
+{/* Grid gaps */}
+<div className="grid gap-4 md:gap-6 lg:gap-8">
+```
+
+## Spacing in Observatory Components
+
+Most Observatory components have sensible default spacing:
+
+```jsx
+{/* Card already has p-6 padding */}
+<Card>
+  <CardHeader /> {/* Has pb-4 and border */}
+  <CardBody />   {/* Has proper spacing */}
+</Card>
+
+{/* Button sizes have appropriate padding */}
+<Button size="sm">  {/* px-3 py-1.5 */}
+<Button size="md">  {/* px-4 py-2 */}
+<Button size="lg">  {/* px-6 py-3 */}
+```

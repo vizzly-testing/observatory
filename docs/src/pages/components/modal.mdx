@@ -1,0 +1,83 @@
+---
+layout: ../../layouts/DocsLayout.astro
+title: Modal
+description: Focused dialogs for important interactions
+---
+
+import { ComponentPreview } from '../../components/ComponentPreview.jsx';
+import { DosAndDonts, Do, Dont } from '../../components/DosAndDonts.jsx';
+import { PropsTable } from '../../components/PropsTable.jsx';
+import { ModalBasicDemo, ModalWithFormDemo } from '../../components/demos/ModalDemos.jsx';
+
+# Modal
+
+Modals display focused content that requires user attention. They overlay the page and block interaction with the background until dismissed.
+
+## When to use
+
+- **Confirmations** — Important decisions before proceeding
+- **Forms** — Creating or editing content
+- **Details** — Viewing more information without leaving context
+- **Focused tasks** — Multi-step wizards, settings
+
+## Basic Usage
+
+<ComponentPreview client:load>
+  <ModalBasicDemo />
+</ComponentPreview>
+
+```jsx
+<Modal
+  isOpen={isOpen}
+  onClose={() => setIsOpen(false)}
+  title="Update Baseline"
+  description="This will update your baseline images"
+>
+  <p>Modal content here...</p>
+  <div className="flex justify-end gap-3">
+    <Button variant="ghost" onClick={close}>Cancel</Button>
+    <Button onClick={handleConfirm}>Confirm</Button>
+  </div>
+</Modal>
+```
+
+## With Form
+
+<ComponentPreview client:load>
+  <ModalWithFormDemo />
+</ComponentPreview>
+
+## Best Practices
+
+<DosAndDonts client:load>
+  <Do>Use clear titles that describe the modal's purpose</Do>
+  <Dont>Use vague titles like "Confirm" or "Are you sure?"</Dont>
+</DosAndDonts>
+
+<DosAndDonts client:load>
+  <Do>Provide a clear way to close (X button, Cancel, click outside)</Do>
+  <Dont>Trap users in modals without an exit</Dont>
+</DosAndDonts>
+
+<DosAndDonts client:load>
+  <Do>Keep modal content focused on a single task</Do>
+  <Dont>Nest modals inside modals</Dont>
+</DosAndDonts>
+
+## Accessibility
+
+- Focus is trapped inside the modal while open
+- Pressing Escape closes the modal
+- Focus returns to the trigger element when closed
+- Background content is hidden from screen readers
+
+## Props
+
+<PropsTable client:load props={[
+  { name: 'isOpen', type: 'boolean', default: 'false', description: 'Controls visibility' },
+  { name: 'onClose', type: '() => void', default: '', description: 'Called when modal should close' },
+  { name: 'title', type: 'string', default: '', description: 'Modal title' },
+  { name: 'description', type: 'string', default: '', description: 'Subtitle or description' },
+  { name: 'children', type: 'ReactNode', default: '', description: 'Modal body content' },
+  { name: 'size', type: "'sm' | 'md' | 'lg' | 'xl'", default: "'md'", description: 'Modal width' },
+]} />

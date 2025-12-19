@@ -1,0 +1,86 @@
+---
+layout: ../../layouts/DocsLayout.astro
+title: Combobox
+description: Searchable dropdown with typeahead filtering
+---
+
+import { ComponentPreview } from '../../components/ComponentPreview.jsx';
+import { DosAndDonts, Do, Dont } from '../../components/DosAndDonts.jsx';
+import { PropsTable } from '../../components/PropsTable.jsx';
+import { ComboboxBasicDemo } from '../../components/demos/FormDemos.jsx';
+
+# Combobox
+
+Combobox combines a text input with a dropdown, allowing users to search and filter options as they type.
+
+## When to use
+
+- **Large option sets** — When there are many options to choose from
+- **Searchable lists** — Branches, users, projects
+- **Dynamic options** — Options loaded based on input
+- **Typeahead** — Auto-complete as user types
+
+## Basic Usage
+
+<ComponentPreview client:load>
+  <ComboboxBasicDemo />
+</ComponentPreview>
+
+```jsx
+let [selected, setSelected] = useState(null);
+
+let branches = [
+  { id: 1, name: 'main' },
+  { id: 2, name: 'develop' },
+  { id: 3, name: 'feature/auth' },
+];
+
+<Combobox
+  items={branches}
+  itemToString={(item) => item?.name || ''}
+  renderItem={(item, { selected }) => (
+    <div className="flex justify-between">
+      <span>{item.name}</span>
+      {selected && <CheckIcon />}
+    </div>
+  )}
+  selectedItem={selected}
+  onSelectedItemChange={setSelected}
+  label="Select Branch"
+  placeholder="Search branches..."
+/>
+```
+
+## Combobox vs Select
+
+| Use Combobox when... | Use Select when... |
+|---------------------|-------------------|
+| 15+ options | Few options (3-15) |
+| Users need to search | All options visible at once |
+| Dynamic/async options | Static option list |
+| Custom option rendering | Simple text options |
+
+## Best Practices
+
+<DosAndDonts client:load>
+  <Do>Show loading state while fetching options asynchronously</Do>
+  <Dont>Let the dropdown appear empty without explanation</Dont>
+</DosAndDonts>
+
+<DosAndDonts client:load>
+  <Do>Highlight matching text in search results</Do>
+  <Dont>Filter in unpredictable ways (match beginning vs contains)</Dont>
+</DosAndDonts>
+
+## Props
+
+<PropsTable client:load props={[
+  { name: 'items', type: 'T[]', default: '[]', description: 'Array of options' },
+  { name: 'itemToString', type: '(item: T) => string', default: '', description: 'Convert item to display string' },
+  { name: 'renderItem', type: '(item: T, state: { selected }) => ReactNode', default: '', description: 'Custom item renderer' },
+  { name: 'selectedItem', type: 'T | null', default: 'null', description: 'Currently selected item' },
+  { name: 'onSelectedItemChange', type: '(item: T) => void', default: '', description: 'Selection change handler' },
+  { name: 'label', type: 'string', default: '', description: 'Input label' },
+  { name: 'placeholder', type: 'string', default: '', description: 'Placeholder text' },
+  { name: 'disabled', type: 'boolean', default: 'false', description: 'Disable the combobox' },
+]} />

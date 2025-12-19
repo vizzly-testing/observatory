@@ -1,0 +1,93 @@
+---
+import { ViewTransitions } from 'astro:transitions';
+import { Header } from '../components/Header.jsx';
+import { Sidebar } from '../components/Sidebar.jsx';
+import '../styles/global.css';
+
+let { title, description } = Astro.props;
+let currentPath = Astro.url.pathname;
+---
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{title} | Observatory</title>
+    <meta name="description" content={description} />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <ViewTransitions />
+  </head>
+  <body>
+    <Header client:load />
+    <div class="flex">
+      <Sidebar currentPath={currentPath} client:load />
+      <main class="flex-1 min-w-0 max-w-4xl">
+        <!-- Decorative top gradient -->
+        <div class="h-px bg-gradient-to-r from-transparent via-amber-500/20 to-transparent" />
+
+        <article class="px-10 py-10">
+          <slot />
+        </article>
+
+        <!-- Page footer -->
+        <footer class="px-10 py-8 border-t border-slate-800/50 mt-12">
+          <div class="flex items-center justify-between text-sm text-slate-500">
+            <span>Observatory Design System</span>
+            <a href="https://github.com/vizzly-testing/vizzly" class="hover:text-amber-500 transition-colors">
+              Edit on GitHub
+            </a>
+          </div>
+        </footer>
+      </main>
+    </div>
+
+    <script>
+      // Add copy buttons to all code blocks
+      function addCopyButtons() {
+        document.querySelectorAll('pre').forEach((pre) => {
+          // Skip if already has a copy button
+          if (pre.querySelector('.copy-button')) return;
+
+          let code = pre.querySelector('code');
+          if (!code) return;
+
+          let button = document.createElement('button');
+          button.className = 'copy-button';
+          button.setAttribute('aria-label', 'Copy code');
+          button.innerHTML = `
+            <svg class="copy-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
+            </svg>
+            <svg class="check-icon" style="display:none" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+            </svg>
+          `;
+
+          button.addEventListener('click', async () => {
+            let text = code.textContent || '';
+            await navigator.clipboard.writeText(text);
+
+            button.classList.add('copied');
+            button.querySelector('.copy-icon').style.display = 'none';
+            button.querySelector('.check-icon').style.display = 'block';
+
+            let timer = window.setTimeout(() => {
+              button.classList.remove('copied');
+              button.querySelector('.copy-icon').style.display = 'block';
+              button.querySelector('.check-icon').style.display = 'none';
+            }, 2000);
+          });
+
+          pre.appendChild(button);
+        });
+      }
+
+      // Run on initial load
+      addCopyButtons();
+
+      // Re-run after view transitions (Astro)
+      document.addEventListener('astro:after-swap', addCopyButtons);
+    </script>
+  </body>
+</html>

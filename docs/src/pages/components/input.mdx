@@ -1,0 +1,91 @@
+---
+layout: ../../layouts/DocsLayout.astro
+title: Input
+description: Text input fields for forms and data entry
+---
+
+import { ComponentPreview } from '../../components/ComponentPreview.jsx';
+import { DosAndDonts, Do, Dont } from '../../components/DosAndDonts.jsx';
+import { PropsTable } from '../../components/PropsTable.jsx';
+import { InputBasicDemo, InputWithIconDemo, InputStatesDemo } from '../../components/demos/FormDemos.jsx';
+
+# Input
+
+Text inputs allow users to enter and edit text. They're the foundation of form-based interactions.
+
+## When to use
+
+- **Text entry** — Names, emails, URLs, search queries
+- **Short answers** — Single-line responses
+- **Formatted data** — Passwords, phone numbers, codes
+- **Search fields** — Quick filtering and lookup
+
+## Basic Usage
+
+<ComponentPreview client:load>
+  <InputBasicDemo />
+</ComponentPreview>
+
+```jsx
+<Input label="Project Name" placeholder="Enter project name..." />
+```
+
+## With Icons
+
+Icons help users identify input purpose at a glance:
+
+<ComponentPreview client:load>
+  <InputWithIconDemo />
+</ComponentPreview>
+
+```jsx
+<Input label="Email" placeholder="you@example.com" icon={EnvelopeIcon} />
+<Input label="Search" placeholder="Search..." icon={MagnifyingGlassIcon} />
+```
+
+## States
+
+<ComponentPreview client:load>
+  <InputStatesDemo />
+</ComponentPreview>
+
+```jsx
+// Error state
+<Input label="Email" error="Please enter a valid email" />
+
+// With hint
+<Input label="Slug" hint="Only lowercase letters and hyphens" />
+
+// Disabled
+<Input label="Locked" disabled />
+```
+
+## Best Practices
+
+<DosAndDonts client:load>
+  <Do>Always include a label — it's essential for accessibility</Do>
+  <Dont>Use placeholder text as the only label</Dont>
+</DosAndDonts>
+
+<DosAndDonts client:load>
+  <Do>Use appropriate input types (email, password, url, etc.)</Do>
+  <Dont>Use a generic text input when a specific type would help</Dont>
+</DosAndDonts>
+
+<DosAndDonts client:load>
+  <Do>Show validation errors inline, near the input</Do>
+  <Dont>Clear the input when showing an error — let users fix it</Dont>
+</DosAndDonts>
+
+## Props
+
+<PropsTable client:load props={[
+  { name: 'label', type: 'string', default: '', description: 'Label text above the input' },
+  { name: 'placeholder', type: 'string', default: '', description: 'Placeholder text' },
+  { name: 'type', type: "'text' | 'email' | 'password' | 'url' | 'number'", default: "'text'", description: 'Input type' },
+  { name: 'icon', type: 'ComponentType', default: '', description: 'Icon component to show' },
+  { name: 'hint', type: 'string', default: '', description: 'Helper text below input' },
+  { name: 'error', type: 'string', default: '', description: 'Error message (shows error state)' },
+  { name: 'disabled', type: 'boolean', default: 'false', description: 'Disable the input' },
+  { name: 'size', type: "'sm' | 'md' | 'lg'", default: "'md'", description: 'Input size' },
+]} />

@@ -1,0 +1,117 @@
+---
+layout: ../../layouts/DocsLayout.astro
+title: Avatar
+description: User profile images with fallback initials
+---
+
+import { ComponentPreview } from '../../components/ComponentPreview.jsx';
+import { DosAndDonts, Do, Dont } from '../../components/DosAndDonts.jsx';
+import { PropsTable } from '../../components/PropsTable.jsx';
+import { AvatarBasicDemo, AvatarSizesDemo, AvatarStatusDemo, AvatarGroupDemo } from '../../components/demos/AvatarDemos.jsx';
+
+# Avatar
+
+Avatars represent users with profile images or generated initials. Use them to personalize interfaces and show user presence.
+
+## When to use
+
+- **User identification** — Profile pages, comments, activity feeds
+- **Team displays** — Show project collaborators or reviewers
+- **Attribution** — Who made changes, who approved builds
+- **Presence indicators** — Online/offline status
+
+## Basic Usage
+
+<ComponentPreview client:load>
+  <AvatarBasicDemo />
+</ComponentPreview>
+
+```jsx
+<Avatar name="John Doe" />
+<Avatar name="Jane Smith" src="/avatars/jane.jpg" />
+```
+
+## Sizes
+
+<ComponentPreview client:load>
+  <AvatarSizesDemo />
+</ComponentPreview>
+
+```jsx
+<Avatar name="User" size="xs" />
+<Avatar name="User" size="sm" />
+<Avatar name="User" size="md" />
+<Avatar name="User" size="lg" />
+<Avatar name="User" size="xl" />
+```
+
+| Size | Pixels | Usage |
+|------|--------|-------|
+| `xs` | 24px | Compact lists, inline mentions |
+| `sm` | 32px | Table cells, tight spaces |
+| `md` | 40px | Default, most contexts |
+| `lg` | 48px | Emphasized displays |
+| `xl` | 64px | Profile headers, hero sections |
+
+## Status Indicators
+
+<ComponentPreview client:load>
+  <AvatarStatusDemo />
+</ComponentPreview>
+
+```jsx
+<Avatar name="User" status="online" />
+<Avatar name="User" status="away" />
+<Avatar name="User" status="busy" />
+<Avatar name="User" status="offline" />
+```
+
+## Avatar Groups
+
+Use `AvatarGroup` to display multiple avatars with overflow handling:
+
+<ComponentPreview client:load>
+  <AvatarGroupDemo />
+</ComponentPreview>
+
+```jsx
+<AvatarGroup
+  avatars={[
+    { name: 'Alice', src: '/avatars/alice.jpg' },
+    { name: 'Bob', src: null },
+    { name: 'Carol', src: '/avatars/carol.jpg' },
+  ]}
+  max={3}
+/>
+```
+
+## Best Practices
+
+<DosAndDonts client:load>
+  <Do>Always provide a name for accessibility and fallback initials</Do>
+  <Dont>Use avatars without any identifying information</Dont>
+</DosAndDonts>
+
+<DosAndDonts client:load>
+  <Do>Use consistent sizing within the same context</Do>
+  <Dont>Mix different avatar sizes in the same row or list</Dont>
+</DosAndDonts>
+
+## Props
+
+### Avatar
+
+<PropsTable client:load props={[
+  { name: 'name', type: 'string', default: '', description: 'User name (used for initials and alt text)' },
+  { name: 'src', type: 'string', default: '', description: 'Image URL' },
+  { name: 'size', type: "'xs' | 'sm' | 'md' | 'lg' | 'xl'", default: "'md'", description: 'Avatar size' },
+  { name: 'status', type: "'online' | 'away' | 'busy' | 'offline'", default: '', description: 'Presence indicator' },
+]} />
+
+### AvatarGroup
+
+<PropsTable client:load props={[
+  { name: 'avatars', type: 'Array<{ name: string, src?: string }>', default: '[]', description: 'List of avatar data' },
+  { name: 'max', type: 'number', default: '4', description: 'Maximum visible avatars before overflow' },
+  { name: 'size', type: "'xs' | 'sm' | 'md' | 'lg'", default: "'md'", description: 'Size for all avatars' },
+]} />

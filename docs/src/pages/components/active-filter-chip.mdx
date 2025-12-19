@@ -1,0 +1,81 @@
+---
+layout: ../../layouts/DocsLayout.astro
+title: ActiveFilterChip
+description: Display and dismiss active filters
+---
+
+import { ComponentPreview } from '../../components/ComponentPreview.jsx';
+import { DosAndDonts, Do, Dont } from '../../components/DosAndDonts.jsx';
+import { PropsTable } from '../../components/PropsTable.jsx';
+import { ActiveFilterChipDemo, ActiveFilterBarDemo } from '../../components/demos/FilterDemos.jsx';
+
+# ActiveFilterChip
+
+ActiveFilterChip displays currently applied filters with a dismiss button. Often used in conjunction with FilterPills.
+
+## When to use
+
+- **Show active filters** — Display what filters are currently applied
+- **Quick removal** — Let users remove individual filters
+- **Filter summary** — Show at a glance what's filtering the view
+
+## Basic Usage
+
+<ComponentPreview client:load>
+  <ActiveFilterChipDemo />
+</ComponentPreview>
+
+```jsx
+<ActiveFilterChip label="Changed" color="amber" onRemove={() => removeFilter('changed')} />
+<ActiveFilterChip label="main" color="blue" onRemove={() => removeFilter('branch')} />
+```
+
+## ActiveFilterBar
+
+Group chips with a summary and "Clear all" action:
+
+<ComponentPreview client:load>
+  <ActiveFilterBarDemo />
+</ComponentPreview>
+
+```jsx
+<ActiveFilterBar
+  filteredCount={15}
+  totalCount={42}
+  onClearAll={() => clearFilters()}
+>
+  <ActiveFilterChip label="Changed" color="amber" onRemove={...} />
+  <ActiveFilterChip label="main" color="blue" onRemove={...} />
+</ActiveFilterBar>
+```
+
+## Best Practices
+
+<DosAndDonts client:load>
+  <Do>Show the filter bar only when filters are active</Do>
+  <Dont>Show an empty filter bar when no filters are applied</Dont>
+</DosAndDonts>
+
+<DosAndDonts client:load>
+  <Do>Use matching colors between FilterPill and ActiveFilterChip</Do>
+  <Dont>Use different colors for the same filter in different places</Dont>
+</DosAndDonts>
+
+## Props
+
+### ActiveFilterChip
+
+<PropsTable client:load props={[
+  { name: 'label', type: 'string', default: '', description: 'Filter label' },
+  { name: 'color', type: "'amber' | 'cyan' | 'blue' | 'gray' | ...", default: "'gray'", description: 'Chip color' },
+  { name: 'onRemove', type: '() => void', default: '', description: 'Remove handler' },
+]} />
+
+### ActiveFilterBar
+
+<PropsTable client:load props={[
+  { name: 'filteredCount', type: 'number', default: '', description: 'Number of filtered results' },
+  { name: 'totalCount', type: 'number', default: '', description: 'Total number of items' },
+  { name: 'onClearAll', type: '() => void', default: '', description: 'Clear all handler' },
+  { name: 'children', type: 'ReactNode', default: '', description: 'ActiveFilterChip components' },
+]} />

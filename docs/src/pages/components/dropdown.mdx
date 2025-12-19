@@ -1,0 +1,109 @@
+---
+layout: ../../layouts/DocsLayout.astro
+title: Dropdown
+description: Action menus and contextual options
+---
+
+import { ComponentPreview } from '../../components/ComponentPreview.jsx';
+import { DosAndDonts, Do, Dont } from '../../components/DosAndDonts.jsx';
+import { PropsTable } from '../../components/PropsTable.jsx';
+import { DropdownBasicDemo, DropdownPositionsDemo } from '../../components/demos/NavigationDemos.jsx';
+
+# Dropdown
+
+Dropdowns display a list of actions or options that appear when triggered. They're great for contextual menus and overflow actions.
+
+## When to use
+
+- **Action menus** — Edit, delete, duplicate actions
+- **More options** — When space is limited for all buttons
+- **Context menus** — Right-click style interactions
+- **Overflow actions** — Secondary actions that don't fit
+
+## Basic Usage
+
+<ComponentPreview client:load>
+  <DropdownBasicDemo />
+</ComponentPreview>
+
+```jsx
+<Dropdown
+  trigger={
+    <Button variant="secondary" icon={EllipsisVerticalIcon}>
+      Actions
+    </Button>
+  }
+>
+  <DropdownItem icon={PencilIcon} onClick={handleEdit}>Edit</DropdownItem>
+  <DropdownItem icon={DocumentDuplicateIcon} onClick={handleDuplicate}>Duplicate</DropdownItem>
+  <DropdownDivider />
+  <DropdownItem icon={TrashIcon} variant="danger" onClick={handleDelete}>Delete</DropdownItem>
+</Dropdown>
+```
+
+## Alignment
+
+<ComponentPreview client:load>
+  <DropdownPositionsDemo />
+</ComponentPreview>
+
+```jsx
+<Dropdown trigger={...} align="left">...</Dropdown>
+<Dropdown trigger={...} align="right">...</Dropdown>
+```
+
+## Item Variants
+
+```jsx
+// Normal item
+<DropdownItem onClick={...}>Normal Action</DropdownItem>
+
+// With icon
+<DropdownItem icon={PencilIcon} onClick={...}>Edit</DropdownItem>
+
+// Danger variant
+<DropdownItem icon={TrashIcon} variant="danger" onClick={...}>Delete</DropdownItem>
+
+// Disabled
+<DropdownItem disabled>Unavailable</DropdownItem>
+
+// Divider between groups
+<DropdownDivider />
+```
+
+## Best Practices
+
+<DosAndDonts client:load>
+  <Do>Group related actions with dividers</Do>
+  <Dont>Put too many items in one dropdown (max 7-8)</Dont>
+</DosAndDonts>
+
+<DosAndDonts client:load>
+  <Do>Put destructive actions at the bottom with danger styling</Do>
+  <Dont>Mix destructive actions randomly with other options</Dont>
+</DosAndDonts>
+
+<DosAndDonts client:load>
+  <Do>Use icons consistently — all items or none</Do>
+  <Dont>Add icons to only some items in the same dropdown</Dont>
+</DosAndDonts>
+
+## Props
+
+### Dropdown
+
+<PropsTable client:load props={[
+  { name: 'trigger', type: 'ReactNode', default: '', description: 'Element that triggers the dropdown' },
+  { name: 'children', type: 'ReactNode', default: '', description: 'DropdownItems and DropdownDividers' },
+  { name: 'align', type: "'left' | 'right'", default: "'left'", description: 'Horizontal alignment' },
+]} />
+
+### DropdownItem
+
+<PropsTable client:load props={[
+  { name: 'children', type: 'ReactNode', default: '', description: 'Item label' },
+  { name: 'icon', type: 'ComponentType', default: '', description: 'Icon component' },
+  { name: 'onClick', type: '() => void', default: '', description: 'Click handler' },
+  { name: 'variant', type: "'default' | 'danger'", default: "'default'", description: 'Visual style' },
+  { name: 'disabled', type: 'boolean', default: 'false', description: 'Disable the item' },
+]} />

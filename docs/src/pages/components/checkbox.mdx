@@ -1,0 +1,74 @@
+---
+layout: ../../layouts/DocsLayout.astro
+title: Checkbox
+description: Binary selection for on/off choices
+---
+
+import { ComponentPreview } from '../../components/ComponentPreview.jsx';
+import { DosAndDonts, Do, Dont } from '../../components/DosAndDonts.jsx';
+import { PropsTable } from '../../components/PropsTable.jsx';
+import { CheckboxBasicDemo } from '../../components/demos/FormDemos.jsx';
+
+# Checkbox
+
+Checkboxes allow users to select one or more options from a set, or toggle a single option on/off.
+
+## When to use
+
+- **Multiple selection** — Select several items from a list
+- **Opt-in/opt-out** — Enable or disable features
+- **Consent** — Terms acceptance, preferences
+- **Boolean settings** — On/off states that persist
+
+## Basic Usage
+
+<ComponentPreview client:load>
+  <CheckboxBasicDemo />
+</ComponentPreview>
+
+```jsx
+<Checkbox
+  label="Auto-approve matching screenshots"
+  checked={checked}
+  onChange={(e) => setChecked(e.target.checked)}
+/>
+
+<Checkbox
+  label="Send notifications"
+  description="Get notified when builds complete"
+  checked={checked}
+  onChange={handleChange}
+/>
+```
+
+## Checkbox vs Toggle
+
+| Use Checkbox when... | Use Toggle when... |
+|---------------------|-------------------|
+| Part of a form | Standalone setting |
+| Multiple related options | Single on/off switch |
+| Changes apply on submit | Changes apply immediately |
+| Grouped with other checkboxes | Primary feature toggle |
+
+## Best Practices
+
+<DosAndDonts client:load>
+  <Do>Use positive, action-oriented labels ("Enable notifications")</Do>
+  <Dont>Use negative labels that confuse the checked state ("Disable notifications")</Dont>
+</DosAndDonts>
+
+<DosAndDonts client:load>
+  <Do>Group related checkboxes together with a group label</Do>
+  <Dont>Scatter related options across different sections</Dont>
+</DosAndDonts>
+
+## Props
+
+<PropsTable client:load props={[
+  { name: 'label', type: 'string', default: '', description: 'Checkbox label' },
+  { name: 'description', type: 'string', default: '', description: 'Additional helper text' },
+  { name: 'checked', type: 'boolean', default: 'false', description: 'Controlled checked state' },
+  { name: 'onChange', type: '(e: ChangeEvent) => void', default: '', description: 'Change handler' },
+  { name: 'disabled', type: 'boolean', default: 'false', description: 'Disable the checkbox' },
+  { name: 'indeterminate', type: 'boolean', default: 'false', description: 'Show indeterminate state' },
+]} />

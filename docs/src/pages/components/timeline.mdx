@@ -1,0 +1,77 @@
+---
+layout: ../../layouts/DocsLayout.astro
+title: Timeline
+description: Chronological list of events or builds
+---
+
+import { ComponentPreview } from '../../components/ComponentPreview.jsx';
+import { DosAndDonts, Do, Dont } from '../../components/DosAndDonts.jsx';
+import { PropsTable } from '../../components/PropsTable.jsx';
+import { TimelineBasicDemo } from '../../components/demos/DataDisplayDemos.jsx';
+
+# Timeline
+
+Timeline displays a chronological list of events with status indicators. Perfect for build history and activity feeds.
+
+## When to use
+
+- **Build history** — Show sequence of builds with their status
+- **Activity feeds** — User actions, system events
+- **Version history** — Document or project changes over time
+- **Process steps** — Sequential workflow status
+
+## Basic Usage
+
+<ComponentPreview client:load>
+  <TimelineBasicDemo />
+</ComponentPreview>
+
+```jsx
+let items = [
+  { id: '1', status: 'approved', label: 'Build #1234', sublabel: 'main', time: '2m ago' },
+  { id: '2', status: 'pending', label: 'Build #1233', sublabel: 'feature/auth', time: '1h ago' },
+  { id: '3', status: 'rejected', label: 'Build #1232', sublabel: 'fix/modal', time: '2h ago' },
+];
+
+<Timeline items={items} onItemClick={(item) => navigate(`/build/${item.id}`)} />
+```
+
+## Status Types
+
+| Status | Color | Usage |
+|--------|-------|-------|
+| `approved` | Green | Passed, completed successfully |
+| `pending` | Amber | Waiting for review |
+| `rejected` | Red | Failed, needs attention |
+| `processing` | Blue (animated) | Currently running |
+
+## Best Practices
+
+<DosAndDonts client:load>
+  <Do>Show the most recent items at the top</Do>
+  <Dont>Mix chronological orders (newest first vs oldest first)</Dont>
+</DosAndDonts>
+
+<DosAndDonts client:load>
+  <Do>Use relative times for recent items ("2m ago", "1h ago")</Do>
+  <Dont>Show precise timestamps for recent activity ("14:32:45")</Dont>
+</DosAndDonts>
+
+## Props
+
+<PropsTable client:load props={[
+  { name: 'items', type: 'Array<TimelineItem>', default: '[]', description: 'List of timeline items' },
+  { name: 'onItemClick', type: '(item) => void', default: '', description: 'Item click handler' },
+]} />
+
+### TimelineItem
+
+```ts
+interface TimelineItem {
+  id: string;
+  status: 'approved' | 'pending' | 'rejected' | 'processing';
+  label: string;
+  sublabel?: string;
+  time: string;
+}
+```

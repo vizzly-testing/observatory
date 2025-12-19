@@ -1,0 +1,103 @@
+---
+layout: ../../layouts/DocsLayout.astro
+title: Alert
+description: Contextual feedback messages for user actions
+---
+
+import { ComponentPreview } from '../../components/ComponentPreview.jsx';
+import { DosAndDonts, Do, Dont } from '../../components/DosAndDonts.jsx';
+import { PropsTable } from '../../components/PropsTable.jsx';
+import { AlertVariantsDemo, AlertBasicDemo, AlertDismissibleDemo, AlertWithoutTitleDemo } from '../../components/demos/AlertDemos.jsx';
+
+# Alert
+
+Alerts display important messages that require user attention. They provide contextual feedback about actions or system states.
+
+## When to use
+
+- **Action feedback** — Confirm successful operations or report errors
+- **System status** — Notify about processing, maintenance, or issues
+- **Contextual help** — Provide tips or warnings relevant to the current view
+- **Validation** — Display form or input validation messages
+
+## Basic Usage
+
+<ComponentPreview client:load>
+  <AlertBasicDemo />
+</ComponentPreview>
+
+```jsx
+<Alert variant="info" title="Tip">
+  You can use keyboard shortcuts to navigate between screenshots.
+</Alert>
+```
+
+## Variants
+
+<ComponentPreview client:load>
+  <AlertVariantsDemo />
+</ComponentPreview>
+
+```jsx
+<Alert variant="success" title="Build Approved">...</Alert>
+<Alert variant="warning" title="Review Required">...</Alert>
+<Alert variant="danger" title="Build Failed">...</Alert>
+<Alert variant="info" title="Processing">...</Alert>
+```
+
+| Variant | Usage |
+|---------|-------|
+| `success` | Positive outcomes, completed actions |
+| `warning` | Attention needed, potential issues |
+| `danger` | Errors, failures, critical issues |
+| `info` | Neutral information, tips, processing |
+
+## Dismissible Alerts
+
+<ComponentPreview client:load>
+  <AlertDismissibleDemo />
+</ComponentPreview>
+
+```jsx
+<Alert
+  variant="success"
+  title="Changes Saved"
+  dismissible
+  onDismiss={() => setVisible(false)}
+>
+  Your project settings have been updated.
+</Alert>
+```
+
+## Without Title
+
+<ComponentPreview client:load>
+  <AlertWithoutTitleDemo />
+</ComponentPreview>
+
+```jsx
+<Alert variant="success">Screenshots uploaded successfully.</Alert>
+```
+
+## Best Practices
+
+<DosAndDonts client:load>
+  <Do>Use clear, actionable language that helps users understand what happened</Do>
+  <Dont>Use vague messages like "An error occurred" without context</Dont>
+</DosAndDonts>
+
+<DosAndDonts client:load>
+  <Do>Place alerts near the relevant content or at the top of the page</Do>
+  <Dont>Stack multiple alerts — consolidate related messages when possible</Dont>
+</DosAndDonts>
+
+## Props
+
+<PropsTable client:load props={[
+  { name: 'variant', type: "'success' | 'warning' | 'danger' | 'info'", default: "'info'", description: 'Visual style indicating the type of message' },
+  { name: 'title', type: 'string', default: '', description: 'Bold heading for the alert' },
+  { name: 'children', type: 'ReactNode', default: '', description: 'Alert body content' },
+  { name: 'dismissible', type: 'boolean', default: 'false', description: 'Show dismiss button' },
+  { name: 'onDismiss', type: '() => void', default: '', description: 'Callback when dismissed' },
+  { name: 'icon', type: 'ComponentType', default: '', description: 'Custom icon override' },
+]} />

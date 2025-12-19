@@ -1,0 +1,72 @@
+---
+layout: ../../layouts/DocsLayout.astro
+title: Installation
+description: How to install and set up Observatory in your project
+---
+
+# Installation
+
+## Package Installation
+
+Install Observatory via npm:
+
+```bash
+npm install @vizzly-testing/observatory
+```
+
+## Peer Dependencies
+
+Observatory requires React 18+ and Tailwind CSS v4+:
+
+```bash
+npm install react react-dom tailwindcss @heroicons/react
+```
+
+## CSS Setup
+
+Import Observatory's styles in your app:
+
+```js
+import '@vizzly-testing/observatory/styles';
+```
+
+Add the package to your Tailwind content configuration:
+
+```js
+// tailwind.config.js
+export default {
+  content: [
+    './src/**/*.{js,jsx}',
+    './node_modules/@vizzly-testing/observatory/src/**/*.{js,jsx}'
+  ],
+}
+```
+
+## Import Components
+
+Import components individually for optimal bundle size:
+
+```jsx
+import { Button } from '@vizzly-testing/observatory';
+import { Card, CardHeader, CardBody } from '@vizzly-testing/observatory';
+import { Badge } from '@vizzly-testing/observatory';
+```
+
+## Dark Theme
+
+Observatory is designed for dark interfaces. Ensure your app has a dark background:
+
+```css
+body {
+  background-color: #0f172a;
+  color: #f1f5f9;
+}
+```
+
+Or use the CSS variables from Observatory's styles:
+
+```css
+body {
+  background-color: var(--vz-bg);
+}
+```

@@ -1,0 +1,92 @@
+---
+layout: ../../layouts/DocsLayout.astro
+title: FilterPill
+description: Toggle filters for tables and lists
+---
+
+import { ComponentPreview } from '../../components/ComponentPreview.jsx';
+import { DosAndDonts, Do, Dont } from '../../components/DosAndDonts.jsx';
+import { PropsTable } from '../../components/PropsTable.jsx';
+import { FilterPillBasicDemo, FilterPillColorsDemo } from '../../components/demos/FilterDemos.jsx';
+
+# FilterPill
+
+FilterPills provide quick toggle filters for lists and tables. They show counts and can be combined in groups.
+
+## When to use
+
+- **Status filtering** — Filter by approved, pending, rejected
+- **Category filtering** — Filter by type, platform, branch
+- **Quick toggles** — Enable/disable filter groups
+- **Multi-select** — When users can select multiple filters
+
+## Basic Usage
+
+<ComponentPreview client:load>
+  <FilterPillBasicDemo />
+</ComponentPreview>
+
+```jsx
+<FilterPillGroup>
+  <FilterPill label="All" count={42} color="gray" active={!hasFilters} onClick={clearFilters} />
+  <FilterDivider />
+  <FilterPill label="Changed" count={8} color="amber" active={isActive('changed')} onClick={toggle} />
+  <FilterPill label="New" count={5} color="cyan" active={isActive('new')} onClick={toggle} />
+  <FilterPill label="Approved" count={29} color="emerald" active={isActive('approved')} onClick={toggle} />
+</FilterPillGroup>
+```
+
+## Color Variants
+
+<ComponentPreview client:load>
+  <FilterPillColorsDemo />
+</ComponentPreview>
+
+| Color | Usage |
+|-------|-------|
+| `amber` | Changed, pending, warning states |
+| `cyan` | New, added items |
+| `emerald` / `green` | Approved, success states |
+| `red` | Rejected, errors |
+| `blue` | Info, branches |
+| `purple` | Special categories |
+| `gray` | Default, "all" option |
+
+## Components
+
+### FilterPillGroup
+
+Wrapper that provides consistent spacing and layout.
+
+### FilterPill
+
+Individual filter toggle with label, count, and active state.
+
+### FilterDivider
+
+Vertical separator between logical groups of pills.
+
+## Best Practices
+
+<DosAndDonts client:load>
+  <Do>Show counts to help users understand filter impact</Do>
+  <Dont>Hide counts if they would always be zero</Dont>
+</DosAndDonts>
+
+<DosAndDonts client:load>
+  <Do>Use consistent colors across your app (amber for pending, green for approved)</Do>
+  <Dont>Use different colors for the same concept on different pages</Dont>
+</DosAndDonts>
+
+## Props
+
+### FilterPill
+
+<PropsTable client:load props={[
+  { name: 'label', type: 'string', default: '', description: 'Filter label' },
+  { name: 'count', type: 'number', default: '', description: 'Item count' },
+  { name: 'color', type: "'amber' | 'cyan' | 'emerald' | 'red' | 'blue' | 'purple' | 'gray'", default: "'gray'", description: 'Pill color' },
+  { name: 'active', type: 'boolean', default: 'false', description: 'Active state' },
+  { name: 'onClick', type: '() => void', default: '', description: 'Click handler' },
+  { name: 'disabled', type: 'boolean', default: 'false', description: 'Disable the pill' },
+]} />

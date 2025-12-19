@@ -1,0 +1,90 @@
+---
+layout: ../../layouts/DocsLayout.astro
+title: Design Principles
+description: Core design principles that guide Observatory
+---
+
+# Design Principles
+
+## Status Colors
+
+In visual testing, color communicates critical information instantly. We use a strict color vocabulary:
+
+| Color | Meaning | Components |
+|-------|---------|------------|
+| **Green** (emerald) | Approved, passed, success, active | Badge, Card, Alert, Button |
+| **Amber** (amber) | Pending, review needed, warning | Badge, Card, Alert |
+| **Red** (red) | Failed, rejected, error, danger | Badge, Card, Alert, Button |
+| **Blue** (blue) | Informational, processing, new | Badge, Card, Alert |
+| **Purple** (purple) | Special, featured, custom | Badge, Card |
+| **Gray** | Neutral, default, disabled | Badge, Button |
+
+### Never Break Color Expectations
+
+Users learn to scan dashboards by color. A green badge should **always** mean something positive. Don't use green decoratively or for branding.
+
+## Information Density
+
+Visual testing generates lots of data. Our components balance density with readability:
+
+### Progressive Disclosure
+
+Show summaries first, details on demand:
+- Card headers show key metrics
+- Expandable sections reveal full data
+- Modals for detailed views
+- Tooltips for contextual info
+
+### Tables for Scanning
+
+When users need to compare many items, use tables:
+- Sortable columns
+- Filterable data
+- Sticky headers for long lists
+- Row actions on hover
+
+### Badges for Quick Status
+
+Badges communicate status at a glance without interrupting flow:
+- Small size for inline use
+- Auto-detect variant from content
+- Dot indicators for emphasis
+
+## Keyboard Navigation
+
+Every interactive component is fully keyboard accessible:
+
+| Key | Action |
+|-----|--------|
+| `Tab` | Move focus to next element |
+| `Shift+Tab` | Move focus to previous element |
+| `Enter/Space` | Activate focused element |
+| `Escape` | Close modal/dropdown/cancel |
+| `Arrow keys` | Navigate within component |
+
+### Focus Management
+
+- Visible focus rings on all interactive elements
+- Focus trapped in modals
+- Focus restored when modals close
+- Logical tab order
+
+## Dark Theme
+
+Observatory is built dark-first, not adapted from light:
+
+### Color Palette
+
+```css
+--vz-bg: #0f172a;        /* Page background */
+--vz-surface: #1a2332;   /* Card backgrounds */
+--vz-elevated: #1e293b;  /* Elevated surfaces */
+--vz-border: #374151;    /* Borders */
+```
+
+### Contrast Ratios
+
+All text meets WCAG AA standards:
+- Primary text: 15.8:1 contrast ratio
+- Secondary text: 7.3:1 contrast ratio
+- Interactive elements have visible focus states

@@ -1,0 +1,131 @@
+---
+layout: ../../layouts/DocsLayout.astro
+title: Typography
+description: Type scales, font families, and text hierarchy
+---
+
+import { ComponentPreview } from '../../components/ComponentPreview.jsx';
+import { TypeScaleDemo, FontWeightsDemo, FontFamiliesDemo, TextHierarchyDemo, LeadingDemo } from '../../components/demos/TypographyDemos.jsx';
+
+# Typography
+
+Observatory uses system fonts for optimal performance and native feel. The type system is designed for scanning—users need to quickly parse build statuses, diff counts, and test results.
+
+## Font Families
+
+<ComponentPreview client:load>
+  <FontFamiliesDemo />
+</ComponentPreview>
+
+```css
+/* System UI - Interface text */
+font-family: ui-sans-serif, system-ui, sans-serif;
+
+/* Monospace - Code, technical values */
+font-family: ui-monospace, SFMono-Regular, monospace;
+```
+
+## Type Scale
+
+A harmonious scale based on Tailwind's defaults. Each step serves a specific purpose.
+
+<ComponentPreview client:load>
+  <TypeScaleDemo />
+</ComponentPreview>
+
+### Recommended Usage
+
+| Size | Tailwind | Use For |
+|------|----------|---------|
+| 0.75rem | `text-xs` | Badges, timestamps, metadata |
+| 0.875rem | `text-sm` | Secondary text, table cells, descriptions |
+| 1rem | `text-base` | Body text, form labels |
+| 1.125rem | `text-lg` | Lead paragraphs, card titles |
+| 1.25rem | `text-xl` | Section headings |
+| 1.5rem | `text-2xl` | Page section titles |
+| 1.875rem | `text-3xl` | Page titles |
+| 2.25rem | `text-4xl` | Hero headings, marketing |
+
+## Font Weights
+
+<ComponentPreview client:load>
+  <FontWeightsDemo />
+</ComponentPreview>
+
+```jsx
+<span className="font-normal">Body text</span>
+<span className="font-medium">Labels, emphasis</span>
+<span className="font-semibold">Headings, buttons</span>
+<span className="font-bold">Strong emphasis</span>
+```
+
+## Line Height
+
+Generous line heights improve readability, especially for technical content.
+
+<ComponentPreview client:load>
+  <LeadingDemo />
+</ComponentPreview>
+
+```jsx
+<p className="leading-tight">Headings — 1.25</p>
+<p className="leading-normal">Body text — 1.5</p>
+<p className="leading-relaxed">Long-form content — 1.625</p>
+```
+
+## Text Hierarchy in Practice
+
+Combine size, weight, and color to create clear visual hierarchy.
+
+<ComponentPreview client:load>
+  <TextHierarchyDemo />
+</ComponentPreview>
+
+### The Pattern
+
+1. **Primary** — Large, semibold, white (`text-white font-semibold text-2xl`)
+2. **Supporting** — Normal weight, secondary color (`text-slate-400`)
+3. **Meta** — Small, muted (`text-sm text-slate-500`)
+4. **Technical** — Monospace, even more muted (`font-mono text-slate-600`)
+
+## Best Practices
+
+### Do
+
+- Use `text-sm` for most interface text—it's readable and space-efficient
+- Reserve `text-xs` for metadata that doesn't need to be scanned quickly
+- Use `font-semibold` for headings, `font-medium` for emphasis
+- Keep line lengths between 50-75 characters for readability
+
+### Don't
+
+- Don't use more than 3 type sizes in one component
+- Avoid `font-bold` for large headings—it's too heavy
+- Don't mix multiple font families in the same context
+- Never use light font weights on dark backgrounds
+
+## Code Typography
+
+For code blocks and technical values, use the monospace stack:
+
+```jsx
+// Inline code
+<code className="font-mono text-sm bg-slate-800 px-1.5 py-0.5 rounded">
+  build.status
+</code>
+
+// Code blocks
+<pre className="font-mono text-sm bg-slate-900 p-4 rounded-lg overflow-x-auto">
+  {code}
+</pre>
+```
+
+## Responsive Typography
+
+Scale headings down on mobile to prevent overflow:
+
+```jsx
+<h1 className="text-2xl md:text-3xl lg:text-4xl font-semibold">
+  Dashboard
+</h1>
+```

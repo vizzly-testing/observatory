@@ -1,0 +1,105 @@
+---
+layout: ../../layouts/DocsLayout.astro
+title: Tabs
+description: Tabbed navigation between related views
+---
+
+import { ComponentPreview } from '../../components/ComponentPreview.jsx';
+import { DosAndDonts, Do, Dont } from '../../components/DosAndDonts.jsx';
+import { PropsTable } from '../../components/PropsTable.jsx';
+import { TabsDefaultDemo, TabsPillsDemo, TabsUnderlineDemo } from '../../components/demos/NavigationDemos.jsx';
+
+# Tabs
+
+Tabs organize content into separate views, allowing users to switch between them without leaving the page.
+
+## When to use
+
+- **Related content** — Different views of the same subject
+- **Settings sections** — Group related settings together
+- **Data views** — Different ways to view the same data
+- **Step navigation** — When steps can be accessed non-linearly
+
+## Default Style
+
+<ComponentPreview client:load>
+  <TabsDefaultDemo />
+</ComponentPreview>
+
+```jsx
+<Tabs
+  tabs={[
+    { id: 'overview', label: 'Overview', icon: ChartBarIcon },
+    { id: 'components', label: 'Components', count: 15 },
+    { id: 'tokens', label: 'Design Tokens' },
+  ]}
+  defaultTab="overview"
+  onChange={(tabId) => setActiveTab(tabId)}
+/>
+```
+
+## Pills Variant
+
+<ComponentPreview client:load>
+  <TabsPillsDemo />
+</ComponentPreview>
+
+```jsx
+<Tabs tabs={tabs} defaultTab="all" variant="pills" />
+```
+
+## Underline Variant
+
+<ComponentPreview client:load>
+  <TabsUnderlineDemo />
+</ComponentPreview>
+
+```jsx
+<Tabs tabs={tabs} defaultTab="details" variant="underline" />
+```
+
+## Variant Guide
+
+| Variant | Usage |
+|---------|-------|
+| `default` | Primary navigation, most contexts |
+| `pills` | Compact, filter-like selection |
+| `underline` | Secondary navigation, subtle appearance |
+
+## Best Practices
+
+<DosAndDonts client:load>
+  <Do>Use 2-5 tabs — more than 5 becomes overwhelming</Do>
+  <Dont>Nest tabs inside tabs — it creates confusing hierarchy</Dont>
+</DosAndDonts>
+
+<DosAndDonts client:load>
+  <Do>Keep tab labels short (1-2 words)</Do>
+  <Dont>Use long descriptions as tab labels</Dont>
+</DosAndDonts>
+
+<DosAndDonts client:load>
+  <Do>Use icons sparingly to aid recognition</Do>
+  <Dont>Add icons to every tab just for decoration</Dont>
+</DosAndDonts>
+
+## Props
+
+<PropsTable client:load props={[
+  { name: 'tabs', type: 'Array<Tab>', default: '[]', description: 'Tab definitions' },
+  { name: 'defaultTab', type: 'string', default: '', description: 'Initially active tab id' },
+  { name: 'onChange', type: '(tabId: string) => void', default: '', description: 'Tab change handler' },
+  { name: 'variant', type: "'default' | 'pills' | 'underline'", default: "'default'", description: 'Visual style' },
+]} />
+
+### Tab
+
+```ts
+interface Tab {
+  id: string;
+  label: string;
+  icon?: ComponentType;
+  count?: number;
+  disabled?: boolean;
+}
+```

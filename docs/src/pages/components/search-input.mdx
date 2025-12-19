@@ -1,0 +1,65 @@
+---
+layout: ../../layouts/DocsLayout.astro
+title: SearchInput
+description: Search field with icon and clear button
+---
+
+import { ComponentPreview } from '../../components/ComponentPreview.jsx';
+import { DosAndDonts, Do, Dont } from '../../components/DosAndDonts.jsx';
+import { PropsTable } from '../../components/PropsTable.jsx';
+import { SearchInputBasicDemo } from '../../components/demos/FormDemos.jsx';
+
+# SearchInput
+
+A specialized input for search and filtering with a built-in search icon and clear button.
+
+## When to use
+
+- **Filtering lists** — Search within tables, lists, or grids
+- **Quick lookup** — Find specific items by name or keyword
+- **Live search** — Real-time filtering as user types
+- **Command palette** — Quick action search
+
+## Basic Usage
+
+<ComponentPreview client:load>
+  <SearchInputBasicDemo />
+</ComponentPreview>
+
+```jsx
+let [search, setSearch] = useState('');
+
+<SearchInput
+  value={search}
+  onChange={setSearch}
+  placeholder="Search screenshots..."
+/>
+```
+
+## Features
+
+- **Search icon** — Visual indicator of search functionality
+- **Clear button** — Appears when there's content to clear
+- **Controlled** — Value managed through props for predictable state
+
+## Best Practices
+
+<DosAndDonts client:load>
+  <Do>Provide instant feedback as users type (filter results live)</Do>
+  <Dont>Require users to press Enter before showing results</Dont>
+</DosAndDonts>
+
+<DosAndDonts client:load>
+  <Do>Use descriptive placeholder text ("Search screenshots...")</Do>
+  <Dont>Use generic placeholders like "Type here..."</Dont>
+</DosAndDonts>
+
+## Props
+
+<PropsTable client:load props={[
+  { name: 'value', type: 'string', default: '', description: 'Controlled search value' },
+  { name: 'onChange', type: '(value: string) => void', default: '', description: 'Called when value changes' },
+  { name: 'placeholder', type: 'string', default: "'Search...'", description: 'Placeholder text' },
+  { name: 'disabled', type: 'boolean', default: 'false', description: 'Disable the input' },
+  { name: 'autoFocus', type: 'boolean', default: 'false', description: 'Focus on mount' },
+]} />

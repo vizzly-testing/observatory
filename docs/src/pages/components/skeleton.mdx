@@ -1,0 +1,111 @@
+---
+layout: ../../layouts/DocsLayout.astro
+title: Skeleton
+description: Loading placeholders while content loads
+---
+
+import { ComponentPreview } from '../../components/ComponentPreview.jsx';
+import { DosAndDonts, Do, Dont } from '../../components/DosAndDonts.jsx';
+import { PropsTable } from '../../components/PropsTable.jsx';
+import { SkeletonBasicDemo, SkeletonCardDemo, SkeletonTableDemo, SkeletonVariantsDemo } from '../../components/demos/SkeletonDemos.jsx';
+
+# Skeleton
+
+Skeletons show placeholder content while data is loading. They reduce perceived wait time and prevent layout shifts.
+
+## When to use
+
+- **Initial load** — First time loading content
+- **Data fetching** — While waiting for API responses
+- **Image loading** — Placeholder while images load
+- **Async content** — Any content that loads asynchronously
+
+## Basic Usage
+
+<ComponentPreview client:load>
+  <SkeletonBasicDemo />
+</ComponentPreview>
+
+```jsx
+<Skeleton variant="heading" />
+<Skeleton variant="text" count={3} />
+<div className="flex items-center gap-3">
+  <Skeleton variant="avatar" />
+  <div>
+    <Skeleton variant="text" width="40%" />
+    <Skeleton variant="text" width="60%" height="12px" />
+  </div>
+</div>
+```
+
+## Variants
+
+<ComponentPreview client:load>
+  <SkeletonVariantsDemo />
+</ComponentPreview>
+
+| Variant | Usage |
+|---------|-------|
+| `heading` | Page or section headings |
+| `text` | Body text, descriptions |
+| `avatar` | Circular user avatars |
+| (custom) | Any size with `width` and `height` |
+
+## SkeletonCard
+
+Pre-composed card skeleton for common layouts:
+
+<ComponentPreview client:load>
+  <SkeletonCardDemo />
+</ComponentPreview>
+
+```jsx
+<SkeletonCard />
+```
+
+## SkeletonTable
+
+Table placeholder with configurable rows and columns:
+
+<ComponentPreview client:load>
+  <SkeletonTableDemo />
+</ComponentPreview>
+
+```jsx
+<SkeletonTable rows={4} columns={4} />
+```
+
+## Best Practices
+
+<DosAndDonts client:load>
+  <Do>Match skeleton layout to actual content layout</Do>
+  <Dont>Use generic skeletons that don't match the real content</Dont>
+</DosAndDonts>
+
+<DosAndDonts client:load>
+  <Do>Show skeletons for content that takes more than 300ms to load</Do>
+  <Dont>Flash skeletons for very fast loads — it feels janky</Dont>
+</DosAndDonts>
+
+<DosAndDonts client:load>
+  <Do>Animate skeletons to indicate loading is in progress</Do>
+  <Dont>Use static gray boxes that look broken</Dont>
+</DosAndDonts>
+
+## Props
+
+### Skeleton
+
+<PropsTable client:load props={[
+  { name: 'variant', type: "'heading' | 'text' | 'avatar'", default: "'text'", description: 'Preset shape' },
+  { name: 'width', type: 'string | number', default: "'100%'", description: 'Custom width' },
+  { name: 'height', type: 'string | number', default: '', description: 'Custom height' },
+  { name: 'count', type: 'number', default: '1', description: 'Number of skeleton lines' },
+]} />
+
+### SkeletonTable
+
+<PropsTable client:load props={[
+  { name: 'rows', type: 'number', default: '4', description: 'Number of rows' },
+  { name: 'columns', type: 'number', default: '4', description: 'Number of columns' },
+]} />

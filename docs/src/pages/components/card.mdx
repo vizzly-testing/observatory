@@ -1,0 +1,128 @@
+---
+layout: ../../layouts/DocsLayout.astro
+title: Card
+description: Content containers with consistent styling
+---
+
+import { ComponentPreview } from '../../components/ComponentPreview.jsx';
+import { DosAndDonts, Do, Dont } from '../../components/DosAndDonts.jsx';
+import { PropsTable } from '../../components/PropsTable.jsx';
+import { BasicCardDemo, CardVariantsDemo, CardWithFooterDemo, CardHeaderActionsDemo, CardHoverDemo } from '../../components/demos/CardDemos.jsx';
+
+# Card
+
+Cards group related content and actions. They create visual hierarchy and help users scan information.
+
+## When to use
+
+- **Content grouping** — Settings sections, build summaries, project cards
+- **Data display** — Statistics, metrics, status overviews
+- **Interactive containers** — Forms, action panels
+- **List items** — When items need more structure than a table row
+
+## Basic Card
+
+<ComponentPreview client:load>
+  <BasicCardDemo />
+</ComponentPreview>
+
+```jsx
+<Card>
+  <CardHeader
+    icon={Cog6ToothIcon}
+    title="Project Settings"
+    description="Configure your project"
+  />
+  <CardBody>
+    <p>Card content goes here.</p>
+  </CardBody>
+</Card>
+```
+
+## Variants
+
+<ComponentPreview client:load>
+  <CardVariantsDemo />
+</ComponentPreview>
+
+| Variant | Usage |
+|---------|-------|
+| `default` | General content, no specific status |
+| `success` | Approved builds, passing tests, positive outcomes |
+| `warning` | Needs review, pending actions, attention required |
+| `danger` | Failed builds, errors, critical issues |
+| `info` | Informational, new items, processing |
+| `purple` | Special categories, featured content |
+
+## With Footer
+
+<ComponentPreview client:load>
+  <CardWithFooterDemo />
+</ComponentPreview>
+
+```jsx
+<Card>
+  <CardHeader title="Delete Project" />
+  <CardBody>
+    <p>This action cannot be undone.</p>
+  </CardBody>
+  <CardFooter>
+    <Button variant="ghost">Cancel</Button>
+    <Button variant="danger">Delete</Button>
+  </CardFooter>
+</Card>
+```
+
+## Header Actions
+
+<ComponentPreview client:load>
+  <CardHeaderActionsDemo />
+</ComponentPreview>
+
+## Hover State
+
+<ComponentPreview client:load>
+  <CardHoverDemo />
+</ComponentPreview>
+
+## Best Practices
+
+<DosAndDonts client:load>
+  <Do>Use cards to group related content with clear visual boundaries</Do>
+  <Dont>Nest cards inside cards — it creates confusing hierarchy</Dont>
+</DosAndDonts>
+
+<DosAndDonts client:load>
+  <Do>Use variants consistently — success always means approved/passing</Do>
+  <Dont>Use variants purely for decoration or to add visual variety</Dont>
+</DosAndDonts>
+
+<DosAndDonts client:load>
+  <Do>Keep card content focused on a single topic or action</Do>
+  <Dont>Cram unrelated information into one card</Dont>
+</DosAndDonts>
+
+## Props
+
+### Card
+
+<PropsTable client:load props={[
+  { name: 'variant', type: "'default' | 'success' | 'warning' | 'danger' | 'info' | 'purple'", default: "'default'", description: 'Visual style indicating status' },
+  { name: 'hover', type: 'boolean', default: 'false', description: 'Enable hover effect for clickable cards' },
+  { name: 'className', type: 'string', default: '', description: 'Additional CSS classes' },
+]} />
+
+### CardHeader
+
+<PropsTable client:load props={[
+  { name: 'title', type: 'string', default: '', description: 'Card title' },
+  { name: 'description', type: 'string', default: '', description: 'Subtitle or description' },
+  { name: 'icon', type: 'ComponentType', default: '', description: 'Icon component' },
+  { name: 'actions', type: 'ReactNode', default: '', description: 'Action buttons/elements' },
+]} />
+
+### CardBody
+
+<PropsTable client:load props={[
+  { name: 'padding', type: 'string', default: "'p-5'", description: 'Padding classes' },
+]} />

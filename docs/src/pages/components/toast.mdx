@@ -1,0 +1,88 @@
+---
+layout: ../../layouts/DocsLayout.astro
+title: Toast
+description: Temporary notifications that appear and auto-dismiss
+---
+
+import { ComponentPreview } from '../../components/ComponentPreview.jsx';
+import { DosAndDonts, Do, Dont } from '../../components/DosAndDonts.jsx';
+import { PropsTable } from '../../components/PropsTable.jsx';
+import { ToastDemo, ToastPositionsDemo } from '../../components/demos/ToastDemos.jsx';
+
+# Toast
+
+Toasts display brief, temporary notifications. They appear, deliver a message, and automatically disappear.
+
+## When to use
+
+- **Background operations** — "Changes saved", "Uploaded successfully"
+- **Non-critical feedback** — Confirmations that don't require action
+- **Async completions** — When background tasks finish
+- **Transient status** — Brief updates that don't need permanent visibility
+
+## Interactive Demo
+
+Click the buttons to trigger different toast variants:
+
+<ComponentPreview client:load>
+  <ToastDemo />
+</ComponentPreview>
+
+```jsx
+<Toast
+  isVisible={true}
+  message="Changes saved successfully!"
+  variant="success"
+  onClose={() => setVisible(false)}
+  position="top-right"
+/>
+```
+
+## Variants
+
+| Variant | Usage |
+|---------|-------|
+| `success` | Completed actions, saved changes |
+| `warning` | Attention needed, potential issues |
+| `error` | Failed operations, errors |
+| `info` | Neutral notifications |
+
+## Positions
+
+<ComponentPreview client:load>
+  <ToastPositionsDemo />
+</ComponentPreview>
+
+Use `top-right` for most cases. Consider `bottom-*` positions for mobile or when the top of the screen has important content.
+
+## Best Practices
+
+<DosAndDonts client:load>
+  <Do>Keep toast messages brief — aim for under 10 words</Do>
+  <Dont>Use toasts for critical information that requires user action</Dont>
+</DosAndDonts>
+
+<DosAndDonts client:load>
+  <Do>Use consistent positions throughout your application</Do>
+  <Dont>Show multiple toasts stacked at once — queue them or consolidate</Dont>
+</DosAndDonts>
+
+## Toast vs Alert
+
+| Use Toast when... | Use Alert when... |
+|-------------------|-------------------|
+| Message is transient | Message should persist |
+| No action required | User needs to take action |
+| Confirming completed action | Showing validation errors |
+| Non-blocking feedback | Critical information |
+
+## Props
+
+<PropsTable client:load props={[
+  { name: 'isVisible', type: 'boolean', default: 'false', description: 'Controls visibility' },
+  { name: 'message', type: 'string', default: '', description: 'Toast message content' },
+  { name: 'variant', type: "'success' | 'warning' | 'error' | 'info'", default: "'info'", description: 'Visual style' },
+  { name: 'onClose', type: '() => void', default: '', description: 'Callback when toast closes' },
+  { name: 'position', type: "'top-right' | 'top-left' | 'bottom-right' | 'bottom-left' | 'top-center' | 'bottom-center'", default: "'top-right'", description: 'Screen position' },
+  { name: 'duration', type: 'number', default: '4000', description: 'Auto-dismiss time in ms' },
+]} />

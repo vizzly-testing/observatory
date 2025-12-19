@@ -1,0 +1,208 @@
+---
+layout: ../../layouts/DocsLayout.astro
+title: Iconography
+description: Icon usage guidelines with Heroicons
+---
+
+import { ComponentPreview } from '../../components/ComponentPreview.jsx';
+import { StatusIconsDemo, ActionIconsDemo, NavigationIconsDemo, VisualTestingIconsDemo, IconSizesDemo, IconStylesDemo, IconWithTextDemo, IconColorsDemo } from '../../components/demos/IconographyDemos.jsx';
+
+# Iconography
+
+Observatory uses [Heroicons](https://heroicons.com) — a beautiful, hand-crafted icon set designed by the makers of Tailwind CSS. Consistent icon usage improves scannability and reduces cognitive load.
+
+## Installation
+
+```bash
+npm install @heroicons/react
+```
+
+## Import Pattern
+
+```jsx
+// Outline style (default)
+import { CheckCircleIcon } from '@heroicons/react/24/outline';
+
+// Solid style (for emphasis)
+import { CheckCircleIcon } from '@heroicons/react/24/solid';
+
+// Mini style (16px)
+import { CheckCircleIcon } from '@heroicons/react/20/solid';
+```
+
+## Icon Styles
+
+Choose the right style for the context.
+
+<ComponentPreview client:load>
+  <IconStylesDemo />
+</ComponentPreview>
+
+| Style | Package | Usage |
+|-------|---------|-------|
+| Outline | `/24/outline` | Default for all UI. Lightweight, unobtrusive. |
+| Solid | `/24/solid` | Selected states, filled badges, emphasis |
+| Mini | `/20/solid` | Small buttons, tight spaces |
+
+## Status Icons
+
+Visual indicators for build and test states.
+
+<ComponentPreview client:load>
+  <StatusIconsDemo />
+</ComponentPreview>
+
+```jsx
+import {
+  CheckCircleIcon,    // Success, approved
+  XCircleIcon,        // Error, rejected
+  ExclamationTriangleIcon, // Warning
+  InformationCircleIcon,   // Info
+  ClockIcon,          // Pending
+  ArrowPathIcon,      // Processing
+} from '@heroicons/react/24/outline';
+```
+
+## Action Icons
+
+Common actions throughout the interface.
+
+<ComponentPreview client:load>
+  <ActionIconsDemo />
+</ComponentPreview>
+
+## Navigation Icons
+
+Wayfinding and UI controls.
+
+<ComponentPreview client:load>
+  <NavigationIconsDemo />
+</ComponentPreview>
+
+## Visual Testing Icons
+
+Specific to Observatory's visual testing domain.
+
+<ComponentPreview client:load>
+  <VisualTestingIconsDemo />
+</ComponentPreview>
+
+## Sizes
+
+Use consistent sizes based on context.
+
+<ComponentPreview client:load>
+  <IconSizesDemo />
+</ComponentPreview>
+
+```jsx
+{/* Inline with text */}
+<Icon className="w-4 h-4" />
+
+{/* Buttons, form inputs */}
+<Icon className="w-5 h-5" />
+
+{/* Standard UI elements */}
+<Icon className="w-6 h-6" />
+
+{/* Cards, feature highlights */}
+<Icon className="w-8 h-8" />
+
+{/* Empty states, heroes */}
+<Icon className="w-12 h-12" />
+```
+
+## Colors
+
+Match icon colors to their semantic meaning.
+
+<ComponentPreview client:load>
+  <IconColorsDemo />
+</ComponentPreview>
+
+```jsx
+{/* Status colors */}
+<CheckCircleIcon className="w-5 h-5 text-emerald-400" />
+<XCircleIcon className="w-5 h-5 text-red-400" />
+<ExclamationTriangleIcon className="w-5 h-5 text-amber-400" />
+<InformationCircleIcon className="w-5 h-5 text-blue-400" />
+
+{/* Neutral / interactive */}
+<Icon className="text-slate-400 hover:text-slate-300" />
+
+{/* Disabled */}
+<Icon className="text-slate-600" />
+```
+
+## Icons with Text
+
+Align icons with text using flexbox.
+
+<ComponentPreview client:load>
+  <IconWithTextDemo />
+</ComponentPreview>
+
+```jsx
+{/* Icon + label */}
+<div className="flex items-center gap-2">
+  <CheckCircleIcon className="w-5 h-5 text-emerald-400 shrink-0" />
+  <span>142 tests passed</span>
+</div>
+
+{/* Button with icon */}
+<Button icon={PlusIcon}>Create Build</Button>
+
+{/* Icon-only button */}
+<button className="p-2 hover:bg-slate-700 rounded-lg">
+  <XMarkIcon className="w-5 h-5" />
+</button>
+```
+
+## Best Practices
+
+### Do
+
+- Use `shrink-0` on icons in flex containers to prevent squishing
+- Match icon size to text size (w-4 with text-sm, w-5 with text-base)
+- Use semantic colors consistently (green = success, red = error)
+- Add hover states to interactive icons
+- Include `aria-label` on icon-only buttons
+
+### Don't
+
+- Don't use icons without purpose—every icon should convey meaning
+- Don't mix icon styles (outline + solid) in the same context
+- Don't use oversized icons in dense UI
+- Don't rely on icons alone—pair with text for accessibility
+
+## Animation
+
+Add subtle animation for processing states:
+
+```jsx
+{/* Spinning for loading */}
+<ArrowPathIcon className="w-5 h-5 animate-spin" />
+
+{/* Pulse for attention */}
+<BellIcon className="w-5 h-5 animate-pulse" />
+```
+
+## Accessibility
+
+Always provide context for screen readers:
+
+```jsx
+{/* Icon with visible label - label provides context */}
+<div className="flex items-center gap-2">
+  <CheckCircleIcon className="w-5 h-5" aria-hidden="true" />
+  <span>Approved</span>
+</div>
+
+{/* Icon-only button - needs aria-label */}
+<button aria-label="Close dialog">
+  <XMarkIcon className="w-5 h-5" />
+</button>
+
+{/* Decorative icons */}
+<Icon aria-hidden="true" />
+```

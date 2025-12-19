@@ -1,0 +1,164 @@
+---
+layout: ../../layouts/DocsLayout.astro
+title: Colors
+description: The Observatory color system and design tokens
+---
+
+import { ComponentPreview } from '../../components/ComponentPreview.jsx';
+import { CorePaletteDemo, AccentPaletteDemo, TextColorsDemo, BrandColorsDemo, ColorLayersDemo } from '../../components/demos/ColorPaletteDemos.jsx';
+
+# Colors
+
+Observatory uses a carefully crafted dark-first color system optimized for visual testing interfaces. Every color serves a purpose—from establishing visual hierarchy to communicating status at a glance.
+
+## Design Tokens
+
+All colors are available as CSS custom properties. Import the styles in your app:
+
+```js
+import '@vizzly-testing/observatory/styles';
+```
+
+## Core Palette
+
+The foundation of every interface. These tokens define the layered surfaces that create depth.
+
+<ComponentPreview client:load>
+  <CorePaletteDemo />
+</ComponentPreview>
+
+```css
+:root {
+  --vz-bg: #0f172a;           /* Page background */
+  --vz-surface: #1a2332;      /* Cards, panels */
+  --vz-elevated: #1e293b;     /* Dropdowns, modals */
+  --vz-border: #374151;       /* Primary borders */
+  --vz-border-subtle: #2d3748; /* Subtle dividers */
+}
+```
+
+## Elevation & Layers
+
+Colors stack to create depth. Each layer is slightly lighter, lifting content off the page.
+
+<ComponentPreview client:load>
+  <ColorLayersDemo />
+</ComponentPreview>
+
+## Accent Colors
+
+Semantic colors that communicate meaning. Each accent has a muted variant for backgrounds.
+
+<ComponentPreview client:load>
+  <AccentPaletteDemo />
+</ComponentPreview>
+
+```css
+:root {
+  /* Success - Approved, passed, active */
+  --accent-success: #10b981;
+  --accent-success-muted: #132a23;
+
+  /* Warning - Pending, attention */
+  --accent-warning: #f59e0b;
+  --accent-warning-muted: #2a2317;
+
+  /* Danger - Rejected, failed, errors */
+  --accent-danger: #ef4444;
+  --accent-danger-muted: #2a1717;
+
+  /* Info - Processing, informational */
+  --accent-info: #3b82f6;
+  --accent-info-muted: #172033;
+}
+```
+
+### Usage Guidelines
+
+| Color | Use For | Don't Use For |
+|-------|---------|---------------|
+| Success | Approved builds, passing tests, active states | Generic positive messaging |
+| Warning | Pending review, changes detected, attention needed | Errors or failures |
+| Danger | Rejected, failed, deleted, errors | Warnings or cautions |
+| Info | Processing, new, in progress, neutral info | Success states |
+
+## Text Colors
+
+A hierarchy of text colors for clear information architecture.
+
+<ComponentPreview client:load>
+  <TextColorsDemo />
+</ComponentPreview>
+
+```css
+:root {
+  --text-primary: #ffffff;    /* Headings, important */
+  --text-secondary: #9ca3af;  /* Body text */
+  --text-tertiary: #6b7280;   /* Captions, metadata */
+  --text-muted: #4b5563;      /* Disabled, placeholders */
+}
+```
+
+## Brand Colors
+
+Amber is Observatory's signature color—warm, energetic, and highly visible against dark backgrounds.
+
+<ComponentPreview client:load>
+  <BrandColorsDemo />
+</ComponentPreview>
+
+```css
+/* Primary actions, links, highlights */
+.amber-500 { color: #f59e0b; }
+.amber-400 { color: #fbbf24; } /* Hover states */
+
+/* Gradient accents */
+background: linear-gradient(to right, #f59e0b, #f97316);
+```
+
+## Using Tokens in Code
+
+### In CSS
+
+```css
+.my-card {
+  background-color: var(--vz-surface);
+  border: 1px solid var(--vz-border);
+  color: var(--text-secondary);
+}
+
+.my-card:hover {
+  background-color: var(--vz-elevated);
+}
+```
+
+### In React (inline styles)
+
+```jsx
+<div style={{
+  backgroundColor: 'var(--vz-surface)',
+  borderColor: 'var(--vz-border)'
+}}>
+  Content
+</div>
+```
+
+### With Tailwind
+
+Observatory is built on Tailwind. Use standard Tailwind color classes:
+
+```jsx
+<div className="bg-slate-800 border-slate-700 text-slate-300">
+  {/* Matches --vz-surface, --vz-border, --text-secondary */}
+</div>
+```
+
+## Accessibility
+
+All color combinations in Observatory meet WCAG 2.1 AA contrast requirements:
+
+- **Primary text** (#ffffff) on surfaces: 13.5:1 ratio
+- **Secondary text** (#9ca3af) on surfaces: 6.2:1 ratio
+- **Amber accents** (#f59e0b) on dark backgrounds: 8.4:1 ratio
+
+Never rely on color alone to convey information—always pair with icons, text, or patterns.

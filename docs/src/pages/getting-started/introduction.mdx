@@ -1,0 +1,86 @@
+---
+layout: ../../layouts/DocsLayout.astro
+title: Introduction
+description: Welcome to Observatory, the design system for Vizzly
+---
+
+import { ComponentPreview } from '../../components/ComponentPreview.jsx';
+import { PhilosophyCardsDemo, StatusColorsDemo, ComponentCategoriesDemo, LivePreviewDemo, QuickStartStepsDemo } from '../../components/demos/IntroductionDemos.jsx';
+
+# Introduction
+
+Observatory is a React component library built specifically for visual testing dashboards. It provides a consistent, accessible, and beautiful set of components designed for dark-theme interfaces.
+
+## Philosophy
+
+Observatory is built on four core principles that guide every component decision.
+
+<div className="mt-6 mb-8">
+  <PhilosophyCardsDemo client:load />
+</div>
+
+### Status Colors Are Sacred
+
+In visual testing, colors communicate critical information at a glance. Users learn to scan by color—never break this trust.
+
+<div className="my-6">
+  <StatusColorsDemo client:load />
+</div>
+
+---
+
+## Quick Start
+
+Get up and running in three simple steps.
+
+<div className="my-6">
+  <QuickStartStepsDemo client:load />
+</div>
+
+Then start building:
+
+```jsx
+import { Button, Card, Badge } from '@vizzly-testing/observatory';
+
+function BuildCard() {
+  return (
+    <Card>
+      <Badge variant="success">Approved</Badge>
+      <h3>Build #1234</h3>
+      <Button variant="primary">View Details</Button>
+    </Card>
+  );
+}
+```
+
+---
+
+## What's Included
+
+Observatory provides **30+ components** organized into intuitive categories.
+
+<div className="my-6">
+  <ComponentCategoriesDemo client:load />
+</div>
+
+Every component is:
+
+- **Accessible** — Full keyboard navigation, ARIA labels, focus management
+- **Dark-optimized** — Designed for dark themes with proper contrast ratios
+- **Consistent** — Follows the same patterns, spacing, and interaction models
+- **Composable** — Works great standalone or combined with other components
+
+---
+
+## Next Steps
+
+<div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-6">
+  <a href="/getting-started/installation" className="group p-5 rounded-xl bg-slate-800/30 border border-slate-700/50 hover:border-amber-500/30 hover:bg-slate-800/50 transition-all no-underline">
+    <h3 className="text-white font-semibold mb-1 group-hover:text-amber-400 transition-colors">Installation →</h3>
+    <p className="text-sm text-slate-400">Set up Observatory in your project</p>
+  </a>
+  <a href="/foundations/colors" className="group p-5 rounded-xl bg-slate-800/30 border border-slate-700/50 hover:border-amber-500/30 hover:bg-slate-800/50 transition-all no-underline">
+    <h3 className="text-white font-semibold mb-1 group-hover:text-amber-400 transition-colors">Design Tokens →</h3>
+    <p className="text-sm text-slate-400">Explore colors, typography, and spacing</p>
+  </a>
+</div>

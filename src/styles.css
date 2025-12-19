@@ -1,0 +1,86 @@
+/**
+ * Observatory Design System - Core Styles
+ *
+ * This file contains the design tokens and keyframe animations
+ * required by Observatory components.
+ *
+ * Usage:
+ *   import '@vizzly-testing/observatory/styles';
+ *
+ * Note: This library requires Tailwind CSS v4+ to be configured
+ * in your project. Components use Tailwind utility classes.
+ */
+
+:root {
+  /* Core palette - Dark theme */
+  --vz-bg: #0f172a;
+  --vz-surface: #1a2332;
+  --vz-elevated: #1e293b;
+  --vz-border: #374151;
+  --vz-border-subtle: #2d3748;
+
+  /* Accent colors */
+  --accent-success: #10b981;
+  --accent-success-muted: #132a23;
+  --accent-warning: #f59e0b;
+  --accent-warning-muted: #2a2317;
+  --accent-danger: #ef4444;
+  --accent-danger-muted: #2a1717;
+  --accent-info: #3b82f6;
+  --accent-info-muted: #172033;
+
+  /* Text hierarchy */
+  --text-primary: #ffffff;
+  --text-secondary: #9ca3af;
+  --text-tertiary: #6b7280;
+  --text-muted: #4b5563;
+
+  /* Component-specific tokens */
+  --ring-size: 120px;
+  --ring-stroke: 8px;
+}
+
+/* Skeleton loading shimmer animation */
+@keyframes shimmer {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+/* Pulse animation for status indicators */
+@keyframes pulse {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+}
+
+/* Custom scrollbar styles */
+.scrollbar-thin {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(75, 85, 99, 0.5) transparent;
+}
+
+.scrollbar-thin::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+.scrollbar-thin::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.scrollbar-thin::-webkit-scrollbar-thumb {
+  background: rgba(75, 85, 99, 0.5);
+  border-radius: 3px;
+}
+
+.scrollbar-thin::-webkit-scrollbar-thumb:hover {
+  background: rgba(107, 114, 128, 0.7);
+}

@@ -1,0 +1,112 @@
+---
+layout: ../../layouts/DocsLayout.astro
+title: BrowserIcon
+description: Browser logo icons from CDN with fallback support
+---
+
+import { ComponentPreview } from '../../components/ComponentPreview.jsx';
+import {
+  BrowserIconGalleryDemo,
+  BrowserIconSizesDemo,
+  BrowserColorDemo,
+  BrowserIconNullDemo
+} from '../../components/demos/BrowserIconDemos.jsx';
+
+# BrowserIcon
+
+Displays browser logos using the browser-logos CDN. Falls back to a generic globe icon for unknown browsers.
+
+## Supported Browsers
+
+<ComponentPreview client:load>
+  <BrowserIconGalleryDemo client:load />
+</ComponentPreview>
+
+## Basic Usage
+
+```jsx
+import { BrowserIcon } from '@vizzly-testing/observatory';
+
+<BrowserIcon browser="chrome" className="w-5 h-5" />
+<BrowserIcon browser="firefox" className="w-5 h-5" />
+<BrowserIcon browser="safari" className="w-5 h-5" />
+```
+
+## Sizes
+
+Use Tailwind width/height classes for sizing:
+
+<ComponentPreview client:load>
+  <BrowserIconSizesDemo client:load />
+</ComponentPreview>
+
+```jsx
+<BrowserIcon browser="chrome" className="w-4 h-4" />
+<BrowserIcon browser="chrome" className="w-6 h-6" />
+<BrowserIcon browser="chrome" className="w-8 h-8" />
+```
+
+## Browser Colors
+
+Use `getBrowserColor()` for consistent text coloring:
+
+<ComponentPreview client:load>
+  <BrowserColorDemo client:load />
+</ComponentPreview>
+
+```jsx
+import { BrowserIcon, getBrowserColor } from '@vizzly-testing/observatory';
+
+<span className={getBrowserColor('firefox')}>Firefox</span>
+// Returns 'text-orange-400'
+```
+
+## Null and Unknown Handling
+
+<ComponentPreview client:load>
+  <BrowserIconNullDemo client:load />
+</ComponentPreview>
+
+- `null` or `undefined` browser renders nothing
+- Unknown browsers show a globe fallback icon
+
+## Props
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| `browser` | `string` | - | Browser name (case-insensitive) |
+| `className` | `string` | `'w-4 h-4'` | CSS classes for sizing |
+| `fallbackClassName` | `string` | `''` | Additional classes for fallback icon |
+
+## Supported Browser Names
+
+The component recognizes these browser strings (case-insensitive):
+
+| Browser | Aliases |
+|---------|---------|
+| Chrome | `chrome`, `chrome-android`, `android chrome` |
+| Firefox | `firefox`, `firefox-android`, `android firefox` |
+| Safari | `safari` |
+| Safari iOS | `safari-ios`, `ios`, `mobile safari` |
+| Edge | `edge` |
+| Opera | `opera` |
+| Brave | `brave` |
+| Vivaldi | `vivaldi` |
+| Chromium | `chromium` |
+| WebKit | `webkit` |
+| Samsung | `samsung`, `samsung internet` |
+| Android | `android`, `android browser` |
+| IE | `ie`, `internet explorer` |
+| Tor | `tor` |
+| DuckDuckGo | `duckduckgo` |
+| Yandex | `yandex` |
+| UC Browser | `uc`, `uc browser` |
+
+## CDN Source
+
+Icons are loaded from the browser-logos CDN:
+```
+https://cdnjs.cloudflare.com/ajax/libs/browser-logos/75.0.1/
+```
+
+The component handles CDN failures gracefully by falling back to the globe icon.

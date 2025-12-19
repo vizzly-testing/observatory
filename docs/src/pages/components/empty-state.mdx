@@ -1,0 +1,103 @@
+---
+layout: ../../layouts/DocsLayout.astro
+title: EmptyState
+description: Placeholder when there's no content to display
+---
+
+import { ComponentPreview } from '../../components/ComponentPreview.jsx';
+import { DosAndDonts, Do, Dont } from '../../components/DosAndDonts.jsx';
+import { PropsTable } from '../../components/PropsTable.jsx';
+import { EmptyStateBasicDemo, EmptyStateVariantsDemo, EmptyStateMinimalDemo } from '../../components/demos/EmptyStateDemos.jsx';
+
+# EmptyState
+
+EmptyState provides a friendly placeholder when there's no content to display. It guides users on what to do next.
+
+## When to use
+
+- **No data** — Empty tables, lists, or grids
+- **No results** — Search or filter returned nothing
+- **First-time use** — Before user has created anything
+- **Error recovery** — After clearing invalid state
+
+## Basic Usage
+
+<ComponentPreview client:load>
+  <EmptyStateBasicDemo />
+</ComponentPreview>
+
+```jsx
+<EmptyState
+  icon={CameraIcon}
+  title="No Screenshots Yet"
+  description="Start capturing screenshots to see your visual testing results here."
+  action={<Button>Capture First Screenshot</Button>}
+/>
+```
+
+## Variants
+
+<ComponentPreview client:load>
+  <EmptyStateVariantsDemo />
+</ComponentPreview>
+
+## Minimal Version
+
+For inline or less prominent empty states:
+
+<ComponentPreview client:load>
+  <EmptyStateMinimalDemo />
+</ComponentPreview>
+
+```jsx
+<EmptyState
+  title="Nothing here yet"
+  description="Content will appear when available."
+/>
+```
+
+## Content Guidelines
+
+### Title
+
+- Be specific ("No Screenshots" not "Nothing Here")
+- Keep it short (3-5 words)
+- Don't be alarmist
+
+### Description
+
+- Explain why it's empty or what to do
+- Keep it to 1-2 sentences
+- Include helpful context
+
+### Action
+
+- Provide a clear next step when possible
+- Use action-oriented button labels ("Create Project", "Upload Screenshot")
+- Only include if there's something the user can do
+
+## Best Practices
+
+<DosAndDonts client:load>
+  <Do>Provide a clear action when the user can fix the empty state</Do>
+  <Dont>Leave users without guidance on what to do next</Dont>
+</DosAndDonts>
+
+<DosAndDonts client:load>
+  <Do>Use relevant icons that match the content type</Do>
+  <Dont>Use generic icons that don't help explain the context</Dont>
+</DosAndDonts>
+
+<DosAndDonts client:load>
+  <Do>Differentiate between "no data yet" and "no results found"</Do>
+  <Dont>Show the same message for different empty scenarios</Dont>
+</DosAndDonts>
+
+## Props
+
+<PropsTable client:load props={[
+  { name: 'icon', type: 'ComponentType', default: '', description: 'Icon component' },
+  { name: 'title', type: 'string', default: '', description: 'Empty state heading' },
+  { name: 'description', type: 'string', default: '', description: 'Explanation or guidance' },
+  { name: 'action', type: 'ReactNode', default: '', description: 'CTA button or link' },
+]} />

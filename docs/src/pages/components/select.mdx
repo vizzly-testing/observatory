@@ -1,0 +1,71 @@
+---
+layout: ../../layouts/DocsLayout.astro
+title: Select
+description: Dropdown selection from a list of options
+---
+
+import { ComponentPreview } from '../../components/ComponentPreview.jsx';
+import { DosAndDonts, Do, Dont } from '../../components/DosAndDonts.jsx';
+import { PropsTable } from '../../components/PropsTable.jsx';
+import { SelectBasicDemo } from '../../components/demos/FormDemos.jsx';
+
+# Select
+
+Select provides a dropdown for choosing from predefined options. Use when the list of options is known and limited.
+
+## When to use
+
+- **Predefined choices** — Status, category, priority
+- **Limited options** — When there are 3-15 options
+- **Single selection** — Choose one value from a list
+- **Space-efficient** — More compact than radio buttons
+
+## Basic Usage
+
+<ComponentPreview client:load>
+  <SelectBasicDemo />
+</ComponentPreview>
+
+```jsx
+<Select
+  label="Baseline Branch"
+  options={[
+    { value: 'main', label: 'main' },
+    { value: 'develop', label: 'develop' },
+    { value: 'staging', label: 'staging' },
+  ]}
+  placeholder="Choose branch"
+/>
+```
+
+## When to use Combobox instead
+
+Consider [Combobox](/components/combobox) when:
+- Users can type to filter/search options
+- The list is long (15+ items)
+- Users might need to create new options
+- Options are fetched dynamically
+
+## Best Practices
+
+<DosAndDonts client:load>
+  <Do>Use clear, descriptive labels for each option</Do>
+  <Dont>Use technical IDs or codes as option labels</Dont>
+</DosAndDonts>
+
+<DosAndDonts client:load>
+  <Do>Order options logically (alphabetically, by frequency, or by priority)</Do>
+  <Dont>Use random or inconsistent ordering</Dont>
+</DosAndDonts>
+
+## Props
+
+<PropsTable client:load props={[
+  { name: 'label', type: 'string', default: '', description: 'Label text above the select' },
+  { name: 'options', type: 'Array<{ value: string, label: string }>', default: '[]', description: 'List of options' },
+  { name: 'value', type: 'string', default: '', description: 'Controlled value' },
+  { name: 'onChange', type: '(value: string) => void', default: '', description: 'Change handler' },
+  { name: 'placeholder', type: 'string', default: '', description: 'Placeholder text' },
+  { name: 'error', type: 'string', default: '', description: 'Error message' },
+  { name: 'disabled', type: 'boolean', default: 'false', description: 'Disable the select' },
+]} />

@@ -1,0 +1,113 @@
+---
+layout: ../../layouts/DocsLayout.astro
+title: Button
+description: Interactive buttons for actions and navigation
+---
+
+import { ComponentPreview } from '../../components/ComponentPreview.jsx';
+import { DosAndDonts, Do, Dont } from '../../components/DosAndDonts.jsx';
+import { PropsTable } from '../../components/PropsTable.jsx';
+import { ButtonVariantsDemo, ButtonSizesDemo, ButtonWithIconsDemo, ButtonStatesDemo } from '../../components/demos/ButtonDemos.jsx';
+
+# Button
+
+Buttons trigger actions. Choose the right variant based on the action's importance and consequences.
+
+## When to use
+
+- **Primary actions** — Submit forms, confirm dialogs, main CTAs
+- **Secondary actions** — Alternative options, less prominent actions
+- **Destructive actions** — Delete, remove, cancel subscriptions
+
+## Variants
+
+<ComponentPreview client:load>
+  <ButtonVariantsDemo />
+</ComponentPreview>
+
+```jsx
+<Button variant="primary">Primary</Button>
+<Button variant="secondary">Secondary</Button>
+<Button variant="ghost">Ghost</Button>
+<Button variant="danger">Danger</Button>
+<Button variant="warning">Warning</Button>
+<Button variant="success">Success</Button>
+```
+
+| Variant | Usage |
+|---------|-------|
+| `primary` | Main action on the page. Use sparingly — typically one per view. |
+| `secondary` | Alternative actions. Safe for multiple instances. |
+| `ghost` | Tertiary actions, cancel buttons, navigation. Minimal visual weight. |
+| `danger` | Destructive actions like delete. Always requires confirmation for irreversible actions. |
+| `warning` | Caution-worthy actions that aren't destructive. |
+| `success` | Positive confirmations, approvals. |
+
+## With Icons
+
+<ComponentPreview client:load>
+  <ButtonWithIconsDemo />
+</ComponentPreview>
+
+```jsx
+import { PlusIcon } from '@heroicons/react/24/outline';
+
+<Button icon={PlusIcon}>Create New</Button>
+<Button variant="ghost" icon={ArrowRightIcon} iconPosition="right">Continue</Button>
+```
+
+## Sizes
+
+<ComponentPreview client:load>
+  <ButtonSizesDemo />
+</ComponentPreview>
+
+- **Small** — Inline actions, table rows, tight spaces
+- **Medium** — Default. Most common use case.
+- **Large** — Hero sections, primary CTAs, mobile-friendly touch targets
+
+## States
+
+<ComponentPreview client:load>
+  <ButtonStatesDemo />
+</ComponentPreview>
+
+```jsx
+<Button disabled>Disabled</Button>
+<Button loading>Loading...</Button>
+<Button fullWidth>Full Width</Button>
+```
+
+## Best Practices
+
+<DosAndDonts client:load>
+  <Do>Use one primary button per view for the main action</Do>
+  <Dont>Use multiple primary buttons that compete for attention</Dont>
+</DosAndDonts>
+
+<DosAndDonts client:load>
+  <Do>Use danger variant for destructive actions</Do>
+  <Dont>Use danger for emphasis or to draw attention to non-destructive actions</Dont>
+</DosAndDonts>
+
+<DosAndDonts client:load>
+  <Do>Show loading state during async operations</Do>
+  <Dont>Leave users wondering if their click registered</Dont>
+</DosAndDonts>
+
+<DosAndDonts client:load>
+  <Do>Use concise, action-oriented labels: "Save", "Delete", "Export"</Do>
+  <Dont>Use vague labels: "Submit", "OK", "Click Here"</Dont>
+</DosAndDonts>
+
+## Props
+
+<PropsTable client:load props={[
+  { name: 'variant', type: "'primary' | 'secondary' | 'ghost' | 'danger' | 'warning' | 'success'", default: "'primary'", description: 'Visual style' },
+  { name: 'size', type: "'sm' | 'md' | 'lg'", default: "'md'", description: 'Button size' },
+  { name: 'icon', type: 'ComponentType', default: '', description: 'Icon component to display' },
+  { name: 'iconPosition', type: "'left' | 'right'", default: "'left'", description: 'Icon placement' },
+  { name: 'loading', type: 'boolean', default: 'false', description: 'Show loading spinner and disable button' },
+  { name: 'fullWidth', type: 'boolean', default: 'false', description: 'Stretch to fill container width' },
+  { name: 'disabled', type: 'boolean', default: 'false', description: 'Disable the button' },
+]} />

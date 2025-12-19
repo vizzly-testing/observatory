@@ -1,0 +1,100 @@
+---
+layout: ../../layouts/DocsLayout.astro
+title: TableToolbar
+description: Complete toolbar with search, filters, and summary
+---
+
+import { ComponentPreview } from '../../components/ComponentPreview.jsx';
+import { DosAndDonts, Do, Dont } from '../../components/DosAndDonts.jsx';
+import { PropsTable } from '../../components/PropsTable.jsx';
+import { TableToolbarDemo } from '../../components/demos/FilterDemos.jsx';
+
+# TableToolbar
+
+TableToolbar combines search, filter pills, and active filter display into a cohesive interface. It handles the common pattern of search + filter together.
+
+## When to use
+
+- **Table filtering** — Combined search and category filters
+- **List controls** — Any list that needs search + filters
+- **Complex filtering** — Multiple filter groups with search
+- **Responsive layouts** — Automatically adapts to mobile
+
+## Basic Usage
+
+<ComponentPreview client:load>
+  <TableToolbarDemo />
+</ComponentPreview>
+
+```jsx
+<TableToolbar
+  searchTerm={search}
+  onSearchChange={setSearch}
+  searchPlaceholder="Search builds..."
+  filterGroups={[
+    {
+      key: 'status',
+      filters: [
+        { key: 'changed', label: 'Changed', count: 8, color: 'amber' },
+        { key: 'new', label: 'New', count: 5, color: 'cyan' },
+        { key: 'approved', label: 'Approved', count: 29, color: 'emerald' },
+      ],
+    },
+  ]}
+  activeFilters={filters}
+  onFilterToggle={(key) => toggleFilter(key)}
+  totalCount={42}
+  filteredCount={filteredData.length}
+  onClearAll={() => clearAllFilters()}
+/>
+```
+
+## Features
+
+- **Integrated search** — SearchInput with proper styling
+- **Filter groups** — Multiple groups of FilterPills with dividers
+- **Active filter display** — Shows applied filters with remove buttons
+- **Result summary** — "15 of 42" count display
+- **Clear all** — Reset both search and filters
+- **Mobile responsive** — Collapsible filter panel on small screens
+
+## Best Practices
+
+<DosAndDonts client:load>
+  <Do>Place the toolbar directly above the table or list it controls</Do>
+  <Dont>Separate the toolbar from its data with other content</Dont>
+</DosAndDonts>
+
+<DosAndDonts client:load>
+  <Do>Update results immediately as users search or filter</Do>
+  <Dont>Require users to click a "Search" button</Dont>
+</DosAndDonts>
+
+## Props
+
+<PropsTable client:load props={[
+  { name: 'searchTerm', type: 'string', default: '', description: 'Current search value' },
+  { name: 'onSearchChange', type: '(value: string) => void', default: '', description: 'Search change handler' },
+  { name: 'searchPlaceholder', type: 'string', default: "'Search...'", description: 'Search placeholder' },
+  { name: 'filterGroups', type: 'Array<FilterGroup>', default: '[]', description: 'Filter configuration' },
+  { name: 'activeFilters', type: 'Set<string>', default: 'new Set()', description: 'Currently active filter keys' },
+  { name: 'onFilterToggle', type: '(key: string) => void', default: '', description: 'Filter toggle handler' },
+  { name: 'totalCount', type: 'number', default: '', description: 'Total items before filtering' },
+  { name: 'filteredCount', type: 'number', default: '', description: 'Items after filtering' },
+  { name: 'onClearAll', type: '() => void', default: '', description: 'Clear all filters and search' },
+]} />
+
+### FilterGroup
+
+```ts
+interface FilterGroup {
+  key: string;
+  label?: string;
+  filters: Array<{
+    key: string;
+    label: string;
+    count: number;
+    color: string;
+  }>;
+}
+```

@@ -1,0 +1,59 @@
+---
+layout: ../../layouts/DocsLayout.astro
+title: Textarea
+description: Multi-line text input for longer content
+---
+
+import { ComponentPreview } from '../../components/ComponentPreview.jsx';
+import { DosAndDonts, Do, Dont } from '../../components/DosAndDonts.jsx';
+import { PropsTable } from '../../components/PropsTable.jsx';
+import { TextareaBasicDemo } from '../../components/demos/FormDemos.jsx';
+
+# Textarea
+
+Textarea provides multi-line text input for longer content like descriptions, comments, and notes.
+
+## When to use
+
+- **Descriptions** — Project descriptions, build notes
+- **Comments** — Review comments, feedback
+- **Rich content** — When content may span multiple lines
+- **Freeform text** — Notes, messages, documentation
+
+## Basic Usage
+
+<ComponentPreview client:load>
+  <TextareaBasicDemo />
+</ComponentPreview>
+
+```jsx
+<Textarea
+  label="Description"
+  placeholder="Describe your project..."
+  hint="Markdown is supported"
+/>
+```
+
+## Best Practices
+
+<DosAndDonts client:load>
+  <Do>Set an appropriate initial height based on expected content length</Do>
+  <Dont>Use a tiny textarea for content that will typically be long</Dont>
+</DosAndDonts>
+
+<DosAndDonts client:load>
+  <Do>Include a character limit hint if there's a maximum length</Do>
+  <Dont>Silently truncate content when it exceeds limits</Dont>
+</DosAndDonts>
+
+## Props
+
+<PropsTable client:load props={[
+  { name: 'label', type: 'string', default: '', description: 'Label text above the textarea' },
+  { name: 'placeholder', type: 'string', default: '', description: 'Placeholder text' },
+  { name: 'hint', type: 'string', default: '', description: 'Helper text below textarea' },
+  { name: 'error', type: 'string', default: '', description: 'Error message' },
+  { name: 'rows', type: 'number', default: '4', description: 'Number of visible text rows' },
+  { name: 'disabled', type: 'boolean', default: 'false', description: 'Disable the textarea' },
+  { name: 'resize', type: "'none' | 'vertical' | 'horizontal' | 'both'", default: "'vertical'", description: 'Resize behavior' },
+]} />

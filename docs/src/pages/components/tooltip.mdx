@@ -1,0 +1,78 @@
+---
+layout: ../../layouts/DocsLayout.astro
+title: Tooltip
+description: Contextual information on hover
+---
+
+import { ComponentPreview } from '../../components/ComponentPreview.jsx';
+import { DosAndDonts, Do, Dont } from '../../components/DosAndDonts.jsx';
+import { PropsTable } from '../../components/PropsTable.jsx';
+import { TooltipBasicDemo, TooltipPositionsDemo } from '../../components/demos/TooltipDemos.jsx';
+
+# Tooltip
+
+Tooltips display helpful text when users hover over or focus on an element. They provide additional context without cluttering the interface.
+
+## When to use
+
+- **Icon buttons** — Explain what icon-only buttons do
+- **Truncated text** — Show full text on hover
+- **Additional context** — Extra information about an element
+- **Keyboard shortcuts** — Reveal shortcuts on hover
+
+## Basic Usage
+
+<ComponentPreview client:load>
+  <TooltipBasicDemo />
+</ComponentPreview>
+
+```jsx
+<Tooltip content="Click to save your changes">
+  <Button>Save Changes</Button>
+</Tooltip>
+```
+
+## Positions
+
+<ComponentPreview client:load>
+  <TooltipPositionsDemo />
+</ComponentPreview>
+
+```jsx
+<Tooltip content="..." position="top">...</Tooltip>
+<Tooltip content="..." position="bottom">...</Tooltip>
+<Tooltip content="..." position="left">...</Tooltip>
+<Tooltip content="..." position="right">...</Tooltip>
+```
+
+## Best Practices
+
+<DosAndDonts client:load>
+  <Do>Keep tooltip text brief — aim for one short sentence</Do>
+  <Dont>Put critical information only in tooltips — some users may never see them</Dont>
+</DosAndDonts>
+
+<DosAndDonts client:load>
+  <Do>Use tooltips to explain icon-only buttons</Do>
+  <Dont>Use tooltips on elements that already have clear labels</Dont>
+</DosAndDonts>
+
+<DosAndDonts client:load>
+  <Do>Position tooltips to avoid covering important content</Do>
+  <Dont>Position tooltips where they'll be cut off by viewport edges</Dont>
+</DosAndDonts>
+
+## Accessibility
+
+- Tooltips appear on both hover and focus
+- Content is announced by screen readers
+- Avoid putting interactive elements inside tooltips
+
+## Props
+
+<PropsTable client:load props={[
+  { name: 'content', type: 'string | ReactNode', default: '', description: 'Tooltip content' },
+  { name: 'position', type: "'top' | 'bottom' | 'left' | 'right'", default: "'top'", description: 'Tooltip position relative to trigger' },
+  { name: 'children', type: 'ReactNode', default: '', description: 'Trigger element' },
+  { name: 'delay', type: 'number', default: '200', description: 'Delay before showing (ms)' },
+]} />

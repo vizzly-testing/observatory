@@ -1,0 +1,263 @@
+---
+layout: ../../layouts/DocsLayout.astro
+title: Animation & Motion
+description: Motion principles, transitions, and loading states
+---
+
+import { ComponentPreview } from '../../components/ComponentPreview.jsx';
+import { TransitionDemo, PulseDotsDemo, LoadingStatesDemo, SpinnerDemo, HoverEffectsDemo, FocusRingDemo, BadgeAnimationDemo, PageTransitionDemo, ReducedMotionDemo } from '../../components/demos/AnimationDemos.jsx';
+
+# Animation & Motion
+
+Motion in Observatory is purposeful—it provides feedback, indicates state changes, and guides attention. Animations are subtle and fast, never getting in the way of productivity.
+
+## Core Principles
+
+1. **Purposeful** — Every animation serves a function: feedback, state change, or attention
+2. **Fast** — Most transitions complete in 150-200ms. Users shouldn't wait for animations
+3. **Subtle** — Animations enhance, not distract. Avoid flashy effects
+4. **Respectful** — Honor `prefers-reduced-motion` for users who need it
+
+## Transition Timing
+
+Standard durations and easing functions for consistent motion.
+
+<ComponentPreview client:load>
+  <TransitionDemo />
+</ComponentPreview>
+
+### Recommended Durations
+
+| Duration | Use For |
+|----------|---------|
+| `100ms` | Micro-interactions: button press, checkbox toggle |
+| `150ms` | Default transitions: hover states, color changes |
+| `200ms` | Layout shifts: expanding panels, tab changes |
+| `300ms` | Complex animations: modals, page transitions |
+
+### Easing Functions
+
+```css
+/* Quick response, natural deceleration */
+transition-timing-function: ease-out;
+
+/* Smooth start and end */
+transition-timing-function: ease-in-out;
+
+/* Playful bounce (use sparingly) */
+transition-timing-function: cubic-bezier(0.34, 1.56, 0.64, 1);
+```
+
+## Hover Effects
+
+Common hover patterns used throughout Observatory.
+
+<ComponentPreview client:load>
+  <HoverEffectsDemo />
+</ComponentPreview>
+
+```jsx
+{/* Color change */}
+<div className="transition-colors hover:bg-slate-700">
+
+{/* Scale */}
+<div className="transition-transform hover:scale-105">
+
+{/* Shadow glow */}
+<div className="transition-shadow hover:shadow-lg hover:shadow-amber-500/10">
+
+{/* Combined */}
+<div className="transition-all hover:bg-slate-700 hover:scale-[1.02] hover:shadow-lg">
+```
+
+## Focus States
+
+Visible focus rings for keyboard navigation.
+
+<ComponentPreview client:load>
+  <FocusRingDemo />
+</ComponentPreview>
+
+```jsx
+{/* Standard focus ring */}
+<button className="focus:outline-none focus:ring-2 focus:ring-amber-500 focus:ring-offset-2 focus:ring-offset-slate-900">
+
+{/* Input focus */}
+<input className="focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-amber-500">
+```
+
+## Pulse Animations
+
+Status dots pulse to indicate active/processing states.
+
+<ComponentPreview client:load>
+  <PulseDotsDemo />
+</ComponentPreview>
+
+```jsx
+{/* Pulsing status dot */}
+<StatusDot variant="success" pulse />
+
+{/* Badge with pulsing dot */}
+<Badge variant="info" dot pulseDot>Processing</Badge>
+```
+
+<ComponentPreview client:load>
+  <BadgeAnimationDemo />
+</ComponentPreview>
+
+### When to Pulse
+
+- **Do pulse**: Active uploads, processing builds, live connections
+- **Don't pulse**: Static statuses, historical data, completed states
+
+## Loading States
+
+Different loading patterns for various contexts.
+
+<ComponentPreview client:load>
+  <LoadingStatesDemo />
+</ComponentPreview>
+
+### Spinners
+
+<ComponentPreview client:load>
+  <SpinnerDemo />
+</ComponentPreview>
+
+```jsx
+{/* Icon spinner */}
+<ArrowPathIcon className="w-5 h-5 animate-spin" />
+
+{/* Border spinner */}
+<div className="w-5 h-5 border-2 border-slate-700 border-t-amber-500 rounded-full animate-spin" />
+
+{/* Bounce dots */}
+<div className="flex gap-1">
+  {[0, 1, 2].map((i) => (
+    <div
+      key={i}
+      className="w-2 h-2 bg-amber-500 rounded-full animate-bounce"
+      style={{ animationDelay: `${i * 0.15}s` }}
+    />
+  ))}
+</div>
+```
+
+### Skeleton Loading
+
+Use skeletons for content-heavy areas to show layout structure.
+
+```jsx
+import { Skeleton, SkeletonCard, SkeletonTable } from '@vizzly-testing/observatory';
+
+{/* Single skeleton */}
+<Skeleton className="h-4 w-3/4" />
+
+{/* Pre-built patterns */}
+<SkeletonCard />
+<SkeletonTable rows={5} />
+```
+
+## Page Transitions
+
+Observatory uses Astro View Transitions for smooth page navigation.
+
+<ComponentPreview client:load>
+  <PageTransitionDemo />
+</ComponentPreview>
+
+```css
+/* Default page transition animation */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+article {
+  animation: fadeInUp 0.4s ease-out;
+}
+```
+
+## CSS Keyframes
+
+Observatory's built-in keyframe animations.
+
+```css
+/* Skeleton shimmer */
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+/* Pulse for status indicators */
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.5; }
+}
+```
+
+## Tailwind Animation Classes
+
+Quick reference for Tailwind's built-in animations:
+
+| Class | Effect |
+|-------|--------|
+| `animate-spin` | Continuous rotation (loaders) |
+| `animate-ping` | Ping/ripple effect (notifications) |
+| `animate-pulse` | Gentle fade in/out (skeletons, status) |
+| `animate-bounce` | Bouncing motion (attention) |
+
+## Reduced Motion
+
+<ComponentPreview client:load>
+  <ReducedMotionDemo />
+</ComponentPreview>
+
+Always respect user preferences:
+
+```css
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+```
+
+In Tailwind:
+
+```jsx
+{/* Only animate when user hasn't requested reduced motion */}
+<div className="motion-safe:animate-bounce">
+
+{/* Alternative for reduced motion */}
+<div className="motion-reduce:transition-none">
+```
+
+## Best Practices
+
+### Do
+
+- Use `transition-all` for elements with multiple changing properties
+- Keep animations under 300ms for responsive feel
+- Use `ease-out` for most transitions—it feels natural
+- Test with `prefers-reduced-motion` enabled
+- Use skeleton loading for data-heavy views
+
+### Don't
+
+- Don't animate everything—it becomes noise
+- Don't use long animations (>500ms) for UI feedback
+- Don't use `animate-bounce` or `animate-ping` excessively
+- Don't block user interaction during animations
+- Don't use animation for critical information alone

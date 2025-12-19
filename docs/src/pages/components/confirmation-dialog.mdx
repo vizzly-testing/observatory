@@ -1,0 +1,90 @@
+---
+layout: ../../layouts/DocsLayout.astro
+title: ConfirmationDialog
+description: Confirm destructive or important actions
+---
+
+import { ComponentPreview } from '../../components/ComponentPreview.jsx';
+import { DosAndDonts, Do, Dont } from '../../components/DosAndDonts.jsx';
+import { PropsTable } from '../../components/PropsTable.jsx';
+import { ConfirmationDialogDemo, ConfirmationDialogVariantsDemo } from '../../components/demos/ModalDemos.jsx';
+
+# ConfirmationDialog
+
+A specialized modal for confirming actions, especially destructive ones. Pre-configured with consistent styling and behavior.
+
+## When to use
+
+- **Delete actions** — Confirm before permanently removing data
+- **Irreversible changes** — Actions that can't be undone
+- **Important decisions** — Settings that affect many items
+- **Dangerous operations** — Anything that could cause problems
+
+## Basic Usage
+
+<ComponentPreview client:load>
+  <ConfirmationDialogDemo />
+</ComponentPreview>
+
+```jsx
+<ConfirmationDialog
+  isOpen={isOpen}
+  onConfirm={() => handleDelete()}
+  onCancel={() => setIsOpen(false)}
+  title="Delete Project?"
+  message="This action cannot be undone. All screenshots, builds, and settings will be permanently removed."
+  confirmText="Delete Project"
+  cancelText="Cancel"
+  variant="danger"
+/>
+```
+
+## Variants
+
+<ComponentPreview client:load>
+  <ConfirmationDialogVariantsDemo />
+</ComponentPreview>
+
+| Variant | Usage |
+|---------|-------|
+| `danger` | Delete, remove, destructive actions |
+| `warning` | Reset, clear, potentially problematic actions |
+
+## ConfirmationDialog vs Modal
+
+| Use ConfirmationDialog when... | Use Modal when... |
+|-------------------------------|-------------------|
+| Simple yes/no decision | Complex forms or content |
+| Confirming an action | Viewing or editing details |
+| Standard confirm/cancel buttons | Custom button layouts |
+| Brief message | Extended content |
+
+## Best Practices
+
+<DosAndDonts client:load>
+  <Do>Be specific about what will be affected ("Delete 15 screenshots")</Do>
+  <Dont>Use vague messages ("Are you sure?")</Dont>
+</DosAndDonts>
+
+<DosAndDonts client:load>
+  <Do>Make the confirm button text specific ("Delete Project", not "OK")</Do>
+  <Dont>Use generic button labels that don't indicate the action</Dont>
+</DosAndDonts>
+
+<DosAndDonts client:load>
+  <Do>Mention if the action is irreversible</Do>
+  <Dont>Surprise users with permanent consequences</Dont>
+</DosAndDonts>
+
+## Props
+
+<PropsTable client:load props={[
+  { name: 'isOpen', type: 'boolean', default: 'false', description: 'Controls visibility' },
+  { name: 'onConfirm', type: '() => void', default: '', description: 'Called when confirmed' },
+  { name: 'onCancel', type: '() => void', default: '', description: 'Called when cancelled' },
+  { name: 'title', type: 'string', default: '', description: 'Dialog title' },
+  { name: 'message', type: 'string', default: '', description: 'Description of the action' },
+  { name: 'confirmText', type: 'string', default: "'Confirm'", description: 'Confirm button text' },
+  { name: 'cancelText', type: 'string', default: "'Cancel'", description: 'Cancel button text' },
+  { name: 'variant', type: "'danger' | 'warning'", default: "'danger'", description: 'Visual style' },
+]} />

@@ -1,0 +1,97 @@
+---
+layout: ../../layouts/DocsLayout.astro
+title: Badge
+description: Status indicators, labels, and counts
+---
+
+import { ComponentPreview } from '../../components/ComponentPreview.jsx';
+import { DosAndDonts, Do, Dont } from '../../components/DosAndDonts.jsx';
+import { PropsTable } from '../../components/PropsTable.jsx';
+import { BadgeVariantsDemo, BadgeWithDotsDemo, BadgeSizesDemo } from '../../components/demos/BadgeDemos.jsx';
+
+# Badge
+
+Badges communicate status, category, or count at a glance. They're one of the most important components in a visual testing tool.
+
+## When to use
+
+- **Status indication** — Approved, pending, rejected, failed
+- **Counts** — Number of changes, screenshots, builds
+- **Categories** — Platform, browser, viewport labels
+- **State** — Processing, new, updated
+
+## Variants
+
+<ComponentPreview client:load>
+  <BadgeVariantsDemo />
+</ComponentPreview>
+
+```jsx
+<Badge>Default</Badge>
+<Badge variant="success">Approved</Badge>
+<Badge variant="warning">Pending</Badge>
+<Badge variant="danger">Rejected</Badge>
+<Badge variant="info">Processing</Badge>
+<Badge variant="purple">Special</Badge>
+```
+
+| Variant | Meaning | Usage |
+|---------|---------|-------|
+| `default` | Neutral | Categories, metadata, counts |
+| `success` | Positive | Approved, passed, active |
+| `warning` | Attention | Pending review, changes detected |
+| `danger` | Negative | Rejected, failed, errors |
+| `info` | Informational | Processing, new, in progress |
+| `purple` | Special | Featured, premium, custom |
+
+## With Status Dot
+
+Add a dot for extra visual emphasis. Use `pulseDot` for active/processing states.
+
+<ComponentPreview client:load>
+  <BadgeWithDotsDemo />
+</ComponentPreview>
+
+```jsx
+<Badge variant="success" dot>Active</Badge>
+<Badge variant="info" dot pulseDot>Processing</Badge>
+```
+
+## Sizes
+
+<ComponentPreview client:load>
+  <BadgeSizesDemo />
+</ComponentPreview>
+
+```jsx
+<Badge size="sm">Small</Badge>
+<Badge size="md">Medium</Badge>
+<Badge size="lg">Large</Badge>
+```
+
+## Best Practices
+
+<DosAndDonts client:load>
+  <Do>Use consistent colors: green = approved, amber = pending, red = rejected</Do>
+  <Dont>Use colors arbitrarily — users learn to scan by color</Dont>
+</DosAndDonts>
+
+<DosAndDonts client:load>
+  <Do>Keep badge text short: "Approved", "3 changes", "iOS"</Do>
+  <Dont>Write sentences in badges: "This build has been approved by..."</Dont>
+</DosAndDonts>
+
+<DosAndDonts client:load>
+  <Do>Use pulsing dots sparingly for truly active states</Do>
+  <Dont>Add animation to every badge — it becomes noise</Dont>
+</DosAndDonts>
+
+## Props
+
+<PropsTable client:load props={[
+  { name: 'variant', type: "'default' | 'success' | 'warning' | 'danger' | 'info' | 'purple'", default: "'default'", description: 'Visual style' },
+  { name: 'size', type: "'sm' | 'md' | 'lg'", default: "'sm'", description: 'Size of the badge' },
+  { name: 'dot', type: 'boolean', default: 'false', description: 'Show status dot' },
+  { name: 'pulseDot', type: 'boolean', default: 'false', description: 'Animate the dot (requires dot=true)' },
+  { name: 'className', type: 'string', default: '', description: 'Additional CSS classes' },
+]} />
