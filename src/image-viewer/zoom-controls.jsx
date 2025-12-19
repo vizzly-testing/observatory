@@ -168,22 +168,22 @@ export function ZoomControls({
     );
   }
 
-  // Default desktop variant
+  // Default desktop variant - matches cloud product styling
   return (
     <div className={`relative flex items-center gap-1.5 ${className}`}>
       {/* Zoom controls */}
-      <div className="flex items-center bg-slate-800/50 rounded-md p-0.5">
+      <div className="flex items-center bg-slate-800/60 rounded-lg p-0.5">
         <button
           onClick={zoomOut}
-          className="p-1 text-slate-400 hover:text-white hover:bg-slate-700/50 rounded transition-all"
+          className="p-2 text-slate-400 hover:text-white hover:bg-slate-700/50 rounded-md transition-all"
           title="Zoom out (−)"
         >
-          <MagnifyingGlassMinusIcon className="w-3.5 h-3.5" />
+          <MagnifyingGlassMinusIcon className="w-4 h-4" />
         </button>
 
         <button
           onClick={() => setIsOpen(!isOpen)}
-          className="px-2 py-1 min-w-[44px] text-xs font-medium text-slate-300 hover:text-white hover:bg-slate-700/50 rounded transition-all tabular-nums"
+          className="px-2 py-2 min-w-[44px] text-xs font-medium text-slate-300 hover:text-white hover:bg-slate-700/50 rounded-md transition-all tabular-nums"
           title="Click for zoom presets"
         >
           {displayValue}
@@ -191,29 +191,29 @@ export function ZoomControls({
 
         <button
           onClick={zoomIn}
-          className="p-1 text-slate-400 hover:text-white hover:bg-slate-700/50 rounded transition-all"
+          className="p-2 text-slate-400 hover:text-white hover:bg-slate-700/50 rounded-md transition-all"
           title="Zoom in (+)"
         >
-          <MagnifyingGlassPlusIcon className="w-3.5 h-3.5" />
+          <MagnifyingGlassPlusIcon className="w-4 h-4" />
         </button>
       </div>
 
       {/* Quick actions */}
-      <div className="flex items-center bg-slate-800/50 rounded-md p-0.5">
+      <div className="flex items-center bg-slate-800/60 rounded-lg p-0.5">
         <button
           onClick={fitToScreen}
-          className={`p-1 rounded transition-all ${
+          className={`p-2 rounded-md transition-all ${
             zoom === 'fit'
               ? 'bg-blue-600 text-white'
               : 'text-slate-400 hover:text-white hover:bg-slate-700/50'
           }`}
           title="Fit to screen (9)"
         >
-          <ArrowsPointingInIcon className="w-3.5 h-3.5" />
+          <ArrowsPointingInIcon className="w-4 h-4" />
         </button>
         <button
           onClick={actualSize}
-          className={`px-2 py-1 rounded transition-all text-xs font-medium ${
+          className={`px-2 py-2 rounded-md transition-all text-xs font-medium ${
             zoom === 1
               ? 'bg-blue-600 text-white'
               : 'text-slate-400 hover:text-white hover:bg-slate-700/50'

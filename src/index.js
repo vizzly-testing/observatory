@@ -82,6 +82,7 @@ export {
 } from './screenshot-metadata.js';
 export { SearchInput } from './search-input.jsx';
 export { Skeleton, SkeletonCard, SkeletonTable } from './skeleton.jsx';
+export { Spinner } from './spinner.jsx';
 export { StatusDot } from './status-dot.jsx';
 export { Table } from './table.jsx';
 export { TableToolbar } from './table-toolbar.jsx';
@@ -110,3 +111,19 @@ export {
 } from './variant-strip.jsx';
 // View mode controls
 export { ViewModeSelect, ViewModeToggle } from './view-mode-toggle.jsx';
+// Image viewer and comparison modes
+export {
+  ThumbnailStrip,
+  useZoom,
+  ZoomControls,
+  SideBySideView,
+  ZoomableImage,
+  OverlayMode,
+  ToggleMode,
+  ToggleView,
+  OnionSkinMode,
+  BaseComparisonMode,
+  ComparisonContainer,
+  ImageRenderer,
+  ImageWithErrorBoundary
+} from './image-viewer/index.js';
